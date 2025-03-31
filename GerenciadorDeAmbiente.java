@@ -3,7 +3,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
-public class GerenciadorDeAmbiente(){
+public class GerenciadorDeAmbiente{
 /*
         private Lista de ambientes disponíveis: Define as áreas do jogo.
         private Clima global: Pode influenciar vários ambientes ao mesmo tempo.
@@ -15,10 +15,14 @@ public class GerenciadorDeAmbiente(){
 
     //construtor do gerenciador
     public GerenciadorDeAmbiente() {
+        Ambiente ambiente = new Ambiente(); // Instanciando a classe externa
         this.ambientesDisponiveis = Arrays.asList(
-            new AmbienteFloresta(),
-            new AmbienteMontanha(),
-            new AmbienteDeserto()
+            ambiente.new AmbienteFloresta(),
+            ambiente.new AmbienteMontanha(),
+            ambiente.new AmbienteDeserto(),
+            ambiente.new AmbienteRuinas(),
+            ambiente.new AmbienteCaverna(),
+            ambiente.new AmbienteLagoRio()
         );
     }
 
@@ -27,7 +31,7 @@ public class GerenciadorDeAmbiente(){
         Ambiente novoAmbiente;
     
        do {
-            novoAmbiente = ambientesDisponiveis.get(random.nextInt(ambientesDisponiveis.size()));
+            novoAmbiente = ambientesDisponiveis.get(aleatorio.nextInt(ambientesDisponiveis.size()));
         } while (novoAmbiente == ambienteAtual); //o ambiente nunca mudará para o mesmo
     
         jogador.setAmbienteAtual(novoAmbiente);
