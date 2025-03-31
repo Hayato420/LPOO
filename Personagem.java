@@ -2,11 +2,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Personagem{
+        
         private String nome;
         private int vida;
         private int fome;
         private int sede;
-        private int energia = 100;
+        private int energia;
         private int sanidade;
         private List<Item> inventario = new ArrayList<>();
         private Ambiente ambienteAtual;
@@ -21,7 +22,7 @@ public class Personagem{
             this.ambienteAtual = ambienteInicial;
         }
 
-        abstract void usarHabilidade();
+        public void usarHabilidade(){};
 
         public Ambiente getAmbienteAtual() {
             return ambienteAtual;
@@ -47,9 +48,9 @@ public class Personagem{
     }
 
 class Rastreador extends Personagem{
-    public Rastreador (String nome, Ambiente ambienteInicial){
+    public Rastreador (String nome, Ambiente ambienteInicial, int energia){
         super(nome, ambienteInicial);   
-        this.adicionarEnergia(20);
+        this.energia = 120;
     }
 
     public void adicionarEnergia(int quantidade){
