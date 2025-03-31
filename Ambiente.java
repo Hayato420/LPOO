@@ -3,14 +3,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;ap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;ap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.Random;
 
@@ -23,7 +15,7 @@ public class Ambiente{
     private Set<Clima> condicoesClimaticas = new HashSet<>();
 
     public String getNome(){
-        return this.nome
+        return this.nome;
     }
 
     public abstract void explorar(Personagem jogador);
@@ -37,15 +29,16 @@ public class Ambiente{
     }
 
 
-    class AmbienteFloresta extends Ambiente{
+    public class AmbienteFloresta extends Ambiente{
 
         public void explorar(Personagem jogador){
             jogador.perderEnergia(2);
         }
     }
-    class AmbienteMontanha extends Ambiente{}
-    class AmbienteCaverna extends Ambiente{}
-    class AmbienteLagoRio extends Ambiente{}
-    class AmbienteRuinas extends Ambiente{}
+    public class AmbienteMontanha extends Ambiente{}
+    public class AmbienteCaverna extends Ambiente{}
+    public class AmbienteLagoRio extends Ambiente{}
+    public class AmbienteRuinas extends Ambiente{}
+    public class AmbienteDeserto extends Ambiente{}
 
 }
