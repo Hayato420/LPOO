@@ -18,7 +18,7 @@ public class GerenciadorDeAmbiente{
         this.ambientesDisponiveis = Arrays.asList(
             new AmbienteFloresta(),
             new AmbienteMontanha()
-            /*new AmbienteDeserto(),
+            /*,new AmbienteDeserto(),
             new AmbienteRuinas(),
             new AmbienteCaverna(),
             new AmbienteLagoRio()*/
