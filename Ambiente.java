@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.Random;
-//TESTE GIT
+
 public class Ambiente{
     private String nome;
     private String descricao;
