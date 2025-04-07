@@ -10,35 +10,45 @@ public class Ambiente{
     private String nome;
     private String descricao;
     private int dificuldade;
-    private List<Item> recursosDisponiveis = new ArrayList<>(); 
-    private Map<Evento, Double> probabilidadeEventos = new HashMap<>();
-    private Set<Clima> condicoesClimaticas = new HashSet<>();
+    /*private Map<Item, Integer> recursosDisponiveis = new HashMap<>();
+    private Map<Evento, Double> probabilidadeEventos = new HashMap<>();*/
+    private Clima condicoesClimaticas;
+    enum Clima {
+        UMIDO, SECO, FRIO, QUENTE, TEMPESTUOSO
+    }
+    
+    public Ambiente(String nome, String descricao, int dificuldade,
+                    /*Map<Item, Integer> recursosDisponiveis,
+                    Map<Evento, Double> probabilidadeEventos,*/
+                    Clima condicoesClimaticas) {
+        this.nome = nome;
+        this.descricao = descricao;
+        this.dificuldade = dificuldade;
+        /*this.recursosDisponiveis = recursosDisponiveis;
+        this.probabilidadeEventos = probabilidadeEventos;*/ //AINDA NAO FOI DEFINIDO, DEVE-SE ACRESCENTAR DPS, ASSIM COMO NO CONSTRUTOR
+        this.condicoesClimaticas = condicoesClimaticas;
+    }
+
 
     public String getNome(){
         return this.nome;
     }
-
-    public abstract void explorar(Personagem jogador);
-
-    public abstract Evento gerarEvento(){
-
+    public String getDescricao(){
+        return this.descricao;
+    }
+    public int getDificuldade(){
+        return this.dificuldade;
     }
 
-    public abstract void modificarClima(){
-
+    public void explorar(Personagem jogador, Ambiente ambiente){
+    
     }
 
-
-    public class AmbienteFloresta extends Ambiente{
-
-        public void explorar(Personagem jogador){
-            jogador.perderEnergia(2);
-        }
+    public Evento gerarEvento(){
+    
     }
-    public class AmbienteMontanha extends Ambiente{}
-    public class AmbienteCaverna extends Ambiente{}
-    public class AmbienteLagoRio extends Ambiente{}
-    public class AmbienteRuinas extends Ambiente{}
-    public class AmbienteDeserto extends Ambiente{}
 
+    public void modificarClima(){
+    
+    }
 }
