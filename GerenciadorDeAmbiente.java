@@ -15,28 +15,32 @@ public class GerenciadorDeAmbiente{
 
     //construtor do gerenciador
     public GerenciadorDeAmbiente() {
-        Ambiente ambiente = new Ambiente(); // Instanciando a classe externa
         this.ambientesDisponiveis = Arrays.asList(
-            ambiente.new AmbienteFloresta(),
-            ambiente.new AmbienteMontanha(),
-            ambiente.new AmbienteDeserto(),
-            ambiente.new AmbienteRuinas(),
-            ambiente.new AmbienteCaverna(),
-            ambiente.new AmbienteLagoRio()
+            new AmbienteFloresta(),
+            new AmbienteMontanha()
+            /*new AmbienteDeserto(),
+            new AmbienteRuinas(),
+            new AmbienteCaverna(),
+            new AmbienteLagoRio()*/
         );
+
     }
 
+    public List<Ambiente> getAmbientesDisponiveis() {
+        return ambientesDisponiveis;
+    }
+    
     public void mudarAmbiente(Personagem jogador) {
-        Ambiente ambienteAtual = jogador.getAmbienteAtual();
-        Ambiente novoAmbiente;
-    
-       do {
-            novoAmbiente = ambientesDisponiveis.get(aleatorio.nextInt(ambientesDisponiveis.size()));
-        } while (novoAmbiente == ambienteAtual); //o ambiente nunca mudará para o mesmo
-    
-        jogador.setAmbienteAtual(novoAmbiente);
-        historicoMovimentacao.add(novoAmbiente);
-        System.out.println("Você agora está em: " + novoAmbiente.getNome());
+        Ambiente localizacaoAtual = jogador.getLocalizacao();
+        Ambiente novaLocalizacao;
+
+        do {
+            novaLocalizacao = ambientesDisponiveis.get(aleatorio.nextInt(ambientesDisponiveis.size()));
+        } while (novaLocalizacao.getClass() == localizacaoAtual.getClass()); //o ambiente nunca mudara para o mesmo
+
+        jogador.setLocalizacao(novaLocalizacao);
+        historicoMovimentacao.add(novaLocalizacao);
+        System.out.println("Voce se encontra em: " + novaLocalizacao.getNome());
     }
 
     public void gerarEvento(Ambiente local){
