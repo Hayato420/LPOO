@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.Random;
-
+//TESTE GIT
 public class Ambiente{
     private String nome;
     private String descricao;
@@ -16,7 +16,7 @@ public class Ambiente{
     enum Clima {
         UMIDO, SECO, FRIO, QUENTE, TEMPESTUOSO
     }
-    
+
     public Ambiente(String nome, String descricao, int dificuldade,
                     /*Map<Item, Integer> recursosDisponiveis,
                     Map<Evento, Double> probabilidadeEventos,*/
