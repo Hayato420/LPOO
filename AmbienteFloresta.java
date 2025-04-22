@@ -19,7 +19,8 @@ public class AmbienteFloresta extends Ambiente{
             }},
 */
             //Clima da Floresta, devera dificultar o acendimento de fogueiras
-            Clima.UMIDO
+            Clima.UMIDO,
+            Temperatura.NEUTRO
         );
     }
 
