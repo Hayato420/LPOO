@@ -13,20 +13,25 @@ public class Ambiente{
     /*private Map<Item, Integer> recursosDisponiveis = new HashMap<>();
     private Map<Evento, Double> probabilidadeEventos = new HashMap<>();*/
     private Clima condicoesClimaticas;
+    private Temperatura temperaturaAmbiente;
     enum Clima {
-        UMIDO, SECO, FRIO, QUENTE, TEMPESTUOSO
+        UMIDO, SECO, TEMPESTUOSO, AMENO
+    }
+    enum Temperatura{
+        QUENTE, FRIO, NEUTRO
     }
 
     public Ambiente(String nome, String descricao, int dificuldade,
                     /*Map<Item, Integer> recursosDisponiveis,
                     Map<Evento, Double> probabilidadeEventos,*/
-                    Clima condicoesClimaticas) {
+                    Clima condicoesClimaticas, Temperatura temperaturaAmbiente) {
         this.nome = nome;
         this.descricao = descricao;
         this.dificuldade = dificuldade;
         /*this.recursosDisponiveis = recursosDisponiveis;
         this.probabilidadeEventos = probabilidadeEventos;*/ //AINDA NAO FOI DEFINIDO, DEVE-SE ACRESCENTAR DPS, ASSIM COMO NO CONSTRUTOR
         this.condicoesClimaticas = condicoesClimaticas;
+        this.temperaturaAmbiente = temperaturaAmbiente;
     }
 
 
@@ -41,7 +46,7 @@ public class Ambiente{
     }
 
     public void explorar(Personagem jogador, Ambiente ambiente){
-    
+        jogador.perderEnergia(ambiente.getDificuldade());
     }
 
     public Evento gerarEvento(){
