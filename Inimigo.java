@@ -4,13 +4,15 @@ public class Inimigo{
     private int vida;
     private int dano;
     private int resistencia;
+    private boolean isAlive;
 
-    public Inimigo(String nome, int vida, int dano, int resistencia){
+    public Inimigo(String nome, int vida, int dano, int resistencia, boolean isAlive){
 
         this.nome = nome;
         this.vida = vida;
         this.dano = dano;
         this.resistencia = resistencia;
+        this.isAlive = isAlive;
 
     }
 
@@ -44,6 +46,14 @@ public class Inimigo{
 
     public void setResistencia(int resistencia){
         this.resistencia = resistencia;
+    }
+
+    public boolean getIsAlive(){
+        return this.isAlive;
+    }
+
+    public void setIsAlive(boolean isAlive){
+        this.isAlive = isAlive;
     }
 
     public void perderVida(int quantidade){
