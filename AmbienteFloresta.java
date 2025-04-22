@@ -24,7 +24,4 @@ public class AmbienteFloresta extends Ambiente{
         );
     }
 
-    public void explorar(Personagem jogador, Ambiente ambiente){
-        jogador.perderEnergia(ambiente.getDificuldade());
-    }
 }
