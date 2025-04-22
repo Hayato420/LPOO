@@ -8,7 +8,7 @@ public class Agua extends Item{
             //REMOVER O ITEM DO INVENTARIO, OU DEIXAR A GARRAFA MAS VAZIA, O QUE SERIA MAIS COMPLICADO POIS TERIA QUE TER O ITEM GARRAFA E SO PODER ENCHER EM ALGUMA FONTE PROXIMA
         }
     }
-    public void beber(Personagem jogador){
+    public void usar(Personagem jogador){
         jogador.adicionarSede(10);
         this.diminuirVolume();
     }
