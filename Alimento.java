@@ -3,25 +3,25 @@ public class Alimento extends Item{
     private enum tipoAlimento{
         FRUTA{
             @Override
-            public void consumir(Personagem jogador){
+            public void usar(Personagem jogador){
                 jogador.adicionarFome(10);
             }
         },
         CARNE{
             @Override
-            public void consumir(Personagem jogador){
+            public void usar(Personagem jogador){
                 jogador.adicionarFome(10);
             }
         },
         ENLATADO{
             @Override
-            public void consumir(Personagem jogador){
+            public void usar(Personagem jogador){
                 jogador.adicionarFome(10);
             }
         },
         FARINACEOS{
             @Override
-            public void consumir(Personagem jogador){
+            public void usar(Personagem jogador){
                 jogador.adicionarFome(10);
             }
         }
