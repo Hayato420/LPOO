@@ -9,19 +9,19 @@ public class GerenciadorDeAmbiente{
         private Clima global: Pode influenciar vários ambientes ao mesmo tempo.
         private Histórico de movimentação: Registra onde o jogador já esteve.
 */
-    private List<Ambiente> ambientesDisponiveis;
-    private Random aleatorio = new Random();
-    private List<Ambiente> historicoMovimentacao = new ArrayList<>();
+    private final List<Ambiente> ambientesDisponiveis;
+    private final Random aleatorio = new Random();
+    private final List<Ambiente> historicoMovimentacao = new ArrayList<>();
 
     //construtor do gerenciador
     public GerenciadorDeAmbiente() {
         this.ambientesDisponiveis = Arrays.asList(
             new AmbienteFloresta(),
-            new AmbienteMontanha()
-            /*,new AmbienteDeserto(),
+            new AmbienteMontanha(),
+            new AmbienteDeserto(),
             new AmbienteRuinas(),
             new AmbienteCaverna(),
-            new AmbienteLagoRio()*/
+            new AmbienteLagoRio()
         );
 
     }
@@ -30,12 +30,17 @@ public class GerenciadorDeAmbiente{
         return ambientesDisponiveis;
     }
     
+    public Ambiente gerarAleatorio(){
+        Ambiente novaLocalizacao = ambientesDisponiveis.get(aleatorio.nextInt(ambientesDisponiveis.size()));
+        return novaLocalizacao;
+    }
+    
     public void mudarAmbiente(Personagem jogador) {
         Ambiente localizacaoAtual = jogador.getLocalizacao();
         Ambiente novaLocalizacao;
 
         do {
-            novaLocalizacao = ambientesDisponiveis.get(aleatorio.nextInt(ambientesDisponiveis.size()));
+            novaLocalizacao = gerarAleatorio();
         } while (novaLocalizacao.getClass() == localizacaoAtual.getClass()); //o ambiente nunca mudara para o mesmo
 
         jogador.setLocalizacao(novaLocalizacao);
@@ -49,6 +54,10 @@ public class GerenciadorDeAmbiente{
 
     public void modificarRecursos(Ambiente local){
 
+    }
+
+    public void exibirHistoricoDeMovimentacao(){
+        System.out.println(this.historicoMovimentacao);
     }
 
 }
