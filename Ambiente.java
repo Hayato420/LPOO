@@ -1,23 +1,15 @@
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.Random;
-
 public class Ambiente{
-    private String nome;
-    private String descricao;
-    private int dificuldade;
+    private final String nome;
+    private final String descricao;
+    private final int dificuldade;
     /*private Map<Item, Integer> recursosDisponiveis = new HashMap<>();
     private Map<Evento, Double> probabilidadeEventos = new HashMap<>();*/
-    private Clima condicoesClimaticas;
-    private Temperatura temperaturaAmbiente;
-    enum Clima {
+    private final Clima condicoesClimaticas;
+    private final Temperatura temperaturaAmbiente;
+    public enum Clima {
         UMIDO, SECO, TEMPESTUOSO, AMENO
     }
-    enum Temperatura{
+    public enum Temperatura{
         QUENTE, FRIO, NEUTRO
     }
 
@@ -38,20 +30,30 @@ public class Ambiente{
     public String getNome(){
         return this.nome;
     }
+
     public String getDescricao(){
         return this.descricao;
     }
+
     public int getDificuldade(){
         return this.dificuldade;
+    }
+
+    public Clima getClima(){
+        return this.condicoesClimaticas;
+    }
+
+    public Temperatura getTemperatura(){
+        return this.temperaturaAmbiente;
     }
 
     public void explorar(Personagem jogador, Ambiente ambiente){
         jogador.perderEnergia(ambiente.getDificuldade());
     }
 
-    public Evento gerarEvento(){
+    /*public Evento gerarEvento(){
     
-    }
+    }*/
 
     public void modificarClima(){
     
