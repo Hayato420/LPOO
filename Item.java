@@ -1,12 +1,11 @@
 import java.util.UUID;
 
 public class Item{
-    private String nome;
-    private String ID;
-    private String descricao;
-    private int peso;
+    private final String nome;
+    private final String ID;
+    private final String descricao;
+    private final int peso;
     private int durabilidade;
-    public void usar(Personagem jogador){}
 
     public Item(String nome, String descricao, int peso, int durabilidade){
         this.nome = nome;
@@ -16,6 +15,9 @@ public class Item{
         this.durabilidade = durabilidade;
     }
 
+    public void exercerUso(){
+    //abstrato
+    }
     public String getNome(){
         return this.nome;
     }
