@@ -1,0 +1,21 @@
+public abstract class Evento{
+
+    private final String nome;
+    private final String descricao;
+
+    public Evento(String nome, String descricao){
+        this.nome = nome;
+        this.descricao = descricao;
+    }
+
+    public abstract void efeitoDoEvento(Personagem personagem);
+
+    public String getNome(){
+        return this.nome;
+    }
+
+    public String getDescricao(){
+        return this.descricao;
+    }
+
+}
