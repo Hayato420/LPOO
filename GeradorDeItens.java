@@ -8,6 +8,10 @@ import java.util.concurrent.ThreadLocalRandom;
 public class GeradorDeItens{
     GeradorDeID geradorDeID;
 
+    public GeradorDeItens(GeradorDeID geradorDeID){
+        this.geradorDeID = geradorDeID;
+    }
+
     public boolean verifCombinacaoMateriais(Personagem jogador, String IDmat1, String IDmat2){//NÃO CONTÉM REMOÇÃO
         if (IDmat1.equals(IDmat2)){
             throw new ExcecaoCombMateriais("Material repetido, é necessário ao menos dois materiais.");
