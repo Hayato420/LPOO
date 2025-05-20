@@ -1,18 +1,22 @@
 public class Inimigo{
 
-    private String nome;
+    private final String nome;
+    private final String descricao;
     private int vida;
-    private int dano;
-    private int resistencia;
+    private final int iniciativa;
+    private final int dano;
+    private final int resistencia;
     private boolean isAlive;
 
-    public Inimigo(String nome, int vida, int dano, int resistencia, boolean isAlive){
+    public Inimigo(String nome, String descricao, int vida, int iniciativa, int dano, int resistencia, boolean isAlive){
 
         this.nome = nome;
+        this.descricao = descricao;
         this.vida = vida;
+        this.iniciativa = iniciativa;
         this.dano = dano;
         this.resistencia = resistencia;
-        this.isAlive = isAlive;
+        this.isAlive = true;
 
     }
 
@@ -20,8 +24,8 @@ public class Inimigo{
         return this.nome;
     }
 
-    public void setNome(String nome){
-        this.nome = nome;
+    public String getDescricao(){
+        return this.descricao;
     }
 
     public int getVida(){
@@ -32,20 +36,16 @@ public class Inimigo{
         this.vida = vida;
     }
 
+    public int getIniciativa(){
+        return this.iniciativa;
+    }
+
     public int getDano(){
         return this.dano;
     }
 
-    public void setDano(int dano){
-        this.dano = dano;
-    }
-
     public int getResistencia(){
         return this.resistencia;
-    }
-
-    public void setResistencia(int resistencia){
-        this.resistencia = resistencia;
     }
 
     public boolean getIsAlive(){
@@ -66,6 +66,7 @@ public class Inimigo{
         if(this.vida <= 0){
             this.vida = 0;
             System.out.print("O inimigo morreu");
+            this.isAlive = false;
         }
     }
 
