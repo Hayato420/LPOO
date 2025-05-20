@@ -1,23 +1,22 @@
-import java.util.UUID;
-
-public class Item{
+public abstract class Item implements Usavel{
     private final String nome;
     private final String ID;
     private final String descricao;
     private final int peso;
     private int durabilidade;
+    private final GeradorDeID geradorDeID;
 
-    public Item(String nome, String descricao, int peso, int durabilidade){
+    public Item(String nome, String descricao, int peso, int durabilidade, GeradorDeID geradorDeID){
         this.nome = nome;
-        this.ID = UUID.randomUUID().toString();
+        this.ID = geradorDeID.gerarIDExclusiva();
         this.descricao = descricao;
         this.peso = peso;
         this.durabilidade = durabilidade;
+        this.geradorDeID = geradorDeID;
     }
 
-    public void exercerUso(){
-    //abstrato
-    }
+    public abstract void usar(Personagem jogador);
+
     public String getNome(){
         return this.nome;
     }
@@ -36,6 +35,10 @@ public class Item{
 
     public int getDurabilidade(){
         return this.durabilidade;
+    }
+
+    public GeradorDeID getGeradorDeID(){
+        return this.geradorDeID;
     }
 
     public void perderDurabilidade(Inventario inventario){

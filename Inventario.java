@@ -1,5 +1,4 @@
 //FABRICAR
-
 import java.util.*;
 
 public class Inventario{
@@ -8,6 +7,37 @@ public class Inventario{
 
     public Inventario(int capacidadeMax) {
         this.capacidadeMax = capacidadeMax;
+    }
+
+    public List<Item> getItens(){
+        return inventario;
+    }
+
+    public void exibirItensID(){
+        for (Item item : inventario){
+            System.out.println(item.getNome() + " (ID: " + item.getID() + ")");
+        }
+    }
+
+    public Material getItemPorID(String ID){
+        for (Item item : inventario) {
+            if (item instanceof Material && ID.equals(item.getID())){
+                return (Material) item;
+            }
+        }
+        System.out.println("Item não encontrado pela ID (getItemPorID, Inventario.java). Item de erro retornado.");
+        return null;
+    }
+
+
+    public boolean verificarItemInventario(String ID){
+        for (Item item : inventario){
+            if (Objects.equals(ID, item.getID())){
+                return true;
+            }
+        }
+        System.out.println("Item de ID " + ID + " não consta no inventário.");
+        return false;
     }
 
     public void adicionarItem(Item item){
@@ -47,10 +77,4 @@ public class Inventario{
     private void ordenarItensPorNome(){
         inventario.sort(Comparator.comparing(Item::getNome, String.CASE_INSENSITIVE_ORDER));
     }
-
-    public void exibirItensID(){
-        for (Item item : inventario){
-            System.out.println(item.getNome() + " (ID: " + item.getID() + ")");
-        }
-    }    
 }

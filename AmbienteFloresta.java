@@ -1,27 +1,84 @@
-public class AmbienteFloresta extends Ambiente{
-    //construtor da subclasse
-    public AmbienteFloresta() {
-        super(
-            "Floresta",
-            "Uma área rica em recursos naturais, mas também habitada por predadores.",
-            2, //dificuldade, determina o gasto de energia
-/*CLASSE ITEM AINDA NAO FOI CRIADA
-            //recursosDisponiveis
-            new HashMap<>() {{
-                put(new Item("Galho"), 5);
-                put(new Item("Fruta"), 3);
-            }},
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ThreadLocalRandom;
 
-            //probabilidadeEventos
-            new HashMap<>() {{
-                put(new EventoLobo(), 0.3);
-                put(new EventoTempestade(), 0.2);
-            }},
-*/
-            //Clima da Floresta, devera dificultar o acendimento de fogueiras
-            Clima.UMIDO,
-            Temperatura.NEUTRO
-        );
+public class AmbienteFloresta extends Ambiente{
+    Map<String, Integer> recursosDisponiveis = new HashMap<>();
+    //construtor da subclasse
+    public AmbienteFloresta(GeradorDeItens geradorDeItens){
+        super("Floresta", "Uma área rica em recursos naturais, mas também habitada por predadores.", 
+        2, Clima.UMIDO, Temperatura.NEUTRO, geradorDeItens);
+        gerarRecursos();
+    }
+
+    public void gerarRecursos(){//usado apenas uma vez, se não sobrescreverá
+        //inicializando alimentos da lista
+        for (Alimento.TipoAlimento tipo : Alimento.TipoAlimento.values()){
+            int quantidadeAlimento = ThreadLocalRandom.current().nextInt(0, 6);
+            recursosDisponiveis.put(tipo.getNome(), quantidadeAlimento);
+        }
+        for (Material.TipoDeMaterial tipo : Material.TipoDeMaterial.values()){
+            int quantidadeMaterial = ThreadLocalRandom.current().nextInt(5,11);
+            recursosDisponiveis.put(tipo.getNome(), quantidadeMaterial);
+        }
+        recursosDisponiveis.put("Arco", ThreadLocalRandom.current().nextInt(0, 2));
+        recursosDisponiveis.put("Espada", ThreadLocalRandom.current().nextInt(0, 2));
+        recursosDisponiveis.put("Lanca", ThreadLocalRandom.current().nextInt(0, 2));
+        recursosDisponiveis.put("Pistola", ThreadLocalRandom.current().nextInt(0, 2));
+        recursosDisponiveis.put("Faca", ThreadLocalRandom.current().nextInt(0, 2));
+        recursosDisponiveis.put("Isqueiro", ThreadLocalRandom.current().nextInt(0, 2));
+        recursosDisponiveis.put("Lanterna", ThreadLocalRandom.current().nextInt(0, 2));
+        recursosDisponiveis.put("Machado", ThreadLocalRandom.current().nextInt(0, 2));
+        recursosDisponiveis.put("Balas", ThreadLocalRandom.current().nextInt(0, 2)); //se achado, deverá dar várias municoes, ou mudamos municao de bala
+        recursosDisponiveis.put("Flechas", ThreadLocalRandom.current().nextInt(0, 2));
+        recursosDisponiveis.put("Picareta", ThreadLocalRandom.current().nextInt(0, 2));
+
+        recursosDisponiveis.entrySet().removeIf(entry -> entry.getValue() == 0);//limpeza dos valores zerados
+    }
+
+    public boolean diminuirRecurso(String nomeDoRecurso){
+        int valorAtual = recursosDisponiveis.getOrDefault(nomeDoRecurso, 0);
+
+        if (valorAtual > 0){
+            recursosDisponiveis.put(nomeDoRecurso, valorAtual - 1);
+            return true;
+        } else{
+            recursosDisponiveis.remove(nomeDoRecurso); //se o recurso esgotar
+            return false;
+        }
+    }
+
+    public Item coletarRecurso(Personagem jogador){
+        if (recursosDisponiveis.isEmpty()) return null; //se não houver mais nada, EXCEPTION: "Recursos não foram encontrados."
+
+        List<String> chavesDeRecursos = new ArrayList<>(recursosDisponiveis.keySet());
+        String recursoEscolhido = chavesDeRecursos.get(ThreadLocalRandom.current().nextInt(chavesDeRecursos.size()));//sorteia uma chave aleatoria, usando o tamanho do hashmap para isso
+        if(diminuirRecurso(recursoEscolhido)){ //retira, se houver, o recurso do ambiente
+            //CRIAÇÃO DO OBJETO EQUIVALENTE À CHAVE
+
+            //se for alimento
+            for (Alimento.TipoAlimento tipo : Alimento.TipoAlimento.values()){
+                if (tipo.getNome().equalsIgnoreCase(recursoEscolhido)){
+                    return tipo.criarAlimento(this.getGeradorDeItens().getGeradorDeID());
+                }
+            }
+            //se não for alimento
+            switch (recursoEscolhido){
+                case "Arco":     return this.getGeradorDeItens().gerarArco(jogador, this.getGeradorDeItens().gerarMateriaisAleatParaFerram(), this.getGeradorDeItens().gerarMateriaisAleatParaFerram());
+                case "Espada":   return this.getGeradorDeItens().gerarEspada(jogador, this.getGeradorDeItens().gerarMateriaisAleatParaFerram(), this.getGeradorDeItens().gerarMateriaisAleatParaFerram());
+                case "Faca":     return this.getGeradorDeItens().gerarFaca(jogador, this.getGeradorDeItens().gerarMateriaisAleatParaFerram(), this.getGeradorDeItens().gerarMateriaisAleatParaFerram());
+                case "Pistola":  return this.getGeradorDeItens().gerarPistola();
+                /*case "Flechas":  return this.getGeradorDeItens().gerarFlechas(
+                case "Balas":    return this.getGeradorDeItens().gerarBalas(*/
+                case "Isqueiro": return this.getGeradorDeItens().gerarIsqueiro();
+                default:         return new Item("Fallback", "Fallback", 1, 1, this.getGeradorDeItens().getGeradorDeID());
+            }
+        }
+        else{
+            return null; //caso o recurso escolhido não tenha tenha mais disponível. EXCEPTION: "Recursos não foram encontrados."
+        }
     }
 
 }
