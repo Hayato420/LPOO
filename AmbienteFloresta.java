@@ -1,11 +1,8 @@
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class AmbienteFloresta extends Ambiente{
-    Map<String, Integer> recursosDisponiveis = new HashMap<>();
     //construtor da subclasse
     public AmbienteFloresta(GeradorDeItens geradorDeItens){
         super("Floresta", "Uma área rica em recursos naturais, mas também habitada por predadores.", 
@@ -20,6 +17,8 @@ public class AmbienteFloresta extends Ambiente{
             recursosDisponiveis.put(tipo.getNome(), quantidadeAlimento);
         }
         for (Material.TipoDeMaterial tipo : Material.TipoDeMaterial.values()){
+            if(tipo == Material.TipoDeMaterial.METALINOX){continue;} //não spawna metal inoxidável
+            if(tipo == Material.TipoDeMaterial.FIBRA){continue;} //não spawna fibra
             int quantidadeMaterial = ThreadLocalRandom.current().nextInt(5,11);
             recursosDisponiveis.put(tipo.getNome(), quantidadeMaterial);
         }
@@ -66,19 +65,21 @@ public class AmbienteFloresta extends Ambiente{
             }
             //se não for alimento
             switch (recursoEscolhido){
-                case "Arco":     return this.getGeradorDeItens().gerarArco(jogador, this.getGeradorDeItens().gerarMateriaisAleatParaFerram(), this.getGeradorDeItens().gerarMateriaisAleatParaFerram());
-                case "Espada":   return this.getGeradorDeItens().gerarEspada(jogador, this.getGeradorDeItens().gerarMateriaisAleatParaFerram(), this.getGeradorDeItens().gerarMateriaisAleatParaFerram());
-                case "Faca":     return this.getGeradorDeItens().gerarFaca(jogador, this.getGeradorDeItens().gerarMateriaisAleatParaFerram(), this.getGeradorDeItens().gerarMateriaisAleatParaFerram());
+                case "Arco":     return this.getGeradorDeItens().gerarArco(jogador, this.getGeradorDeItens().gerarMateriaisAleatParaFerram().getID(), this.getGeradorDeItens().gerarMateriaisAleatParaFerram().getID());
+                case "Espada":   return this.getGeradorDeItens().gerarEspada(jogador, this.getGeradorDeItens().gerarMateriaisAleatParaFerram().getID(), this.getGeradorDeItens().gerarMateriaisAleatParaFerram().getID());
+                case "Faca":     return this.getGeradorDeItens().gerarFaca(jogador, this.getGeradorDeItens().gerarMateriaisAleatParaFerram().getID(), this.getGeradorDeItens().gerarMateriaisAleatParaFerram().getID());
                 case "Pistola":  return this.getGeradorDeItens().gerarPistola();
                 /*case "Flechas":  return this.getGeradorDeItens().gerarFlechas(
                 case "Balas":    return this.getGeradorDeItens().gerarBalas(*/
                 case "Isqueiro": return this.getGeradorDeItens().gerarIsqueiro();
-                default:         return new Item("Fallback", "Fallback", 1, 1, this.getGeradorDeItens().getGeradorDeID());
+                default:         return new Espada("Fallback", "Fallback", 1, this.getGeradorDeItens().getGeradorDeID(), 
+                                                    Arma.TipoArma.corpoACorpo, Arma.QualArma.ESPADA, 1, 
+                                                    this.getGeradorDeItens().gerarMateriaisAleatParaFerram(), 
+                                                    this.getGeradorDeItens().gerarMateriaisAleatParaFerram());
             }
         }
         else{
             return null; //caso o recurso escolhido não tenha tenha mais disponível. EXCEPTION: "Recursos não foram encontrados."
         }
     }
-
 }

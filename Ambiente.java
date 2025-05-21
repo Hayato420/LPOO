@@ -1,3 +1,6 @@
+import java.util.HashMap;
+import java.util.Map;
+
 public class Ambiente{
     private final String nome;
     private final String descricao;
@@ -5,6 +8,8 @@ public class Ambiente{
     private final Clima condicoesClimaticas;
     private final Temperatura temperaturaAmbiente;
     private GeradorDeItens geradorDeItens;
+    Map<String, Integer> recursosDisponiveis = new HashMap<>();
+
     public enum Clima {
         UMIDO, SECO, TEMPESTUOSO, AMENO
     }
