@@ -28,7 +28,7 @@ public class EventoDoente extends Evento{
                 //reducao drastica de sede e custa mais energia para se mover se nao beber agua
             }
         }
-        else if(jogador.getLocalizacao().getTemperatura() == Ambiente.Temperatura.FRIO){
+        else if(jogador.getLocalizacao().getClima() == Ambiente.Clima.UMIDO ||jogador.getLocalizacao().getTemperatura() == Ambiente.Temperatura.FRIO){
             if(chance <= 10){
                 System.out.println("Voce pegou uma infecçao em um corte qualquer. O pus fede."); //10%
                 //reducao drastica de atributos se nao tratada
@@ -42,7 +42,7 @@ public class EventoDoente extends Evento{
                 //vida instantaneamente reduzida e custa mais energia para se mover se nao tratado
             }
             else if(chance <= 100){
-                System.out.println("Voce com hipotermia, procure agua."); //70
+                System.out.println("Voce esta com hipotermia, procure agua."); //70
                 //reducao continua de sanidade e vida
             }
         }
