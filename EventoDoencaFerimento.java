@@ -41,7 +41,7 @@ public class EventoDoencaFerimento extends Evento{
                 //vida instantaneamente reduzida e custa mais energia para se mover se nao tratado
             }
             else if(chance <= 100){
-                System.out.println("Voce com hipotermia, procure agua."); //70
+                System.out.println("Voce esta com hipotermia, procure agua."); //70
                 //reducao continua de sanidade e vida
             }
         }
