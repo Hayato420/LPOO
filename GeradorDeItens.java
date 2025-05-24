@@ -126,6 +126,12 @@ encontrados na exploracao*/
         return materialAleatorio.criarMaterial(this.geradorDeID);//retorna um material com base nesse valor
     }
 
+    public Agua gerarAguaAleatoria(){
+        boolean booleanAleatorio = ThreadLocalRandom.current().nextBoolean();
+        int volumeAleatorio = ThreadLocalRandom.current().nextInt(1, 6);
+        return new Agua(this.geradorDeID, booleanAleatorio, volumeAleatorio);
+    }
+
 //GERADOR ALEATÓRIO DE ALIMENTOS
     public Alimento gerarAlimento(){
         Alimento.TipoAlimento[] listaDeAlimentos = Alimento.TipoAlimento.values();//pega os valores do enum e cria uma lista

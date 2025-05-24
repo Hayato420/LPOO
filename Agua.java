@@ -2,8 +2,8 @@ public class Agua extends Item{
     private boolean pureza;
     private int volume;
 
-    public Agua(String nome, String descricao, int peso, GeradorDeID geradorDeID, boolean pureza, int volume){
-        super(nome, descricao, peso, 1, geradorDeID);
+    public Agua(GeradorDeID geradorDeID, boolean pureza, int volume){
+        super("Agua", "Molhada", 1, 1, geradorDeID);
         this.pureza = pureza;
         this.volume = volume;
     }
