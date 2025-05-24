@@ -1,21 +1,29 @@
 public class Agua extends Item{
     private boolean pureza;
-    private int volume;
+    private final int volumeMax;
+    private int volumeAtual;
 
-    public Agua(GeradorDeID geradorDeID, boolean pureza, int volume){
+    public Agua(GeradorDeID geradorDeID, boolean pureza, int volumeMax){
         super("Agua", "Molhada", 1, 1, geradorDeID);
         this.pureza = pureza;
-        this.volume = volume;
+        this.volumeMax = volumeMax;
+        this.volumeAtual = volumeMax;
+    }
+
+    public void encher(){ //enche para o volume máximo, mas será IMPURA (não vejo formas de encher se não com fontes naturais)
+        this.volumeAtual = volumeMax;
+        this.pureza = false;
     }
 
     public void diminuirVolume(Inventario inventario){
-        this.volume -= 1;
-        if(this.volume <= 0){
+        this.volumeAtual -= 1;
+        if(this.volumeAtual <= 0){
             inventario.removerItem(this.getID());
         }
     }
-    
+
     public void usar(Personagem jogador){
+        if(!this.pureza){jogador.getStatus().setDoente(true);} //se impura, adoecera
         jogador.adicionarSede(10);
         this.diminuirVolume(jogador.getInventario());
     }
@@ -25,8 +33,11 @@ public class Agua extends Item{
     }
 
     public void purificar(){
-        if(this.pureza == false){
+        if(!this.pureza){
             this.pureza = true;
+        }
+        else{
+            System.out.println("Já está pura.");
         }
     }
 }

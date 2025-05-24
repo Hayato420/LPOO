@@ -1,4 +1,5 @@
 import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class EventoExploracao extends Evento{
     Random aleatorio = new Random();
@@ -9,33 +10,38 @@ public class EventoExploracao extends Evento{
 
     @Override
     public void efeitoDoEvento(Personagem jogador){
-        int chance = aleatorio.nextInt(101);
-        if(jogador.getClass() == PersonagemExplorador.class){ //se for Rastreador
+        int chance = rand.nextInt(101);
+        if(jogador.getClass() == Explorador.class){ //se for Rastreador
             if(chance <= 30){
-                System.out.println("Abrigo encontrado!"); //30%
-                //gerar comida e/ou criatura
-            }
-            else if(chance <= 80){
-                System.out.println("Suprimentos encontrados."); //50%
-                //gerar agua, comida, ferramentas e/ou armas
+                System.out.println("Abrigo encontrado !"); //30%
+                int quantidadeAlimentos = ThreadLocalRandom.current().nextInt(1, 4); 
+                for (int i = 0; i <= quantidadeAlimentos; i++){
+                    jogador.getInventario().adicionarItem(this.geradorDeItens.gerarAlimento());
+                }
+                //talvez gerar criatura
             }
             else if(chance <= 90){
-                System.out.println("Fonte de agua encontrada."); //10%
+                jogador.getStatus().setPertoDeFonteDeAgua(true);
+                System.out.println("Fonte de água encontrada."); //60%
             }
             else{
-                System.out.println("Ruinas misteriosas encontradas."); //10%
+                System.out.println("Ruínas misteriosas encontradas."); //10%
+                //ADICIONAR ITENS RAROS
             }
         }
-        else{                   //se nao for rastreador
-            if(chance <= 40){
-                System.out.println("Abrigo encontrado!"); //40%
-                //gerar comida e/ou criatura
+        else{ //se não for Rastreador
+            if(chance <= 30){ //se não for Rastreador
+                System.out.println("Abrigo encontrado !"); //40%
+                int quantidadeAlimentos = ThreadLocalRandom.current().nextInt(1, 4); 
+                for (int i = 0; i <= quantidadeAlimentos; i++){
+                    jogador.getInventario().adicionarItem(this.geradorDeItens.gerarAlimento());
+                }
+                //talvez gerar criatura
             }
             else{
-                System.out.println("Suprimentos encontrados."); //60%
-                //gerar agua, comida, ferramentas e/ou armas
+                jogador.getStatus().setPertoDeFonteDeAgua(true);
+                System.out.println("Fonte de água encontrada."); //70%
             }
         }
     }
-
 }
