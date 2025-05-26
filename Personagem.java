@@ -35,13 +35,13 @@ public class Personagem{
 
     //MOVIMENTAÇÃO, USADA EM EXPLORAR E MUDAR DE AMBIENTE
     public void movimentacao(){
-       this.status.setPertoDeFonteDeAgua(false);
-       this.fonteDeCalor = null;
+        this.status.setPertoDeFonteDeAgua(false);
+        this.fonteDeCalor = null;
     }
 
     //APAGAR FOGUEIRA
     public void apagarFogueira(){
-     this.fonteDeCalor = null; //não gastará mais madeira do inventário a cada loop, mesmo sem se movimentar
+        this.fonteDeCalor = null; //não gastará mais madeira do inventário a cada loop, mesmo sem se movimentar
     }
 
     //LOCALIZACAO
