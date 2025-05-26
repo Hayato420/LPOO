@@ -10,8 +10,9 @@ public class Personagem{
     private int sanidade;
     private Status status;
     private final Inventario inventario;
+    private List<Item> recursosProximos;
     private Arma armaEquipada;
-    private FonteDeCalor fonteDeCalor;//SE != null, A CADA ROUND DEVERA ESQUENTAR O JOGADOR PARA NORMAL, ALEM DE PERMITIR COZINHAR
+    private FonteDeCalor fonteDeCalor;//SE != null, A CADA ROUND DEVERA ESQUENTAR O JOGADOR PARA NORMAL, ALEM DE PERMITIR COZINHAR. SE == null, não usará o alimentarFogo(). Se não tiver madeira, o alimentarFogo() porá um fim à fogueira ("setFonteDeCalor(null);").
     private final GeradorDeID geradorDeID;
 
     public Personagem(String nome, GeradorDeID geradorDeID){
@@ -24,11 +25,25 @@ public class Personagem{
         this.sanidade = 100;
         this.status = new Status();
         this.inventario = new Inventario(50);
+        this.recursosProximos = null;
         this.armaEquipada = null;
+        this.fonteDeCalor = null;
         this.geradorDeID = geradorDeID;
     }
 
     /*public abstract void usarHabilidade();*/
+
+    //MOVIMENTAÇÃO, USADA EM EXPLORAR E MUDAR DE AMBIENTE
+    public void movimentacao(){
+       this.status.setPertoDeFonteDeAgua(false);
+       this.fonteDeCalor = null;
+    }
+
+    //APAGAR FOGUEIRA
+    public void apagarFogueira(){
+     this.fonteDeCalor = null; //não gastará mais madeira do inventário a cada loop, mesmo sem se movimentar
+    }
+
     //LOCALIZACAO
     public Ambiente getLocalizacao() {
         return this.localizacao;
