@@ -3,6 +3,8 @@
 /*IDEIA DE INTERFACE CRAFTING: INSERIR DOIS IDS DE MATERIAIS DO INVENTÁRIO,
 DIZER O QUE QUER GERAR, FAZER UM CASE COM ISSO E CHAMAR O MÉTODO ADEQUADO*/
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class GeradorDeItens{
@@ -137,5 +139,21 @@ encontrados na exploracao*/
         Alimento.TipoAlimento[] listaDeAlimentos = Alimento.TipoAlimento.values();//pega os valores do enum e cria uma lista
         int index = ThreadLocalRandom.current().nextInt(listaDeAlimentos.length);//sorteia um dos elementos da lista criada
         return listaDeAlimentos[index].criarAlimento(this.geradorDeID);//retorna o elemento sorteado
+    }
+//GERADOR ALEATÓRIO DE FERRAMENTAS E ARMAS
+    public Map<String, Integer> gerarFerrEArm(){
+        Map<String, Integer> recursos = new HashMap<>();
+        recursos.put("Arco", ThreadLocalRandom.current().nextInt(0, 2));
+        recursos.put("Espada", ThreadLocalRandom.current().nextInt(0, 2));
+        recursos.put("Lanca", ThreadLocalRandom.current().nextInt(0, 2));
+        recursos.put("Pistola", ThreadLocalRandom.current().nextInt(0, 2));
+        recursos.put("Faca", ThreadLocalRandom.current().nextInt(0, 2));
+        recursos.put("Isqueiro", ThreadLocalRandom.current().nextInt(0, 2));
+        recursos.put("Lanterna", ThreadLocalRandom.current().nextInt(0, 2));
+        recursos.put("Machado", ThreadLocalRandom.current().nextInt(0, 2));
+        recursos.put("Balas", ThreadLocalRandom.current().nextInt(0, 2)); //se achado, deverá dar várias municoes, ou mudamos municao de bala
+        recursos.put("Flechas", ThreadLocalRandom.current().nextInt(0, 2));
+        recursos.put("Picareta", ThreadLocalRandom.current().nextInt(0, 2));
+        return recursos;
     }
 }

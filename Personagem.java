@@ -11,8 +11,10 @@ public class Personagem{
     private Status status;
     private final Inventario inventario;
     private Arma armaEquipada;
+    private FonteDeCalor fonteDeCalor;//SE != null, A CADA ROUND DEVERA ESQUENTAR O JOGADOR PARA NORMAL, ALEM DE PERMITIR COZINHAR
+    private final GeradorDeID geradorDeID;
 
-    public Personagem(String nome){
+    public Personagem(String nome, GeradorDeID geradorDeID){
         this.localizacao = pontoDePartida.gerarAleatorio();
         this.nome = nome;
         this.vida = 100;
@@ -23,6 +25,7 @@ public class Personagem{
         this.status = new Status();
         this.inventario = new Inventario(50);
         this.armaEquipada = null;
+        this.geradorDeID = geradorDeID;
     }
 
     /*public abstract void usarHabilidade();*/
@@ -33,6 +36,17 @@ public class Personagem{
 
     public void setLocalizacao(Ambiente novaLocalizacao){
         this.localizacao = novaLocalizacao;
+    }
+    //FONTE DE CALOR
+    public FonteDeCalor getFonteDeCalor(){
+        return this.fonteDeCalor;
+    }
+    public void setFonteDeCalor(FonteDeCalor fonteDeCalor){
+        this.fonteDeCalor = fonteDeCalor;
+    }
+    //GERADOR PARA FONTE DE CALOR
+    public GeradorDeID getGeradorDeID(){
+        return this.geradorDeID;
     }
     //NOME
     public String getNome(){

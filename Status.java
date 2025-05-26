@@ -13,9 +13,7 @@ public class Status{
         NORMAL,
         FRIO //custa mais energia para se mover se nao beber esquentar-se
     }
-    private boolean pertoDeFonteDeCalor; //deve estabilizar temperatura se FRIO
     private boolean pertoDeFonteDeAgua; //deve permitir encher garrafas
-    private boolean pertoDeFogo; //deve ativar pertoDeFonteDeCalor, deve permitir cozinhar comida
 
 
     public Status(){
@@ -25,8 +23,6 @@ public class Status{
         this.perturbado = false;
         this.fraturado = false;
         this.temperatura = Temperatura.NORMAL;
-        this.pertoDeFonteDeCalor = false;
-        this.pertoDeFogo = false;
     }
 
     //iluminado
@@ -75,26 +71,12 @@ public class Status{
         this.temperatura = temperatura;
     }
 
-    //Perto de Fonte de Calor, Agua e Fogo
-    public boolean isPertoDeFonteDeCalor(){
-        return this.pertoDeFonteDeCalor;
-    } 
-    public void setPertoDeFonteDeCalor(boolean perto){
-        this.pertoDeFonteDeCalor = perto;
-    }
-
+    //Agua
     public boolean isPertoDeFonteDeAgua(){
         return this.pertoDeFonteDeAgua;
     } 
     public void setPertoDeFonteDeAgua(boolean perto){
         this.pertoDeFonteDeAgua = perto;
-    }
-
-    public boolean isPertoDeFogo(){
-        return this.pertoDeFogo;
-    }
-    public void setPertoDeFogo(boolean perto){
-        this.pertoDeFogo = perto;
     }
     
     public String exibirStatus(){

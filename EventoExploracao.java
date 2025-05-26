@@ -3,15 +3,17 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class EventoExploracao extends Evento{
     Random aleatorio = new Random();
+    private final GeradorDeItens geradorDeItens;
     //construtor
-    public EventoExploracao(){
+    public EventoExploracao(GeradorDeItens geradorDeItens){
         super("nome", "descricao");
+        this.geradorDeItens = geradorDeItens;
     }
 
     @Override
     public void efeitoDoEvento(Personagem jogador){
-        int chance = rand.nextInt(101);
-        if(jogador.getClass() == Explorador.class){ //se for Rastreador
+        int chance = aleatorio.nextInt(101);
+        if(jogador.getClass() == PersonagemExplorador.class){ //se for Rastreador
             if(chance <= 30){
                 System.out.println("Abrigo encontrado !"); //30%
                 int quantidadeAlimentos = ThreadLocalRandom.current().nextInt(1, 4); 
@@ -26,7 +28,8 @@ public class EventoExploracao extends Evento{
             }
             else{
                 System.out.println("Ruínas misteriosas encontradas."); //10%
-                //ADICIONAR ITENS RAROS
+                jogador.getInventario().adicionarItem(ruinasLoots());
+                //ITEM RARO
             }
         }
         else{ //se não for Rastreador
@@ -43,5 +46,12 @@ public class EventoExploracao extends Evento{
                 System.out.println("Fonte de água encontrada."); //70%
             }
         }
+    }
+
+    public Item ruinasLoots(){
+        int chance = ThreadLocalRandom.current().nextInt(1,4);
+        if(chance == 1){return this.geradorDeItens.gerarIsqueiro();}
+        else if(chance == 2){return this.geradorDeItens.gerarLanterna();}
+        else{return this.geradorDeItens.gerarPistola();}
     }
 }

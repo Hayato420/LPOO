@@ -95,6 +95,7 @@ public class Alimento extends Item{
     public int getPeso(){return tipoAlimento.getPeso();}
     public int getDurabilidade(){return tipoAlimento.getDurabilidade();}
     public int getValorNutricional(){return tipoAlimento.getValorNutricional();}
+    public TipoAlimento getTipoAlimento(){return this.tipoAlimento;}
 
     public int getPrazoDeValidade(){
         return this.prazoDeValidade;

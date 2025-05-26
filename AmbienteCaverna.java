@@ -25,17 +25,7 @@ public class AmbienteCaverna extends Ambiente{
             recursosDisponiveis.put(tipo.getNome(), quantidadeMaterial);
         }
         //gerando Ferramentas e Armas
-        recursosDisponiveis.put("Arco", ThreadLocalRandom.current().nextInt(0, 2));
-        recursosDisponiveis.put("Espada", ThreadLocalRandom.current().nextInt(0, 2));
-        recursosDisponiveis.put("Lanca", ThreadLocalRandom.current().nextInt(0, 2));
-        recursosDisponiveis.put("Pistola", ThreadLocalRandom.current().nextInt(0, 2));
-        recursosDisponiveis.put("Faca", ThreadLocalRandom.current().nextInt(0, 2));
-        recursosDisponiveis.put("Isqueiro", ThreadLocalRandom.current().nextInt(0, 2));
-        recursosDisponiveis.put("Lanterna", ThreadLocalRandom.current().nextInt(0, 2));
-        recursosDisponiveis.put("Machado", ThreadLocalRandom.current().nextInt(0, 2));
-        recursosDisponiveis.put("Balas", ThreadLocalRandom.current().nextInt(0, 2)); //se achado, deverá dar várias municoes, ou mudamos municao de bala
-        recursosDisponiveis.put("Flechas", ThreadLocalRandom.current().nextInt(0, 2));
-        recursosDisponiveis.put("Picareta", ThreadLocalRandom.current().nextInt(0, 2));
+        recursosDisponiveis.putAll(this.getGeradorDeItens().gerarFerrEArm());
 
         recursosDisponiveis.entrySet().removeIf(entry -> entry.getValue() == 0);//limpeza dos valores zerados
     }
