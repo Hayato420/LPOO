@@ -28,6 +28,7 @@ public class EventoExploracao extends Evento{
             }
             else{
                 System.out.println("Ruínas misteriosas encontradas."); //10%
+                /*jogador.setLocalizacao(NEW AMBIENTERUINAS);*/
                 jogador.getInventario().adicionarItem(ruinasLoots());
                 //ITEM RARO
             }
