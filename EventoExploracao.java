@@ -28,7 +28,7 @@ public class EventoExploracao extends Evento{
             }
             else{
                 System.out.println("Ruínas misteriosas encontradas."); //10%
-                /*jogador.setLocalizacao(NEW AMBIENTERUINAS);*/
+                jogador.setLocalizacao(new AmbienteRuinas(this.geradorDeItens));//vai por o personagem em um novo objeto de AmbienteRuinas
                 jogador.getInventario().adicionarItem(ruinasLoots());
                 //ITEM RARO
             }
