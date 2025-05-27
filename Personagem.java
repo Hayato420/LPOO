@@ -1,4 +1,6 @@
-public class Personagem{
+import java.util.List;
+
+public abstract class Personagem{
     //COMBATE E FINS DE JOGO
     private boolean emCombate = false;
     private boolean condicaoVitoria = false;
@@ -13,7 +15,7 @@ public class Personagem{
     private int sede;
     private int energia;
     private int sanidade;
-    private Status status;
+    private final Status status;
     //ITENS
     private final Inventario inventario;
     private List<Item> recursosProximos;
@@ -117,9 +119,10 @@ public class Personagem{
     }
 
     public void perderVida(int quantidade){
-        this.vida -= quantidade;
-        if(this.vida <=0){
-            System.out.print("Voce sucumbiu aos seus ferimentos. Fim de jogo.");
+        int novaVida = this.vida - quantidade;
+        this.vida = novaVida;
+        if(novaVida <=0){
+            System.out.println("Voce sucumbiu aos seus ferimentos. Fim de jogo.");
             this.condicaoDerrota = true;
         }
     }
@@ -141,9 +144,10 @@ public class Personagem{
     }
 
     public void perderFome(int quantidade){
-        this.fome -= quantidade;
-        if(this.fome <= 0){
-            System.out.print("Voce morreu de fome. Fim de jogo.");
+        int novaFome = this.fome - quantidade;
+        this.fome = novaFome;
+        if(novaFome <= 0){
+            System.out.println("Voce morreu de fome. Fim de jogo.");
             this.condicaoDerrota = true;
         }
     }
@@ -166,9 +170,10 @@ public class Personagem{
     }
 
     public void perderSede(int quantidade){
-        this.sede -= quantidade;
-        if(this.sede <= 0){
-            System.out.print("Voce desidratou. Fim de jogo.");
+        int novaSede = this.sede - quantidade;
+        this.sede = novaSede;
+        if(novaSede <= 0){
+            System.out.println("Voce desidratou. Fim de jogo.");
             this.condicaoDerrota = true;
         }
     }
@@ -186,9 +191,10 @@ public class Personagem{
     }
 
     public void perderEnergia(int quantidade){
-        this.energia -= quantidade;
-        if (this.energia <= 0) {
-            System.out.print("Sua energia acabou. Fim de jogo.");
+        int novaEnergia = this.energia - quantidade;
+        this.energia = novaEnergia;
+        if (novaEnergia <= 0) {
+            System.out.println("Sua energia acabou. Fim de jogo.");
             this.condicaoDerrota = true;
         }
     }
@@ -210,9 +216,10 @@ public class Personagem{
     }
 
     public void perderSanidade (int quantidade){
-        this.sanidade -= quantidade;
-        if(this.sanidade <= 0){
-            System.out.print("Você enlouqueceu. Fim de jogo.");
+        int novaSanidade = this.sanidade - quantidade;
+        this.sanidade = novaSanidade;
+        if(novaSanidade <= 0){
+            System.out.println("Você enlouqueceu. Fim de jogo.");
             this.condicaoDerrota = true;
         }
     }
