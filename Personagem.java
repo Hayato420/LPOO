@@ -1,7 +1,12 @@
 public class Personagem{
-
+    //COMBATE E FINS DE JOGO
+    private boolean emCombate = false;
+    private boolean condicaoVitoria = false;
+    private boolean condicaoDerrota = false;
+    //AMBIENTE
     private final GerenciadorDeAmbiente pontoDePartida = new GerenciadorDeAmbiente();
     private Ambiente localizacao;
+    //ATRIBUTOS
     private final String nome;
     private int vida;
     private int fome;
@@ -9,9 +14,11 @@ public class Personagem{
     private int energia;
     private int sanidade;
     private Status status;
+    //ITENS
     private final Inventario inventario;
     private List<Item> recursosProximos;
     private Arma armaEquipada;
+    //CALOR (FOGUEIRA E FORNO)
     private FonteDeCalor fonteDeCalor;//SE != null, A CADA ROUND DEVERA ESQUENTAR O JOGADOR PARA NORMAL, ALEM DE PERMITIR COZINHAR. SE == null, não usará o alimentarFogo(). Se não tiver madeira, o alimentarFogo() porá um fim à fogueira ("setFonteDeCalor(null);").
     private final GeradorDeID geradorDeID;
 
@@ -31,7 +38,33 @@ public class Personagem{
         this.geradorDeID = geradorDeID;
     }
 
-    /*public abstract void usarHabilidade();*/
+    public abstract void usarHabilidade();
+
+    //FINS DE JOGO
+    public boolean getCondicaoVitoria(){
+        return this.condicaoVitoria;
+    }
+
+    public void setCondicaoVitoria(boolean valor){
+        this.condicaoVitoria = valor;
+    }
+
+    public boolean getCondicaoDerrota(){
+        return this.condicaoDerrota;
+    }
+
+    public void setCondicaoDerrota(boolean valor){
+        this.condicaoDerrota = valor;
+    }
+
+    //COMBATE
+    public boolean getEmCombate(){
+        return this.emCombate;
+    }
+
+    public void setEmCombate(boolean emCombate){
+        this.emCombate = emCombate;
+    }
 
     //MOVIMENTAÇÃO, USADA EM EXPLORAR E MUDAR DE AMBIENTE
     public void movimentacao(){
@@ -72,6 +105,10 @@ public class Personagem{
         return this.vida;
     }
 
+    public void setVida(int vida){
+        this.vida = vida;
+    }
+
     public void adicionarVida(int quantidade){
         this.vida += quantidade;
         if (this.vida > 100){
@@ -83,11 +120,17 @@ public class Personagem{
         this.vida -= quantidade;
         if(this.vida <=0){
             System.out.print("Voce sucumbiu aos seus ferimentos. Fim de jogo.");
+            this.condicaoDerrota = true;
         }
     }
+
     //FOME
     public int getFome(){
         return this.fome;
+    }
+
+    public void setFome(int fome){
+        this.fome = fome;
     }
 
     public void adicionarFome(int quantidade){
@@ -101,11 +144,17 @@ public class Personagem{
         this.fome -= quantidade;
         if(this.fome <= 0){
             System.out.print("Voce morreu de fome. Fim de jogo.");
+            this.condicaoDerrota = true;
         }
     }
+
     //SEDE
     public int getSede(){
         return this.sede;
+    }
+
+    public void setSede(int sede){
+        this.sede = sede;
     }
 
     public void adicionarSede(int quantidade){
@@ -120,8 +169,10 @@ public class Personagem{
         this.sede -= quantidade;
         if(this.sede <= 0){
             System.out.print("Voce desidratou. Fim de jogo.");
+            this.condicaoDerrota = true;
         }
     }
+
     //ENERGIA
     public int getEnergia(){
         return this.energia;
@@ -138,11 +189,17 @@ public class Personagem{
         this.energia -= quantidade;
         if (this.energia <= 0) {
             System.out.print("Sua energia acabou. Fim de jogo.");
+            this.condicaoDerrota = true;
         }
     }
+
     //SANIDADE
     public int getSanidade(){
         return this.sanidade;
+    }
+
+    public void setSanidade(int sanidade){
+        this.sanidade = sanidade;
     }
 
     public void adicionarSanidade(int quantidade){
@@ -152,12 +209,14 @@ public class Personagem{
         }
     }
 
-    public void perderSanidade (int quantidade) {
+    public void perderSanidade (int quantidade){
         this.sanidade -= quantidade;
         if(this.sanidade <= 0){
             System.out.print("Você enlouqueceu. Fim de jogo.");
+            this.condicaoDerrota = true;
         }
     }
+
     //STATUS
     public Status getStatus(){
         return this.status;
