@@ -1,5 +1,5 @@
-import java.util.List;
 import java.util.Iterator;
+import java.util.List;
 
 public abstract class Personagem{
     //COMBATE E FINS DE JOGO
@@ -23,22 +23,21 @@ public abstract class Personagem{
     private Arma armaEquipada;
     //CALOR (FOGUEIRA E FORNO)
     private FonteDeCalor fonteDeCalor; //SE != null, A CADA ROUND DEVERA ESQUENTAR O JOGADOR PARA NORMAL, ALEM DE PERMITIR COZINHAR. SE == null, não usará o alimentarFogo(). Se não tiver madeira, o alimentarFogo() porá um fim à fogueira ("setFonteDeCalor(null);").
-    private final GeradorDeID geradorDeID;
+    private final GeradorDeID geradorDeID = new GeradorDeID();
 
-    public Personagem(String nome, GeradorDeID geradorDeID){
+    public Personagem(String nome, int vida, int fome, int sede, int energia, int sanidade){
         this.localizacao = pontoDePartida.gerarAleatorio();
         this.nome = nome;
-        this.vida = 100;
-        this.fome = 100;
-        this.sede = 100;
-        this.energia = 100;
-        this.sanidade = 100;
+        this.vida = vida;
+        this.fome = fome;
+        this.sede = sede;
+        this.energia = energia;
+        this.sanidade = sanidade;
         this.status = new Status();
         this.inventario = new Inventario(50);
         this.recursosProximos = null;
         this.armaEquipada = null;
         this.fonteDeCalor = null;
-        this.geradorDeID = geradorDeID;
     }
 
     public abstract void usarHabilidade();
@@ -70,9 +69,8 @@ public abstract class Personagem{
     }
 
     public void coletarAmbiente(){
-        List<Item> recursosProximos = this.getRecursosProximos();
         for(int i = 1; i <= 5; i++){
-            recursosProximos.add(this.localizacao.coletarRecurso(this));
+            recursosProximos.add(this.getLocalizacao().coletarRecurso(this));
         }
         System.out.println("Recursos coletaveis:");
         for (Item item : recursosProximos){
@@ -273,6 +271,10 @@ public abstract class Personagem{
         return this.energia;
     }
 
+    public void setEnergia(int energia){
+        this.energia = energia;
+    }
+
     public void adicionarEnergia(int quantidade){
         this.energia += quantidade;
         if (this.energia > 100) {
@@ -326,6 +328,10 @@ public abstract class Personagem{
 
     public List<Item> getRecursosProximos(){
         return this.recursosProximos;
+    }
+
+    public void setRecursosProximos(List<Item> recursosProximos){
+        this.recursosProximos = recursosProximos;
     }
 
     public void exibirItens(){

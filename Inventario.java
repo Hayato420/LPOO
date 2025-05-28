@@ -10,7 +10,7 @@ public class Inventario{
     }
 
     public List<Item> getItens(){
-        return inventario;
+        return this.inventario;
     }
 
     public void exibirItens(){
@@ -28,7 +28,7 @@ public class Inventario{
     }
 
     public Material getItemPorID(String ID){
-        for (Item item : inventario) {
+        for (Item item : this.inventario) {
             if (item instanceof Material && ID.equals(item.getID())){
                 return (Material) item;
             }
@@ -37,9 +37,19 @@ public class Inventario{
         return null;
     }
 
+    public Item getItemEscolhido(String ID){
+        for(Item item : this.inventario){
+            if(item.getID().equals(ID)){
+                return item;
+            }
+        }    
+        System.out.println("Item nao encontrado");
+        return null; 
+        
+    }
 
     public boolean verificarItemInventario(String ID){
-        for (Item item : inventario){
+        for (Item item : this.inventario){
             if (Objects.equals(ID, item.getID())){
                 return true;
             }
@@ -63,7 +73,7 @@ public class Inventario{
 
     private int calcularPesoAtual(){
         int total = 0;
-        for (Item i : inventario){
+        for (Item i : this.inventario){
             total += i.getPeso();
         }
         return total;

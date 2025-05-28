@@ -10,8 +10,8 @@ public class Ambiente{
     private final int dificuldade;
     private final Clima condicoesClimaticas;
     private final Temperatura temperaturaAmbiente;
-    private GeradorDeItens geradorDeItens;
-    Map<String, Integer> recursosDisponiveis = new HashMap<>();
+    private final GeradorDeItens geradorDeItens = new GeradorDeItens();
+    private Map<String, Integer> recursosDisponiveis = new HashMap<>();
 
     public enum Clima {
         UMIDO, SECO, TEMPESTUOSO, AMENO
@@ -21,14 +21,12 @@ public class Ambiente{
     }
 
     public Ambiente(String nome, String descricao, int dificuldade,
-                    Clima condicoesClimaticas, Temperatura temperaturaAmbiente,
-                    GeradorDeItens geradorDeItens){
+                    Clima condicoesClimaticas, Temperatura temperaturaAmbiente){
         this.nome = nome;
         this.descricao = descricao;
         this.dificuldade = dificuldade;
         this.condicoesClimaticas = condicoesClimaticas;
         this.temperaturaAmbiente = temperaturaAmbiente;
-        this.geradorDeItens = geradorDeItens;
     }
 
 
@@ -108,11 +106,4 @@ public class Ambiente{
         }
     }
 
-    /*public Evento gerarEvento(){
-    
-    }*/
-
-    public void modificarClima(){
-    
-    }
 }

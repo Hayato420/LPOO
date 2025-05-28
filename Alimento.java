@@ -24,7 +24,9 @@ public class Alimento extends Item{
         private final String descricao;
         private final int peso;
         private final int durabilidade;
+        @SuppressWarnings("FieldMayBeFinal")
         private int prazoDeValidade;
+        @SuppressWarnings("FieldMayBeFinal")
         private boolean apodrecido;
         private final int valorNutricional;
 
@@ -90,9 +92,13 @@ public class Alimento extends Item{
     }
 
     //getter da classe, usando o getter do enum
+    @Override
     public String getNome(){return tipoAlimento.getNome();}
+    @Override
     public String getDescricao(){return tipoAlimento.getDescricao();}
+    @Override
     public int getPeso(){return tipoAlimento.getPeso();}
+    @Override
     public int getDurabilidade(){return tipoAlimento.getDurabilidade();}
     public int getValorNutricional(){return tipoAlimento.getValorNutricional();}
     public TipoAlimento getTipoAlimento(){return this.tipoAlimento;}
@@ -101,18 +107,23 @@ public class Alimento extends Item{
         return this.prazoDeValidade;
     }
 
+    public void aumentarValidade(int quantidade){
+        this.prazoDeValidade += quantidade;
+    }
+
     public boolean getApodrecido(){
         return this.apodrecido;
     }
 
     public void apodrecer(){
         this.prazoDeValidade -= 1;
-        if (this.prazoDeValidade <= 0 && !this.apodrecido) {
+        if (this.prazoDeValidade <= 0 && this.apodrecido == false){
             this.apodrecido = true;
             System.out.printf("O alimento %s apodreceu.\n", this.getNome());
         }
     }
 
+    @Override
     public void usar(Personagem jogador){
             if(this.getApodrecido() == false){
                 jogador.adicionarFome(this.getValorNutricional());

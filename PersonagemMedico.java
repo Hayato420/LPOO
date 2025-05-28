@@ -6,7 +6,11 @@ public class PersonagemMedico extends Personagem{
 
     @Override
     public void usarHabilidade(){
-        
+        /*Primeiros socorros: gastar um pouco de energia para recuperar vida sem precisar de remedios*/
+        adicionarVida(7);
+        perderEnergia(15);
     }
+
+
 
 }
