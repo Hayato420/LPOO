@@ -1,4 +1,5 @@
 import java.util.List;
+import java.util.Iterator;
 
 public abstract class Personagem{
     //COMBATE E FINS DE JOGO
@@ -18,10 +19,10 @@ public abstract class Personagem{
     private final Status status;
     //ITENS
     private final Inventario inventario;
-    private List<Item> recursosProximos;
+    private List<Item> recursosProximos; //LIMPO A CADA EXPLORAR ou MUDAR DE AMBIENTE
     private Arma armaEquipada;
     //CALOR (FOGUEIRA E FORNO)
-    private FonteDeCalor fonteDeCalor;//SE != null, A CADA ROUND DEVERA ESQUENTAR O JOGADOR PARA NORMAL, ALEM DE PERMITIR COZINHAR. SE == null, não usará o alimentarFogo(). Se não tiver madeira, o alimentarFogo() porá um fim à fogueira ("setFonteDeCalor(null);").
+    private FonteDeCalor fonteDeCalor; //SE != null, A CADA ROUND DEVERA ESQUENTAR O JOGADOR PARA NORMAL, ALEM DE PERMITIR COZINHAR. SE == null, não usará o alimentarFogo(). Se não tiver madeira, o alimentarFogo() porá um fim à fogueira ("setFonteDeCalor(null);").
     private final GeradorDeID geradorDeID;
 
     public Personagem(String nome, GeradorDeID geradorDeID){
@@ -41,6 +42,40 @@ public abstract class Personagem{
     }
 
     public abstract void usarHabilidade();
+
+    //EXPLORAR, COLETAR RECURSOS (AMBIENTE E PRÓXIMOS) E MUDAR DE AMBIENTE
+    public void explorar(){
+        if(this.status.getTemperatura() == Status.Temperatura.FRIO 
+           || this.status.getTemperatura() == Status.Temperatura.CALOR){
+            this.perderEnergia(20);
+        }
+        else{
+            this.perderEnergia(10);
+        }
+        recursosProximos.clear();
+        //OCORRENCIA DE EVENTOS !!!!!
+    }
+
+    public void coletarAmbiente(){
+        for(int i = 1; i <= 5; i++){
+            recursosProximos.add(this.localizacao.coletarRecurso(this));
+        }
+        System.out.println("Recursos coletaveis: " + recursosProximos);
+    }
+
+    public void coletarProximos(String ID){
+        Iterator<Item> it = this.recursosProximos.iterator();
+        while (it.hasNext()){
+            Item item = it.next();
+            if (item.getID().equals(ID)){
+                this.inventario.getItens().add(item);
+                it.remove();
+                return;
+            }
+        }
+    }
+
+    //public void mudarAmbiente(){} USAR GERENCIADOR DE AMBIENTE
 
     //FINS DE JOGO
     public boolean getCondicaoVitoria(){
@@ -72,6 +107,39 @@ public abstract class Personagem{
     public void movimentacao(){
         this.status.setPertoDeFonteDeAgua(false);
         this.fonteDeCalor = null;
+    }
+
+    //AGUA
+    public void encherAgua(String ID){
+        for (Item item : this.getInventario().getItens()){
+            if (item.getID().equals(ID) && item.getClass() == Agua.class){
+                Agua agua = (Agua) item;
+                if (agua.getVolumeAtual() < agua.getVolumeMax()){
+                    agua.encher();
+                    System.out.println("Você encheu a garrafa de agua. Melhor purificar isso.");
+                } else{
+                    System.out.println("A garrafa ja esta cheio.");
+                }
+                return;
+            }
+        }
+        System.out.println("Nao foi encontrada agua de ID " + ID + ".");
+    }
+
+    public void beberAgua(String ID) {
+        for (Item item : this.getInventario().getItens()){
+            if (item.getID().equals(ID) && item instanceof Agua agua) {
+                if (agua.getVolumeAtual() > 0){
+                    agua.usar(this);
+                    System.out.println("Voce bebeu.");
+                    return;
+                } else{
+                    System.out.println("A garrafa esta vazia.");
+                    return;
+                }
+            }
+        }
+        System.out.println("Nao foi encontrada agua de ID " + ID + ".");
     }
 
     //APAGAR FOGUEIRA
