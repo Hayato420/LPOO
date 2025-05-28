@@ -89,6 +89,7 @@ public class Ambiente{
             }
             //se não for alimento
             switch (recursoEscolhido){
+                case "Garrafa":  return this.getGeradorDeItens().gerarAguaAleatoria();
                 case "Arco":     return this.getGeradorDeItens().gerarArco(jogador, this.getGeradorDeItens().gerarMateriaisAleatParaFerram().getID(), this.getGeradorDeItens().gerarMateriaisAleatParaFerram().getID());
                 case "Espada":   return this.getGeradorDeItens().gerarEspada(jogador, this.getGeradorDeItens().gerarMateriaisAleatParaFerram().getID(), this.getGeradorDeItens().gerarMateriaisAleatParaFerram().getID());
                 case "Faca":     return this.getGeradorDeItens().gerarFaca(jogador, this.getGeradorDeItens().gerarMateriaisAleatParaFerram().getID(), this.getGeradorDeItens().gerarMateriaisAleatParaFerram().getID());

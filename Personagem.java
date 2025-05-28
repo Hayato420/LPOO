@@ -45,34 +45,43 @@ public abstract class Personagem{
 
     //EXPLORAR, COLETAR RECURSOS (AMBIENTE E PRÓXIMOS) E MUDAR DE AMBIENTE
     public void explorar(){
-        if(this.status.getTemperatura() == Status.Temperatura.FRIO 
-           || this.status.getTemperatura() == Status.Temperatura.CALOR){
+        if(this.getStatus().getTemperatura() == Status.Temperatura.FRIO 
+           || this.getStatus().getTemperatura() == Status.Temperatura.CALOR){
             this.perderEnergia(20);
         }
         else{
             this.perderEnergia(10);
         }
-        recursosProximos.clear();
+        this.getRecursosProximos().clear();
         //OCORRENCIA DE EVENTOS !!!!!
     }
 
     public void coletarAmbiente(){
+        List<Item> recursosProximos = this.getRecursosProximos();
         for(int i = 1; i <= 5; i++){
             recursosProximos.add(this.localizacao.coletarRecurso(this));
         }
-        System.out.println("Recursos coletaveis: " + recursosProximos);
+        System.out.println("Recursos coletaveis:");
+        for (Item item : recursosProximos){
+            System.out.println(item.getNome() + ": " + item.getID());
+        }
     }
 
     public void coletarProximos(String ID){
-        Iterator<Item> it = this.recursosProximos.iterator();
+        Iterator<Item> it = this.getRecursosProximos().iterator();
         while (it.hasNext()){
             Item item = it.next();
             if (item.getID().equals(ID)){
-                this.inventario.getItens().add(item);
-                it.remove();
+                if(this.getInventario().adicionarItem(item)){
+                    it.remove();
+                }
+                else{
+                    System.out.println("Limpe o inventario antes de pegar itens proximos.");
+                }
                 return;
             }
         }
+        System.out.println("Nao foram encontrados recursos proximos de ID ''" + ID + "''.");
     }
 
     //public void mudarAmbiente(){} USAR GERENCIADOR DE AMBIENTE
@@ -105,8 +114,8 @@ public abstract class Personagem{
 
     //MOVIMENTAÇÃO, USADA EM EXPLORAR E MUDAR DE AMBIENTE
     public void movimentacao(){
-        this.status.setPertoDeFonteDeAgua(false);
-        this.fonteDeCalor = null;
+        this.getStatus().setPertoDeFonteDeAgua(false);
+        this.setFonteDeCalor(null);
     }
 
     //AGUA
@@ -144,7 +153,7 @@ public abstract class Personagem{
 
     //APAGAR FOGUEIRA
     public void apagarFogueira(){
-        this.fonteDeCalor = null; //não gastará mais madeira do inventário a cada loop, mesmo sem se movimentar
+        this.setFonteDeCalor(null);//não gastará mais madeira do inventário a cada loop, mesmo sem se movimentar
     }
 
     //LOCALIZACAO
@@ -296,10 +305,20 @@ public abstract class Personagem{
     public Status getStatus(){
         return this.status;
     }
-    //INVENTARIO
+
+    //INVENTARIO E RECURSOS PROXIMOS
     public Inventario getInventario(){
         return this.inventario;
     }
+
+    public List<Item> getRecursosProximos(){
+        return this.recursosProximos;
+    }
+
+    public void exibirItens(){
+        this.getInventario().exibirItens();
+    }
+
     //ARMA EQUIPADA
     public Arma getArmaEquipada(){
         return this.armaEquipada;

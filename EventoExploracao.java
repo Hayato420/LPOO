@@ -1,5 +1,7 @@
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.ArrayList;
+import java.util.List;
 
 public class EventoExploracao extends Evento{
     Random aleatorio = new Random();
@@ -29,7 +31,7 @@ public class EventoExploracao extends Evento{
             else{
                 System.out.println("Ruínas misteriosas encontradas."); //10%
                 jogador.setLocalizacao(new AmbienteRuinas(this.geradorDeItens));//vai por o personagem em um novo objeto de AmbienteRuinas
-                jogador.getInventario().adicionarItem(ruinasLoots());
+                jogador.getRecursosProximos().addAll(ruinasLoots());
                 //ITEM RARO
             }
         }
@@ -49,10 +51,23 @@ public class EventoExploracao extends Evento{
         }
     }
 
-    public Item ruinasLoots(){
+    public List<Item> ruinasLoots(){
+        List<Item> loots = new ArrayList<>();
         int chance = ThreadLocalRandom.current().nextInt(1,4);
-        if(chance == 1){return this.geradorDeItens.gerarIsqueiro();}
-        else if(chance == 2){return this.geradorDeItens.gerarLanterna();}
-        else{return this.geradorDeItens.gerarPistola();}
+
+        switch (chance){
+            case 1:
+                loots.add(this.geradorDeItens.gerarIsqueiro());
+                break;
+            case 2:
+                loots.add(this.geradorDeItens.gerarLanterna());
+                break;
+            default:
+                loots.add(this.geradorDeItens.gerarPistola());
+                break;
+        }
+
+        //ADICIONAR GERACAO DE MUNICAO
+        return loots;
     }
 }

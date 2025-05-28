@@ -1,22 +1,13 @@
-import java.util.concurrent.ThreadLocalRandom;
-
 public class Agua extends Item{
     private boolean pureza;
     private final int volumeMax;
     private int volumeAtual;
 
     public Agua(GeradorDeID geradorDeID, boolean pureza, int volumeMax){
-        super("Garrafa", "Molhada.", 1, 1, geradorDeID);
+        super("Garrafa", "Contem agua.", 1, 1, geradorDeID);
         this.pureza = pureza;
         this.volumeMax = volumeMax;
         this.volumeAtual = volumeMax;
-    }
-
-    public Agua(GeradorDeID geradorDeID){ //gerador aleatório
-        super("Garrafa", "Molhada.", 1, 1, geradorDeID);
-        this.pureza = ThreadLocalRandom.current().nextBoolean();
-        this.volumeMax = ThreadLocalRandom.current().nextInt(1, 6);
-        this.volumeAtual = ThreadLocalRandom.current().nextInt(1, this.volumeMax + 1);
     }
 
     public int getVolumeAtual(){

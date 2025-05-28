@@ -140,7 +140,7 @@ encontrados na exploracao*/
         int index = ThreadLocalRandom.current().nextInt(listaDeAlimentos.length);//sorteia um dos elementos da lista criada
         return listaDeAlimentos[index].criarAlimento(this.geradorDeID);//retorna o elemento sorteado
     }
-//GERADOR ALEATÓRIO DE FERRAMENTAS E ARMAS
+//GERADOR ALEATÓRIO DE FERRAMENTAS E ARMAS (HASHMAP)
     public Map<String, Integer> gerarFerrEArm(){
         Map<String, Integer> recursos = new HashMap<>();
         recursos.put("Arco", ThreadLocalRandom.current().nextInt(0, 2));

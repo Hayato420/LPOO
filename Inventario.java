@@ -5,7 +5,7 @@ public class Inventario{
     private final List<Item> inventario = new ArrayList<>();
     private final int capacidadeMax;
 
-    public Inventario(int capacidadeMax) {
+    public Inventario(int capacidadeMax){
         this.capacidadeMax = capacidadeMax;
     }
 
@@ -13,10 +13,18 @@ public class Inventario{
         return inventario;
     }
 
-    public void exibirItensID(){
-        for (Item item : inventario){
-            System.out.println(item.getNome() + " (ID: " + item.getID() + ")");
+    public void exibirItens(){
+        List<Item> itens = this.getItens();
+        for (Item item : itens){
+            System.out.println(item.getNome() + ": ");
+            System.out.println("ID — " + item.getID());
+            System.out.println("Descricao — " + item.getDescricao());
+            System.out.println("Peso — " + item.getPeso());
+            System.out.println("Durabilidade — " + item.getDurabilidade());
+            System.out.println("Tipo — " + item.getClass().getSimpleName());
+            System.out.println();
         }
+        System.out.println("Peso total do inventario: " + calcularPesoAtual());
     }
 
     public Material getItemPorID(String ID){
@@ -25,7 +33,7 @@ public class Inventario{
                 return (Material) item;
             }
         }
-        System.out.println("Item não encontrado pela ID (getItemPorID, Inventario.java). Item de erro retornado.");
+        System.out.println("Item nao encontrado pela ID (getItemPorID, Inventario.java). Item de erro retornado.");
         return null;
     }
 
@@ -36,24 +44,26 @@ public class Inventario{
                 return true;
             }
         }
-        System.out.println("Item de ID " + ID + " não consta no inventário.");
+        System.out.println("Item de ID " + ID + " nao consta no inventario.");
         return false;
     }
 
-    public void adicionarItem(Item item){
+    public boolean adicionarItem(Item item){
         int pesoAtual = calcularPesoAtual();
 
-        if (pesoAtual + item.getPeso() <= this.capacidadeMax) {
+        if (pesoAtual + item.getPeso() <= this.capacidadeMax){
             inventario.add(item);
             ordenarItensPorNome();
-        } else {
-            System.out.println("Seu inventário está cheio!");
+            return true;
+        } else{
+            System.out.println("Seu inventario esta cheio!");
+            return false;
         }
     }
 
     private int calcularPesoAtual(){
         int total = 0;
-        for (Item i : inventario) {
+        for (Item i : inventario){
             total += i.getPeso();
         }
         return total;
