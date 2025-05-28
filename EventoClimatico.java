@@ -7,25 +7,25 @@ public class EventoClimatico extends Evento{
 
     @Override
     public void efeitoDoEvento(Personagem jogador){
-        if(jogador.getLocalizacao()getClass() == AmbienteCaverna.class){
+        if(jogador.getLocalizacao().getClass() == AmbienteCaverna.class){
             System.out.println("Estalagmites cairam sobre voce.");
             jogador.perderVida(20);
         }
-        else if(jogador.getLocalizacao()getClass() == AmbienteDeserto.class){
+        else if(jogador.getLocalizacao().getClass() == AmbienteDeserto.class){
             System.out.println("Voce se deparou com uma tempestade de areia.");
             jogador.perderSede(20);
             jogador.perderEnergia(10);
         }
-        else if(jogador.getLocalizacao()getClass() == AmbienteFloresta.class){
+        else if(jogador.getLocalizacao().getClass() == AmbienteFloresta.class){
             System.out.println("Uma chuva intensa lhe encharcou, melhor se aquecer logo.");
             jogador.getStatus().setTemperatura(Status.Temperatura.FRIO);
         }
-        else if(jogador.getLocalizacao()getClass() == AmbienteLagoRio.class){
+        else if(jogador.getLocalizacao().getClass() == AmbienteLagoRio.class){
             System.out.println("Uma inundacao inesperada lhe encharcou, voce sente frio.");
             jogador.perderEnergia(10);
             jogador.getStatus().setTemperatura(Status.Temperatura.FRIO);
         }
-        else if(jogador.getLocalizacao()getClass() == AmbienteMontanha.class){
+        else if(jogador.getLocalizacao().getClass() == AmbienteMontanha.class){
             System.out.println("Esta nevando, apesar de bonito, isso representa um perigo a sua temperatura.");
             jogador.getStatus().setTemperatura(Status.Temperatura.FRIO);
         }
