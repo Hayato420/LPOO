@@ -56,6 +56,19 @@ public abstract class Personagem{
         //OCORRENCIA DE EVENTOS !!!!!
     }
 
+    public void mudarAmbiente(){
+        if(this.getStatus().getTemperatura() == Status.Temperatura.FRIO 
+           || this.getStatus().getTemperatura() == Status.Temperatura.CALOR){
+            this.perderEnergia(20);
+            //GERENCIADOR DE AMBIENTE, MUDAR LOCALIZACAO
+        }
+        else{
+            this.perderEnergia(10);
+            //GERENCIADOR DE AMBIENTE, MUDAR LOCALIZACAO
+        }
+        this.getRecursosProximos().clear();
+    }
+
     public void coletarAmbiente(){
         List<Item> recursosProximos = this.getRecursosProximos();
         for(int i = 1; i <= 5; i++){
