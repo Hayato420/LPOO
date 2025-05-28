@@ -41,6 +41,7 @@ public class Agua extends Item{
 
     public void usar(Personagem jogador){
         if(!this.pureza){jogador.getStatus().setDoente(true);} //se impura, adoecera
+        if(jogador.getStatus().getTemperatura() == Status.Temperatura.CALOR){jogador.getStatus().setTemperatura(Status.Temperatura.NORMAL);}
         jogador.adicionarSede(10);
         this.diminuirVolume(jogador.getInventario());
     }
