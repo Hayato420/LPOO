@@ -31,6 +31,8 @@ public class GeradorDeItens{
         }
     }
 
+
+
 //GERAR FERRAMENTAS; FUNCIONA TANTO PARA PLAYER QUANTO PARA GERAÇÃO DO AMBIENTE
     public Picareta gerarPicareta(Personagem jogador, String IDmat1, String IDmat2){
         if(verifCombinacaoMateriais(jogador, IDmat1, IDmat2)){
@@ -77,6 +79,33 @@ encontrados na exploracao*/
         Lanterna lanterna = new Lanterna("Lanterna", "Luz !", 1, this.geradorDeID, metalInox1, metalInox2);
         return lanterna;
     }//talvez seja bom fazer o item pilha, talvez em materiais, ou algo assim, para puder usar a lanterna
+
+
+
+//GERADOR DE MUNICOES
+    public Balas gerarBalas(){
+        Material metalInox1 = Material.TipoDeMaterial.METALINOX.criarMaterial(this.geradorDeID);
+        Material metalInox2 = Material.TipoDeMaterial.METALINOX.criarMaterial(this.geradorDeID);
+        Balas balas = new Balas(ThreadLocalRandom.current().nextInt(1, 11), metalInox1, metalInox2, this.geradorDeID);
+        return balas;
+    }
+
+    public Pilhas gerarPilhas(){
+        Material metalInox1 = Material.TipoDeMaterial.METALINOX.criarMaterial(this.geradorDeID);
+        Material metalInox2 = Material.TipoDeMaterial.METALINOX.criarMaterial(this.geradorDeID);
+        Pilhas pilhas = new Pilhas(ThreadLocalRandom.current().nextInt(1, 21), metalInox1, metalInox2, this.geradorDeID);
+        return pilhas;
+    }
+
+    public FluidoDeIsqueiro  gerarFluidoDeIsqueiro (){
+        Material metalInox1 = Material.TipoDeMaterial.METALINOX.criarMaterial(this.geradorDeID);
+        Material metalInox2 = Material.TipoDeMaterial.METALINOX.criarMaterial(this.geradorDeID);
+        FluidoDeIsqueiro fluidoDeIsqueiro  = new FluidoDeIsqueiro(ThreadLocalRandom.current().nextInt(1, 11), metalInox1, metalInox2, this.geradorDeID);
+        return fluidoDeIsqueiro;
+    }
+
+    FLECHAS, ALEATORIO E FABRICADO
+
 
 //GERADOR DE ARMAS
     public Arma gerarArco(Personagem jogador, String IDmat1, String IDmat2){
