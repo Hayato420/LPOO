@@ -31,10 +31,44 @@ public class GeradorDeItens{
         }
     }
 
+    public void removerCombinacao(Personagem jogador, String IDmat1, String IDmat2){
+        jogador.getInventario().removerItem(IDmat1);
+        jogador.getInventario().removerItem(IDmat2);
+    }
 
+//GERAR FERRAMENTAS; INSTANCIAR COM CAST: Picareta picareta = (Picareta) gerador.gerarFerramentaFab("picareta", jogador, "IDmat1", "IDmat2");
+    public Item gerarFerramentaFab(String tipo, Personagem jogador, String IDmat1, String IDmat2){
+        if (!verifCombinacaoMateriais(jogador, IDmat1, IDmat2)) {
+            return null; //Por segurança, mas verifCombinacaoMateriais ja lanca excecao se os materiais forem invalidos
+        }
+    
+        Item mat1 = jogador.getInventario().getItemPorID(IDmat1);
+        Item mat2 = jogador.getInventario().getItemPorID(IDmat2);
+    
+        switch (tipo.toLowerCase()) {
+            case "picareta":
+                Picareta picareta = new Picareta("Picareta", "Pontiaguda.", 3, mat1, mat2, this.geradorDeID);
+                removerCombinacao(jogador, IDmat1, IDmat2);
+                return picareta;
+    
+            case "machado":
+                Machado machado = new Machado("Machado", "Afiado.", 3, mat1, mat2, this.geradorDeID);
+                removerCombinacao(jogador, IDmat1, IDmat2);
+                return machado;
+    
+            case "faca":
+                Faca faca = new Faca("Faca", "Cortante.", 1, mat1, mat2, this.geradorDeID);
+                removerCombinacao(jogador, IDmat1, IDmat2);
+                return faca;
+    
+            default:
+                System.out.println("Tipo de ferramenta invalido.");
+                return null;
+        }
+    }
 
-//GERAR FERRAMENTAS; FUNCIONA TANTO PARA PLAYER QUANTO PARA GERAÇÃO DO AMBIENTE
-    public Picareta gerarPicareta(Personagem jogador, String IDmat1, String IDmat2){
+//old
+/*  public Picareta gerarPicareta(Personagem jogador, String IDmat1, String IDmat2){
         if(verifCombinacaoMateriais(jogador, IDmat1, IDmat2)){
             Picareta picareta = new Picareta("Picareta", "Pontiaguda.", 3, jogador.getInventario().getItemPorID(IDmat1), 
             jogador.getInventario().getItemPorID(IDmat2), this.geradorDeID);
@@ -64,21 +98,21 @@ public class GeradorDeItens{
         }
         return null;//nunca ocorrera devido a ExcecaoCombMateriais em verifCombinacaoMateriais
     }
+*/
 
-/*ideia: por não serem fabricáveis, Lanterna e Isqueiro devem ser apenas encontrados, sendo só criados por aleatoriedade,
-encontrados na exploracao*/
-    public Isqueiro gerarIsqueiro(){
-        Material metalInox1 = Material.TipoDeMaterial.METALINOX.criarMaterial(this.geradorDeID);
-        Material metalInox2 = Material.TipoDeMaterial.METALINOX.criarMaterial(this.geradorDeID);
-        Isqueiro isqueiro = new Isqueiro("Isqueiro", "Fogo !", 1, this.geradorDeID, metalInox1, metalInox2);
-        return isqueiro;
-    }//talvez seja bom fazer o item fluido de isqueiro, talvez em materiais, ou algo assim, para puder usar o isqueiro
-    public Lanterna gerarLanterna(){
-        Material metalInox1 = Material.TipoDeMaterial.METALINOX.criarMaterial(this.geradorDeID);
-        Material metalInox2 = Material.TipoDeMaterial.METALINOX.criarMaterial(this.geradorDeID);
-        Lanterna lanterna = new Lanterna("Lanterna", "Luz !", 1, this.geradorDeID, metalInox1, metalInox2);
-        return lanterna;
-    }//talvez seja bom fazer o item pilha, talvez em materiais, ou algo assim, para puder usar a lanterna
+/* ideia: por nao serem fabricaveis, Lanterna e Isqueiro devem ser apenas encontrados, sendo so criados por aleatoriedade,
+encontrados na exploracao */
+    public Isqueiro gerarIsqueiroAleat(){//o "Aleat" eh apenas para dizer que foi gerador pelo ambiente e nao pelo player
+        Material m1 = Material.TipoDeMaterial.METALINOX.criarMaterial(this.geradorDeID);
+        Material m2 = Material.TipoDeMaterial.METALINOX.criarMaterial(this.geradorDeID);
+        return new Isqueiro("Isqueiro", "Fogo !", 1, this.geradorDeID, m1, m2);
+    }
+    
+    public Lanterna gerarLanternaAleat(){//o "Aleat" eh apenas para dizer que foi gerador pelo ambiente e nao pelo player
+        Material m1 = Material.TipoDeMaterial.METALINOX.criarMaterial(this.geradorDeID);
+        Material m2 = Material.TipoDeMaterial.METALINOX.criarMaterial(this.geradorDeID);
+        return new Lanterna("Lanterna", "Luz !", 1, this.geradorDeID, m1, m2);
+    }
 
 
 
@@ -104,10 +138,42 @@ encontrados na exploracao*/
         return fluidoDeIsqueiro;
     }
 
-    FLECHAS, ALEATORIO E FABRICADO
+    FAZER FLECHAS, ALEATORIO E FABRICADO
 
 
-//GERADOR DE ARMAS
+//GERADOR DE ARMAS; INSTANCIAR COM CAST: Espada espada = (Espada) geradorDeItens.gerarArmaFab("espada", jogador, "IDmat1", "IDmat2");
+    public Arma gerarArmaFab(String tipo, Personagem jogador, String IDmat1, String IDmat2){
+        if (!verifCombinacaoMateriais(jogador, IDmat1, IDmat2)) return null;
+    
+        Material mat1 = jogador.getInventario().getItemPorID(IDmat1);
+        Material mat2 = jogador.getInventario().getItemPorID(IDmat2);
+    
+        switch (tipo.toLowerCase()){
+            case "arco":
+                Arco arco = new Arco("Arco", "É bom ter flechas.", 2, this.geradorDeID,
+                                    Arma.TipoArma.aDistancia, Arma.QualArma.ARCO, 3, mat1, mat2);
+                                    removerCombinacao(jogador, IDmat1, IDmat2);
+                return arco;
+
+            case "espada":
+                Espada espada = new Espada("Espada", "Avante !", 3, this.geradorDeID,
+                                            Arma.TipoArma.corpoACorpo, Arma.QualArma.ESPADA, 1, mat1, mat2);
+                                            removerCombinacao(jogador, IDmat1, IDmat2);
+                return espada;
+    
+            case "lanca":
+                Lanca lanca = new Lanca("Lança", "Espeta !", 3, this.geradorDeID,
+                                        Arma.TipoArma.corpoACorpo, Arma.QualArma.LANCA, 2, mat1, mat2);
+                                        removerCombinacao(jogador, IDmat1, IDmat2);
+                return lanca;
+    
+            default:
+                return null;//tipo invalido
+        }
+    }
+
+//old
+/*
     public Arma gerarArco(Personagem jogador, String IDmat1, String IDmat2){
         if(verifCombinacaoMateriais(jogador, IDmat1, IDmat2)){
             Arco arco = new Arco("Arco", "É bom ter flechas.", 2, this.geradorDeID, Arma.TipoArma.aDistancia, 
@@ -148,6 +214,9 @@ encontrados na exploracao*/
                           Arma.QualArma.PISTOLA, 3, metalInox1, metalInox2);
         return pistola;
     }
+*/
+
+
 
 //GERADOR ALEATORIO DE MATERIAIS, DEVE SER USADO PARA PARAMETRO DE FUNCAO QUE GERE ARMA/FERRAMENTA ALEATORIAMENTE, SE FOREM ADICIONADOS MATERIAIS NO ENUM NAO NECESSITARA SER ALTERADO  
     public Material gerarMateriaisAleatParaFerram(){
@@ -169,7 +238,7 @@ encontrados na exploracao*/
         int index = ThreadLocalRandom.current().nextInt(listaDeAlimentos.length);//sorteia um dos elementos da lista criada
         return listaDeAlimentos[index].criarAlimento(this.geradorDeID);//retorna o elemento sorteado
     }
-//GERADOR ALEATÓRIO DE FERRAMENTAS E ARMAS (HASHMAP)
+//GERADOR ALEATÓRIO DE FERRAMENTAS E ARMAS PARA O AMBIENTE (HASHMAP)
     public Map<String, Integer> gerarFerrEArm(){
         Map<String, Integer> recursos = new HashMap<>();
         recursos.put("Arco", ThreadLocalRandom.current().nextInt(0, 2));
