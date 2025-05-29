@@ -7,10 +7,11 @@ public class Faca extends Ferramenta{
     public void usar(Personagem jogador){
         jogador.perderEnergia(5);
         this.perderDurabilidade(jogador.getInventario());
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 5; i++){
             Material fibra = Material.TipoDeMaterial.FIBRA.criarMaterial(this.getGeradorDeID());
-            jogador.getInventario().adicionarItem(fibra);
-jogador.getLocalizacao().diminuirRecurso("Fibra");
-       }
+            jogador.getRecursosProximos().add(fibra);
+            jogador.getLocalizacao().diminuirRecurso("Fibra");
+            jogador.exibirRecursosProximos();
+        }
     }
 }
