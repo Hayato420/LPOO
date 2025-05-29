@@ -10,7 +10,7 @@ public class Faca extends Ferramenta{
         for (int i = 0; i < 5; i++) {
             Material fibra = Material.TipoDeMaterial.FIBRA.criarMaterial(this.getGeradorDeID());
             jogador.getInventario().adicionarItem(fibra);
-        //AINDA FALTA DIMINUIR QUANTIDADE DE RECURSOS DISPONIVEIS NO AMBIENTE
-        }
+jogador.getLocalizacao().diminuirRecurso("Fibra");
+       }
     }
 }
