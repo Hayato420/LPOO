@@ -309,6 +309,10 @@ encontrados na exploracao */
         recursos.put("Balas", ThreadLocalRandom.current().nextInt(0, 2)); //se achado, deverá dar várias municoes, ou mudamos municao de bala
         recursos.put("Flechas", ThreadLocalRandom.current().nextInt(0, 2));
         recursos.put("Picareta", ThreadLocalRandom.current().nextInt(0, 2));
+        recursos.put("Balas", ThreadLocalRandom.current().nextInt(0, 2));
+        recursos.put("Flechas", ThreadLocalRandom.current().nextInt(0, 2));
+        recursos.put("Pilhas", ThreadLocalRandom.current().nextInt(0, 2));
+        recursos.put("Fluido de Isqueiro", ThreadLocalRandom.current().nextInt(0, 2));
         return recursos;
     }
 }
