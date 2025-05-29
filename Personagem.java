@@ -336,6 +336,18 @@ public abstract class Personagem{
         this.recursosProximos = recursosProximos;
     }
 
+    public void exibirRecursosProximos(){
+        System.out.println("Recursos coletaveis: ");
+        if (this.getRecursosProximos().isEmpty()){
+           System.out.println("Nenhum recurso coletavel por perto.");
+           return;
+        } else{
+        for(Item item : this.getRecursosProximos()){
+              System.out.println(item.getNome() + ": " + item.getID());
+             }
+        }
+    }
+
     public void exibirItens(){
         this.getInventario().exibirItens();
     }
