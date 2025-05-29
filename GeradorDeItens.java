@@ -172,6 +172,37 @@ encontrados na exploracao */
         }
     }
 
+    public Arma gerarArmaAleat(String tipoArma){ //USADO NA COLETA DE RECURSOS DO AMBIENTE
+        Material mat1 = gerarMateriaisAleatParaArmas();
+        Material mat2 = gerarMateriaisAleatParaArmas();
+    
+        tipoArma = tipoArma.toLowerCase();
+    
+        switch (tipoArma){
+            case "espada":
+                return new Espada("Espada", "Avante !", 3, this.geradorDeID,
+                        Arma.TipoArma.corpoACorpo, Arma.QualArma.ESPADA, 1, mat1, mat2);
+    
+            case "arco":
+                return new Arco("Arco", "É bom ter flechas.", 2, this.geradorDeID,
+                        Arma.TipoArma.aDistancia, Arma.QualArma.ARCO, 3, mat1, mat2);
+    
+            case "lanca":
+            case "lança": //da no mesmo se o player digitar "lanca" ou "lança"
+                return new Lanca("Lança", "Espeta !", 3, this.geradorDeID,
+                        Arma.TipoArma.corpoACorpo, Arma.QualArma.LANCA, 2, mat1, mat2);
+    
+            case "pistola":
+                Material metalInox1 = Material.TipoDeMaterial.METALINOX.criarMaterial(geradorDeID);
+                Material metalInox2 = Material.TipoDeMaterial.METALINOX.criarMaterial(geradorDeID);
+                return new Pistola("Pistola", "Pow pow !", 1, this.geradorDeID,
+                        Arma.TipoArma.aDistancia, Arma.QualArma.PISTOLA, 3, metalInox1, metalInox2);
+    
+            default:
+                throw new IllegalArgumentException("Tipo de arma desconhecido: " + tipoArma); //SE APARECER, É ERRO NO CÓDIGO, NÃO DO PLAYER
+        }
+    }
+
 //old
 /*
     public Arma gerarArco(Personagem jogador, String IDmat1, String IDmat2){
