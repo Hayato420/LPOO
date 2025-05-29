@@ -1,9 +1,11 @@
 public class Flechas extends Municao{
     private final int quantiaMax;
+    private final int dano;
 
     public Flechas(int quantiaAtual, Material material1, Material material2, GeradorDeID geradorDeID){
         super("Flechas", "Balas primitivas !", 1, 1, quantiaAtual, material1, material2, geradorDeID);
         this.quantiaMax = 4;
+        this.dano = (material1.getResistencia() + material2.getResistencia())/4
     }
 
     @Override
@@ -23,5 +25,8 @@ public class Flechas extends Municao{
 
     public int getQuantiaMax(){
         return this.quantiaMax;
+    }
+    public int getDano(){
+        return this.dano;
     }
 }
