@@ -3,7 +3,7 @@ public class FluidoDeIsqueiro extends Municao{
 
     public FluidoDeIsqueiro(int quantiaAtual, Material material1, Material material2, GeradorDeID geradorDeID){
         super("FluidoDeIsqueiro", "Nao beba isso, tem cheiro de petroleo.", 1, 1, quantiaAtual, material1, material2, geradorDeID);
-        this.quantiaMax = 20;
+        this.quantiaMax = 10;
     }
 
     @Override
