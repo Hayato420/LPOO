@@ -53,7 +53,7 @@ public abstract class Personagem{
             this.perderEnergia(10);
         }
         this.getRecursosProximos().clear();
-        this.coletarAmbiente();
+        this.coletarAmbiente(ThreadLocalRandom.current().nextInt(0, 6));
         //OCORRENCIA DE EVENTOS !!!!!
     }
 
