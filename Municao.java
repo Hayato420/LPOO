@@ -1,4 +1,4 @@
-public class Municao extends Item{
+public abstract class Municao extends Item{
     private int quantiaAtual;
     //quantia maxima definida em cada item
     private final Material material1;
@@ -19,14 +19,7 @@ public class Municao extends Item{
     public void setQuantiaAtual(int quantia){
         this.quantiaAtual = quantia;
     }
-    
-    public void getQuantiaMax(){
-        return this.quantiaMax;
-    }
-    
-    public void setQuantiaMax(int quantia){
-        this.quantiaMax = quantia;
-    }
+
     //USO
     public void diminuirQuantia(Personagem jogador, int quantia){
         this.quantiaAtual -= quantia;
@@ -35,7 +28,7 @@ public class Municao extends Item{
         }
     }
     //RECARGA SE ADICIONAR MAIS AO INVENTARIO 
-    public abstract void aumentarQuantia(Personagem jogador, int quantia){ //getQuantiaAtual() do novo item passado como parâmetro
+    public abstract void aumentarQuantia(){}/*(Personagem jogador, int quantia){ //getQuantiaAtual() do novo item passado como parâmetro
         for (Item item : jogador.getInventario().getItens()){
             if (item instanceof XXXX){
                 XXXX xxxx = (XXXX) item;
@@ -46,13 +39,14 @@ public class Municao extends Item{
                 if (quantia == 0) break;
             }
         }
-    
+    */
         if (quantia > 0){
             jogador.getInventario().adicionarItem(new XXXX(jogador.getGeradorDeID(), quantia));
         }
     }
 
     //OVERRIDE OBRIGATORIO DO ABSTRATO, QUANDO FOR USAR -> UTILIZAR diminuirQuantia()
+    @Override
     public void usar(Personagem jogador){
         System.out.println("Usavel em outro item.");
     }
