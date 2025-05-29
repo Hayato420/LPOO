@@ -1,9 +1,11 @@
 public class Balas extends Municao{
     private final int quantiaMax;
+    private final int dano;
 
     public Balas(int quantiaAtual, Material material1, Material material2, GeradorDeID geradorDeID){
         super("Balas", "Perfurante.", 1, 1, quantiaAtual, material1, material2, geradorDeID);
         this.quantiaMax = 10;
+        this.dano = 20;
     }
 
     @Override
@@ -23,5 +25,8 @@ public class Balas extends Municao{
 
     public int getQuantiaMax(){
         return this.quantiaMax;
+    }
+    public int getDano(){
+        return this.dano;
     }
 }
