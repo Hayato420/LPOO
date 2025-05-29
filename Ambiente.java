@@ -88,22 +88,22 @@ public class Ambiente{
             //se nao for alimento
             //armas
             List<String> armasPossiveis = Arrays.asList("arco", "espada", "lança", "lanca", "pistola");
-            if (armasPossiveis.contains(recursoEscolhido.toLowerCase())){
-                return this.getGeradorDeItens().gerarFerramentaAleat(recursoEscolhido);
+            if(armasPossiveis.contains(recursoEscolhido.toLowerCase())){
+                return this.getGeradorDeItens().gerarArmaAleat(recursoEscolhido);
             }
             //ferramentas
             List<String> ferramentasPossiveis = Arrays.asList("faca", "picareta", "machado", "isqueiro", "lanterna");
-            else if (ferramentasPossiveis.contains(recursoEscolhido.toLowerCase())){
+            if(ferramentasPossiveis.contains(recursoEscolhido.toLowerCase())){
                 return this.getGeradorDeItens().gerarFerramentaAleat(recursoEscolhido);
             }
             //municoes
             List<String> municoesPossiveis = Arrays.asList("bala", "flecha", "fluido de isqueiro", "pilhas");
-            else if (municoesPossiveis.contains(recursoEscolhido.toLowerCase())){
-                return this.getGeradorDeItens().gerarFerramentaAleat(recursoEscolhido);
+            if(municoesPossiveis.contains(recursoEscolhido.toLowerCase())){
+                return this.getGeradorDeItens().gerarMunicaoAleat(recursoEscolhido);
             }
-            else{return this.getGeradorDeItens().gerarAguaAleatoria();}
-        else{
-            return null; //caso o recurso escolhido não tenha tenha mais disponível. Retorno nulo tratado "coletarAmbiente(int contador)" de Personagem
+            //se for agua (ultima possibilidade)
+            return this.getGeradorDeItens().gerarAguaAleatoria();
         }
+            return null; //caso o recurso escolhido não tenha tenha mais disponível. Retorno nulo tratado "coletarAmbiente(int contador)" de Personagem
     }
 }
