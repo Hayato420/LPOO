@@ -22,4 +22,13 @@ public abstract class Ferramenta extends Item{
         return this.material2;
     }
 
+    public void feitaDe(){
+        if(material1.getTipoDeMaterial() == material2.getTipoDeMaterial()){
+            System.out.println("Feita de " + material1.getNome() + ".");
+        }
+        else{
+        System.out.println("Feita de " + material1.getNome() + " e " + material2.getNome() + ".");
+        }
+    }
+
 }
