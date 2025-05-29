@@ -1,3 +1,4 @@
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.Iterator;
 import java.util.List;
 
@@ -69,8 +70,8 @@ public abstract class Personagem{
         this.getRecursosProximos().clear();
     }
 
-    public void coletarAmbiente(){
-        for(int i = 1; i <= 5; i++){
+    public void coletarAmbiente(int contador){
+        for(int i = contador; i >= 1; i--){
             recursosProximos.add(this.getLocalizacao().coletarRecurso(this));
         }
         System.out.println("Recursos coletaveis:");
