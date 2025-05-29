@@ -142,7 +142,56 @@ encontrados na exploracao */
 
 
 
-//GERADOR DE MUNICOES
+    //GERADOR DE MUNICOES
+    public Item gerarMunicaoAleat(String nome) {
+        nome = nome.toLowerCase();
+    
+        Material metalInox1 = Material.TipoDeMaterial.METALINOX.criarMaterial(this.geradorDeID);
+        Material metalInox2 = Material.TipoDeMaterial.METALINOX.criarMaterial(this.geradorDeID);
+    
+        switch (nome) {
+            case "bala":
+            case "balas":
+                return new Balas(
+                    ThreadLocalRandom.current().nextInt(1, 11),
+                    metalInox1,
+                    metalInox2,
+                    this.geradorDeID
+                );
+    
+            case "pilha":
+            case "pilhas":
+                return new Pilhas(
+                    ThreadLocalRandom.current().nextInt(1, 21),
+                    metalInox1,
+                    metalInox2,
+                    this.geradorDeID
+                );
+    
+            case "fluido de isqueiro":
+                return new FluidoDeIsqueiro(
+                    ThreadLocalRandom.current().nextInt(1, 11),
+                    metalInox1,
+                    metalInox2,
+                    this.geradorDeID
+                );
+    
+            case "flecha":
+            case "flechas":
+                return new Flechas(
+                    ThreadLocalRandom.current().nextInt(1, 16),
+                    this.gerarMateriaisAleatParaFerram(),
+                    this.gerarMateriaisAleatParaFerram(),
+                    this.geradorDeID
+                );
+    
+            default:
+                return null;
+        }
+    }
+
+//old
+/*
     public Balas gerarBalas(){
         Material metalInox1 = Material.TipoDeMaterial.METALINOX.criarMaterial(this.geradorDeID);
         Material metalInox2 = Material.TipoDeMaterial.METALINOX.criarMaterial(this.geradorDeID);
@@ -163,8 +212,8 @@ encontrados na exploracao */
         FluidoDeIsqueiro fluidoDeIsqueiro  = new FluidoDeIsqueiro(ThreadLocalRandom.current().nextInt(1, 11), metalInox1, metalInox2, this.geradorDeID);
         return fluidoDeIsqueiro;
     }
+*/
 
-    FAZER FLECHAS, ALEATORIO E FABRICADO
 
 
 //GERADOR DE ARMAS; INSTANCIAR COM CAST: Espada espada = (Espada) geradorDeItens.gerarArmaFab("espada", jogador, "IDmat1", "IDmat2");
