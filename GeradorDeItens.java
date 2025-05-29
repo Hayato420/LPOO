@@ -143,6 +143,11 @@ encontrados na exploracao */
 
 
     //GERADOR DE MUNICOES
+    //apenas flechas sao fabricaveis
+    public Item gerarFlechaFab(Material material1, Material material2){
+        return new Flecha(16, material1, material2, this.geradorDeID)
+    }
+    //apenas flechas podem ser de materiais diferentes de metal inoxidavel
     public Item gerarMunicaoAleat(String tipo) {
         tipo = tipo.toLowerCase();
     
