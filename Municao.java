@@ -12,7 +12,7 @@ public abstract class Municao extends Item{
         this.quantiaAtual = quantiaAtual;//NAO FILTRA DE A QUANTIA ATUAL PASSA A MAXIMA, CUIDADO DEVE SER FEITO EM QUEM CHAMAR
     }
     //QUANTIA
-    public void getQuantiaAtual(){
+    public int getQuantiaAtual(){
         return this.quantiaAtual;
     }
 
