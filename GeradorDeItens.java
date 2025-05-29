@@ -144,8 +144,14 @@ encontrados na exploracao */
 
     //GERADOR DE MUNICOES
     //apenas flechas sao fabricaveis
-    public Item gerarFlechaFab(Material material1, Material material2){
-        return new Flecha(16, material1, material2, this.geradorDeID)
+    public Item gerarFlechaFab(Personagem jogador, String IDmat1, String IDmat2){
+        if (!verifCombinacaoMateriais(jogador, IDmat1, IDmat2)){
+            return null; //se nao houver os materiais no inventario do jogador
+        }
+        Material mat1 = for(item : jogador.getInventario.getItens() if(item.getID().equals(IDmat1) return item
+        Flecha flecha = new Flecha(16, material1, material2, this.geradorDeID)
+        removerCombinacao(jogador, IDmat1, IDmat2);
+        return //FAZER UM GETMATERIAL
     }
     //apenas flechas podem ser de materiais diferentes de metal inoxidavel
     public Item gerarMunicaoAleat(String tipo) {
