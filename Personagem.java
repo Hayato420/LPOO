@@ -52,6 +52,7 @@ public abstract class Personagem{
             this.perderEnergia(10);
         }
         this.getRecursosProximos().clear();
+        this.coletarAmbiente();
         //OCORRENCIA DE EVENTOS !!!!!
     }
 
