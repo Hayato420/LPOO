@@ -85,25 +85,25 @@ public class Ambiente{
                     return tipo.criarAlimento(this.getGeradorDeItens().getGeradorDeID());
                 }
             }
-            //se não for alimento
-            switch (recursoEscolhido){
-                case "Garrafa":  return this.getGeradorDeItens().gerarAguaAleatoria();
-                case "Arco":     return this.getGeradorDeItens().gerarArco(jogador, this.getGeradorDeItens().gerarMateriaisAleatParaFerram().getID(), this.getGeradorDeItens().gerarMateriaisAleatParaFerram().getID());
-                case "Espada":   return this.getGeradorDeItens().gerarEspada(jogador, this.getGeradorDeItens().gerarMateriaisAleatParaFerram().getID(), this.getGeradorDeItens().gerarMateriaisAleatParaFerram().getID());
-                case "Faca":     return this.getGeradorDeItens().gerarFaca(jogador, this.getGeradorDeItens().gerarMateriaisAleatParaFerram().getID(), this.getGeradorDeItens().gerarMateriaisAleatParaFerram().getID());
-                case "Pistola":  return this.getGeradorDeItens().gerarPistola();
-                /*case "Flechas":  return this.getGeradorDeItens().gerarFlechas(
-                case "Balas":    return this.getGeradorDeItens().gerarBalas(*/
-                case "Isqueiro": return this.getGeradorDeItens().gerarIsqueiro();
-                default:         return new Espada("Fallback", "Fallback", 1, this.getGeradorDeItens().getGeradorDeID(), 
-                                                    Arma.TipoArma.corpoACorpo, Arma.QualArma.ESPADA, 1, 
-                                                    this.getGeradorDeItens().gerarMateriaisAleatParaFerram(), 
-                                                    this.getGeradorDeItens().gerarMateriaisAleatParaFerram());
+            //se nao for alimento
+            //armas
+            List<String> armasPossiveis = Set.of("arco", "espada", "lança", "lanca", "pistola");
+            if (armasPossiveis.contains(recursoEscolhido.toLowerCase())){
+                return this.getGeradorDeItens().gerarFerramentaAleat(recursoEscolhido);
             }
-        }
+            //ferramentas
+            List<String> ferramentasPossiveis = Arrays.asList("faca", "picareta", "machado", "isqueiro", "lanterna");
+            else if (ferramentasPossiveis.contains(recursoEscolhido.toLowerCase())){
+                return this.getGeradorDeItens().gerarFerramentaAleat(recursoEscolhido);
+            }
+            //municoes
+            List<String> municoesPossiveis = Arrays.asList("bala", "flecha", "fluido de isqueiro", "pilhas");
+            else if (municoesPossiveis.contains(recursoEscolhido.toLowerCase())){
+                return this.getGeradorDeItens().gerarFerramentaAleat(recursoEscolhido);
+            }
+            else{return this.getGeradorDeItens().gerarAguaAleatoria();}
         else{
-            return null; //caso o recurso escolhido não tenha tenha mais disponível. EXCEPTION: "Recursos não foram encontrados."
+            return null; //caso o recurso escolhido não tenha tenha mais disponível. Retorno nulo tratado "coletarAmbiente(int contador)" de Personagem
         }
     }
-
 }
