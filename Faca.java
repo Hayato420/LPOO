@@ -11,7 +11,7 @@ public class Faca extends Ferramenta{
             Material fibra = Material.TipoDeMaterial.FIBRA.criarMaterial(this.getGeradorDeID());
             jogador.getRecursosProximos().add(fibra);
             jogador.getLocalizacao().diminuirRecurso("Fibra");
-            jogador.exibirRecursosProximos();
         }
+        jogador.exibirRecursosProximos();
     }
 }
