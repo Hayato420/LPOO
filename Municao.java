@@ -1,27 +1,34 @@
 public class Municao extends Item{
-    private int quantia;
+    private int quantiaAtual;
+    private final int quantiaMax;
     private final Material material1;
     private final Material material2;
     
-    public Municao(String nome, String descricao, int peso, int durabilidade, int quantia,
+    public Municao(String nome, String descricao, int peso, int durabilidade, int quantiaMax,
                    Material material1, Material material2, GeradorDeID geradorDeID){
         super(nome, descricao, peso, durabilidade, geradorDeID);
         this.material1 = material1;
         this.material2 = material2;
-        this.quantidade = quantia;
+        this.quantiaAtual = quantiaMax;
+        this.quantiaMax = quantiaMax;
     }
     //QUANTIA
     public void getQuantia(){
         return this.quantia;
     }
-    public void setQuatia(int quantia){
+    public void setQuantia(int quantia){
         this.quantia = quantia;
     }
-    public void diminuirQuantia(int quantia){
-        this.quantia -= quantia;
+    
+    public void diminuirQuantia(Personagem jogador, int quantia){
+        this.quantiaAtual -= quantia;
+        if(this.quantiaAtual <= 0){
+            jogador.getInventario().removerItem(this.getID());
+        }
     }
-    public void aumentarQuantia(int quantia){
-        this.quantia += quantia;
+    public void aumentarQuantia(Personagem jogador, int quantia){
+        this.quantiaAtual += quantia;
+        if(this.quantiaAtual > this.quantiaMax){this.quantiaAtual = this.quantiaMax;}
     }
 
     public void usar(Personagem jogador){
