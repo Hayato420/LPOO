@@ -9,18 +9,19 @@ public class Picareta extends Ferramenta{
     public void usar(Personagem jogador){
         jogador.perderEnergia(5);
         this.perderDurabilidade(jogador.getInventario());
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 5; i++){
             int chance = ThreadLocalRandom.current().nextInt(1,11); //incluso 1, excluso 11
             if (chance <= 7){
                 Material pedra = Material.TipoDeMaterial.PEDRA.criarMaterial(this.getGeradorDeID());
-                jogador.getInventario().adicionarItem(pedra);
-                //AINDA FALTA DIMINUIR QUANTIDADE DE RECURSOS DISPONIVEIS NO AMBIENTE
+                jogador.getRecursosProximos().add(pedra);
+                jogador.getLocalizacao().diminuirRecurso("Pedra");
             }
             else{
                 Material metal = Material.TipoDeMaterial.METAL.criarMaterial(this.getGeradorDeID());
-                jogador.getInventario().adicionarItem(metal);
-                //AINDA FALTA DIMINUIR QUANTIDADE DE RECURSOS DISPONIVEIS NO AMBIENTE
+                jogador.getRecursosProximos().add(metal);
+                jogador.getLocalizacao().diminuirRecurso("Metal");
             }
         }
-    } 
+        jogador.exibirRecursosProximos();
+    }
 }
