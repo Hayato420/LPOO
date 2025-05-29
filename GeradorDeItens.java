@@ -143,13 +143,13 @@ encontrados na exploracao */
 
 
     //GERADOR DE MUNICOES
-    public Item gerarMunicaoAleat(String nome) {
-        nome = nome.toLowerCase();
+    public Item gerarMunicaoAleat(String tipo) {
+        tipo = tipo.toLowerCase();
     
         Material metalInox1 = Material.TipoDeMaterial.METALINOX.criarMaterial(this.geradorDeID);
         Material metalInox2 = Material.TipoDeMaterial.METALINOX.criarMaterial(this.geradorDeID);
     
-        switch (nome) {
+        switch (tipo) {
             case "bala":
             case "balas":
                 return new Balas(
