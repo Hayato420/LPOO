@@ -87,7 +87,7 @@ public class Ambiente{
             }
             //se nao for alimento
             //armas
-            List<String> armasPossiveis = Set.of("arco", "espada", "lança", "lanca", "pistola");
+            List<String> armasPossiveis = Arrays.asList("arco", "espada", "lança", "lanca", "pistola");
             if (armasPossiveis.contains(recursoEscolhido.toLowerCase())){
                 return this.getGeradorDeItens().gerarFerramentaAleat(recursoEscolhido);
             }
