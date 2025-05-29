@@ -72,12 +72,10 @@ public abstract class Personagem{
 
     public void coletarAmbiente(int contador){
         for(int i = contador; i >= 1; i--){
-            recursosProximos.add(this.getLocalizacao().coletarRecurso(this));
+            Item recursoColetado = this.getLocalizacao().coletarRecurso(this);
+            if(recursoColetado != null){recursosProximos.add(recursoColetado);}
         }
-        System.out.println("Recursos coletaveis:");
-        for (Item item : recursosProximos){
-            System.out.println(item.getNome() + ": " + item.getID());
-        }
+        this.exibirRecursosProximos();
     }
 
     public void coletarProximos(String ID){
