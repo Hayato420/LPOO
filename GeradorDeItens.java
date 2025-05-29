@@ -67,6 +67,42 @@ public class GeradorDeItens{
         }
     }
 
+    public Ferramenta gerarFerramentaAleat(String tipoFerramenta){ //USADO NA COLETA DE RECURSOS DO AMBIENTE
+        Material mat1 = gerarMateriaisAleatParaFerram();
+        Material mat2 = gerarMateriaisAleatParaFerram();
+    
+        tipoFerramenta = tipoFerramenta.toLowerCase();
+    
+        switch (tipoFerramenta){
+            case "faca":
+                Material facaMat1 = gerarMateriaisAleatParaFerram();
+                Material facaMat2 = gerarMateriaisAleatParaFerram();
+                return new Faca("Faca", "Tromantino.", 1, this.geradorDeID,
+                                Ferramenta.TipoFerramenta.FACA, facaMat1, facaMat2);
+
+            case "picareta":
+                return new Picareta("Picareta", "First we mine, then we craft !", 3, this.geradorDeID,
+                        Ferramenta.TipoFerramenta.PICARETA, mat1, mat2);
+    
+            case "machado":
+                return new Machado("Machado", "Uma serra seria melhor.", 2, this.geradorDeID,
+                        Ferramenta.TipoFerramenta.MACHADO, mat1, mat2);
+
+            case "isqueiro":
+                Material metalInox1 = Material.TipoDeMaterial.METALINOX.criarMaterial(this.geradorDeID);
+                Material metalInox2 = Material.TipoDeMaterial.METALINOX.criarMaterial(this.geradorDeID);
+                return new Isqueiro("Isqueiro", "Fogo !", 1, this.geradorDeID, metalInox1, metalInox2);
+    
+            case "lanterna":
+                Material metalInox1 = Material.TipoDeMaterial.METALINOX.criarMaterial(this.geradorDeID);
+                Material metalInox2 = Material.TipoDeMaterial.METALINOX.criarMaterial(this.geradorDeID);
+                return new Lanterna("Lanterna", "Luz !", 1, this.geradorDeID, metalInox1, metalInox2);
+
+            default:
+                throw new IllegalArgumentException("Tipo de ferramenta desconhecido: " + tipoFerramenta); // erro do código
+        }
+    }
+
 //old
 /*  public Picareta gerarPicareta(Personagem jogador, String IDmat1, String IDmat2){
         if(verifCombinacaoMateriais(jogador, IDmat1, IDmat2)){
@@ -102,17 +138,7 @@ public class GeradorDeItens{
 
 /* ideia: por nao serem fabricaveis, Lanterna e Isqueiro devem ser apenas encontrados, sendo so criados por aleatoriedade,
 encontrados na exploracao */
-    public Isqueiro gerarIsqueiroAleat(){//o "Aleat" eh apenas para dizer que foi gerador pelo ambiente e nao pelo player
-        Material m1 = Material.TipoDeMaterial.METALINOX.criarMaterial(this.geradorDeID);
-        Material m2 = Material.TipoDeMaterial.METALINOX.criarMaterial(this.geradorDeID);
-        return new Isqueiro("Isqueiro", "Fogo !", 1, this.geradorDeID, m1, m2);
-    }
     
-    public Lanterna gerarLanternaAleat(){//o "Aleat" eh apenas para dizer que foi gerador pelo ambiente e nao pelo player
-        Material m1 = Material.TipoDeMaterial.METALINOX.criarMaterial(this.geradorDeID);
-        Material m2 = Material.TipoDeMaterial.METALINOX.criarMaterial(this.geradorDeID);
-        return new Lanterna("Lanterna", "Luz !", 1, this.geradorDeID, m1, m2);
-    }
 
 
 
