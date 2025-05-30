@@ -11,7 +11,7 @@ public class Ambiente{
     private final int dificuldade;
     private final Clima condicoesClimaticas;
     private final Temperatura temperaturaAmbiente;
-    private final GeradorDeItens geradorDeItens = new GeradorDeItens();
+    private final GeradorDeItens geradorDeItens;
     private Map<String, Integer> recursosDisponiveis = new HashMap<>();
 
     public enum Clima {
@@ -22,12 +22,13 @@ public class Ambiente{
     }
 
     public Ambiente(String nome, String descricao, int dificuldade,
-                    Clima condicoesClimaticas, Temperatura temperaturaAmbiente){
+                    Clima condicoesClimaticas, Temperatura temperaturaAmbiente, GeradorDeItens geradorDeItens){
         this.nome = nome;
         this.descricao = descricao;
         this.dificuldade = dificuldade;
         this.condicoesClimaticas = condicoesClimaticas;
         this.temperaturaAmbiente = temperaturaAmbiente;
+        this.geradorDeItens = geradorDeItens;
     }
 
 

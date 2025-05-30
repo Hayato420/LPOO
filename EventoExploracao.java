@@ -6,10 +6,11 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class EventoExploracao extends Evento{
     Random aleatorio = new Random();
-    private final GeradorDeItens geradorDeItens = new GeradorDeItens();
+    private final GeradorDeItens geradorDeItens;
     //construtor
-    public EventoExploracao(){
+    public EventoExploracao(GeradorDeItens geradorDeItens){
         super("nome", "descricao");
+        this.geradorDeItens = geradorDeItens;
     }
 
     @Override
@@ -30,7 +31,7 @@ public class EventoExploracao extends Evento{
             }
             else{
                 System.out.println("Ruínas misteriosas encontradas."); //10%
-                jogador.setLocalizacao(new AmbienteRuinas());//vai por o personagem em um novo objeto de AmbienteRuinas
+                jogador.setLocalizacao(new AmbienteRuinas(this.geradorDeItens));//vai por o personagem em um novo objeto de AmbienteRuinas
                 jogador.getRecursosProximos().addAll(ruinasLoots());
                 //ITEM RARO
             }

@@ -1,7 +1,7 @@
 public class PersonagemMedico extends Personagem{
 
-    public PersonagemMedico(String nome){
-        super(nome, 100, 100, 100, 100, 100);
+    public PersonagemMedico(String nome, GerenciadorDeAmbiente gerenciadorDeAmbiente){
+        super(nome, 100, 100, 100, 100, 100, gerenciadorDeAmbiente);
     }
 
     @Override

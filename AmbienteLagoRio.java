@@ -2,9 +2,9 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class AmbienteLagoRio extends Ambiente{
     //construtor da subclasse
-    public AmbienteLagoRio(){
+    public AmbienteLagoRio(GeradorDeItens geradorDeItens){
         super("Zona alagada", "Uma próspera região, rica em água e alimentos, mas pouca matéria prima.", 
-        3, Clima.UMIDO, Temperatura.NEUTRO);
+        3, Clima.UMIDO, Temperatura.NEUTRO, geradorDeItens);
         gerarRecursos();
     }   
 

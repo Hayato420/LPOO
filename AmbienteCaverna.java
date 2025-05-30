@@ -2,9 +2,9 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class AmbienteCaverna extends Ambiente{
     //construtor da subclasse
-    public AmbienteCaverna(){
+    public AmbienteCaverna(GeradorDeItens geradorDeItens){
         super("Caverna", "Um grande túnel que passa por baixo da terra, escondido do sol e fácil de se perder.", 
-        3, Clima.UMIDO, Temperatura.NEUTRO);
+        3, Clima.UMIDO, Temperatura.NEUTRO, geradorDeItens);
         gerarRecursos();
     }   
 

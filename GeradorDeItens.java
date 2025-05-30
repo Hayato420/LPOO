@@ -10,6 +10,10 @@ import java.util.concurrent.ThreadLocalRandom;
 public class GeradorDeItens{
     private GeradorDeID geradorDeID;
 
+    public GeradorDeItens(GeradorDeID geradorDeID){
+        this.geradorDeID = geradorDeID;
+    }
+
     public GeradorDeID getGeradorDeID(){
         return this.geradorDeID;
     }

@@ -1,7 +1,7 @@
 public class PersonagemSobrevivente extends Personagem{
     
-    public PersonagemSobrevivente(String nome){
-        super(nome, 80, 120, 100, 100, 100);
+    public PersonagemSobrevivente(String nome, GerenciadorDeAmbiente gerenciadorDeAmbiente){
+        super(nome, 80, 120, 100, 100, 100, gerenciadorDeAmbiente);
     }
 
     @Override

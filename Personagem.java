@@ -8,7 +8,7 @@ public abstract class Personagem{
     private boolean condicaoVitoria = false;
     private boolean condicaoDerrota = false;
     //AMBIENTE
-    private final GerenciadorDeAmbiente pontoDePartida = new GerenciadorDeAmbiente();
+    private final GerenciadorDeAmbiente gerenciadorDeAmbiente;
     private Ambiente localizacao;
     //ATRIBUTOS
     private final String nome;
@@ -26,8 +26,10 @@ public abstract class Personagem{
     private FonteDeCalor fonteDeCalor; //SE != null, A CADA ROUND DEVERA ESQUENTAR O JOGADOR PARA NORMAL, ALEM DE PERMITIR COZINHAR. SE == null, não usará o alimentarFogo(). Se não tiver madeira, o alimentarFogo() porá um fim à fogueira ("setFonteDeCalor(null);").
     private final GeradorDeID geradorDeID = new GeradorDeID();
 
-    public Personagem(String nome, int vida, int fome, int sede, int energia, int sanidade){
-        this.localizacao = pontoDePartida.gerarAleatorio();
+    public Personagem(String nome, int vida, int fome, int sede, int energia, 
+                      int sanidade, GerenciadorDeAmbiente gerenciadorDeAmbiente){
+        this.gerenciadorDeAmbiente = gerenciadorDeAmbiente;
+        this.localizacao = gerenciadorDeAmbiente.gerarAleatorio();
         this.nome = nome;
         this.vida = vida;
         this.fome = fome;

@@ -9,55 +9,49 @@ public class GerenciadorDeAmbiente{
         private Clima global: Pode influenciar vários ambientes ao mesmo tempo.
         private Histórico de movimentação: Registra onde o jogador já esteve.
 */
-    private final List<Ambiente> ambientesDisponiveis;
     private final Random aleatorio = new Random();
-    private final List<Ambiente> historicoMovimentacao = new ArrayList<>();
+    private final List<Ambiente> historicoMovimentacao = new ArrayList<Ambiente>();
+    private final GeradorDeItens geradorDeItens;
 
-    //construtor do gerenciador
-    public GerenciadorDeAmbiente() {
-        this.ambientesDisponiveis = Arrays.asList(
-            new AmbienteFloresta(),
-            new AmbienteMontanha(),
-            new AmbienteDeserto(),
-            new AmbienteRuinas(),
-            new AmbienteCaverna(),
-            new AmbienteLagoRio()
-        );
-
+    public GerenciadorDeAmbiente(GeradorDeItens geradorDeItens) {
+        this.geradorDeItens = geradorDeItens;
     }
 
-    public List<Ambiente> getAmbientesDisponiveis() {
-        return ambientesDisponiveis;
+    public Ambiente gerarAleatorio() {
+        int tipo = aleatorio.nextInt(6); // 6 tipos de ambiente
+
+        switch (tipo) {
+            case 0:
+                return new AmbienteFloresta(geradorDeItens);
+            case 1:
+                return new AmbienteMontanha(geradorDeItens);
+            case 2:
+                return new AmbienteDeserto(geradorDeItens);
+            case 3:
+                return new AmbienteRuinas(geradorDeItens);
+            case 4:
+                return new AmbienteCaverna(geradorDeItens);
+            case 5:
+                return new AmbienteLagoRio(geradorDeItens);
+            default:
+                throw new IllegalStateException("Tipo de ambiente nao descrito: " + tipo);
+        }
     }
-    
-    public Ambiente gerarAleatorio(){
-        Ambiente novaLocalizacao = ambientesDisponiveis.get(aleatorio.nextInt(ambientesDisponiveis.size()));
-        return novaLocalizacao;
-    }
-    
+
     public void mudarAmbiente(Personagem jogador) {
         Ambiente localizacaoAtual = jogador.getLocalizacao();
         Ambiente novaLocalizacao;
 
         do {
             novaLocalizacao = gerarAleatorio();
-        } while (novaLocalizacao.getClass() == localizacaoAtual.getClass()); //o ambiente nunca mudara para o mesmo
+        } while (novaLocalizacao.getClass() == localizacaoAtual.getClass());
 
         jogador.setLocalizacao(novaLocalizacao);
         historicoMovimentacao.add(novaLocalizacao);
-        System.out.println("Voce se encontra em: " + novaLocalizacao.getNome());
+        System.out.println("Você se encontra em: " + novaLocalizacao.getNome());
     }
 
-    public void gerarEvento(Ambiente local){
-
-    }
-
-    public void modificarRecursos(Ambiente local){
-
-    }
-
-    public void exibirHistoricoDeMovimentacao(){
+    public void exibirHistoricoDeMovimentacao() {
         System.out.println(this.historicoMovimentacao);
     }
-
 }
