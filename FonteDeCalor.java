@@ -12,19 +12,20 @@ public abstract class FonteDeCalor{
     }
 
     //USADO A CADA TURNO E NA CRIAÇÃO, PARA MANTER O FOGO ACESO
-    public void alimentarFogo(){
+    public boolean alimentarFogo(){
         try{
         for (Item item : this.jogador.getInventario().getItens()){
                 if ("Madeira".equals(item.getNome())){
                     this.jogador.getInventario().removerItem(item.getID());
                     this.jogador.setFonteDeCalor(this);
-                    return;
+                    return true;
                 }
         }
         throw new ExcecaoSemMadeira("Nenhuma madeira encontrada no inventario.");
         } catch (ExcecaoSemMadeira exc){
             System.out.println("Voce nao possui madeira para iniciar o fogo.");
             this.getJogador().setFonteDeCalor(null);
+            return false;
         }
     }
 

@@ -7,8 +7,9 @@ public abstract class Personagem{
     private boolean emCombate = false;
     private boolean condicaoVitoria = false;
     private boolean condicaoDerrota = false;
-    //AMBIENTE
+    //Geradores e Gerenciadores
     private final GerenciadorDeAmbiente gerenciadorDeAmbiente;
+    private final GeradorDeID geradorDeID;
     private Ambiente localizacao;
     //ATRIBUTOS
     private final String nome;
@@ -24,12 +25,12 @@ public abstract class Personagem{
     private Arma armaEquipada;
     //CALOR (FOGUEIRA E FORNO)
     private FonteDeCalor fonteDeCalor; //SE != null, A CADA ROUND DEVERA ESQUENTAR O JOGADOR PARA NORMAL, ALEM DE PERMITIR COZINHAR. SE == null, não usará o alimentarFogo(). Se não tiver madeira, o alimentarFogo() porá um fim à fogueira ("setFonteDeCalor(null);").
-    private final GeradorDeID geradorDeID = new GeradorDeID();
 
     public Personagem(String nome, int vida, int fome, int sede, int energia, 
-                      int sanidade, GerenciadorDeAmbiente gerenciadorDeAmbiente){
+                      int sanidade, GerenciadorDeAmbiente gerenciadorDeAmbiente, GeradorDeID geradorDeID){
         this.gerenciadorDeAmbiente = gerenciadorDeAmbiente;
         this.localizacao = gerenciadorDeAmbiente.gerarAleatorio();
+        this.geradorDeID = geradorDeID;
         this.nome = nome;
         this.vida = vida;
         this.fome = fome;
@@ -164,7 +165,14 @@ public abstract class Personagem{
         System.out.println("Nao foi encontrada agua de ID " + ID + ".");
     }
 
-    //APAGAR FOGUEIRA
+    //FOGUEIRA
+    public void criarFogueira(){
+        this.fonteDeCalor = new Fogueira(this);
+        if(fonteDeCalor.alimentarFogo()){
+            System.out.println("Fogueira criada !");
+        }
+    }
+
     public void apagarFogueira(){
         this.setFonteDeCalor(null);//não gastará mais madeira do inventário a cada loop, mesmo sem se movimentar
     }

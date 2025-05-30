@@ -4,8 +4,8 @@ public class PersonagemTeste extends Personagem{
 
     private final Scanner scanner = new Scanner(System.in);
 
-    public PersonagemTeste(GerenciadorDeAmbiente gerenciadorDeAmbiente){
-        super("jorge", 100, 100, 100, 100, 100, gerenciadorDeAmbiente);
+    public PersonagemTeste(GerenciadorDeAmbiente gerenciadorDeAmbiente, GeradorDeID geradorDeID){
+        super("jorge", 100, 100, 100, 100, 100, gerenciadorDeAmbiente, geradorDeID);
     }
 
     @Override
