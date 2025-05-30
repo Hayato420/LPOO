@@ -11,22 +11,22 @@ public class AmbienteDeserto extends Ambiente{
     public void gerarRecursos(){//usado apenas uma vez, se não sobrescreverá
         //gerando agua
         int quantidadeAgua = ThreadLocalRandom.current().nextInt(0, 6);
-        recursosDisponiveis.put("Garrafa", quantidadeAgua);
+        getRecursosDisponiveis().put("Garrafa", quantidadeAgua);
 
         //gerando alimentos da lista
         for(Alimento.TipoAlimento tipo : Alimento.TipoAlimento.values()){
             int quantidadeAlimento = ThreadLocalRandom.current().nextInt(0, 3);
-            recursosDisponiveis.put(tipo.getNome(), quantidadeAlimento);
+            getRecursosDisponiveis().put(tipo.getNome(), quantidadeAlimento);
         }
         //gerando materiais
         for(Material.TipoDeMaterial tipo : Material.TipoDeMaterial.values()){
             if(tipo != Material.TipoDeMaterial.PEDRA){continue;} //não spawna nada além de pedra
             int quantidadeMaterial = ThreadLocalRandom.current().nextInt(5,11);
-            recursosDisponiveis.put(tipo.getNome(), quantidadeMaterial);
+            getRecursosDisponiveis().put(tipo.getNome(), quantidadeMaterial);
         }
         //gerando Ferramentas e Armas
-        recursosDisponiveis.putAll(this.getGeradorDeItens().gerarFerrEArm());
+        getRecursosDisponiveis().putAll(this.getGeradorDeItens().gerarFerrArmMunic());
 
-        recursosDisponiveis.entrySet().removeIf(entry -> entry.getValue() == 0);//limpeza dos valores zerados
+        getRecursosDisponiveis().entrySet().removeIf(entry -> entry.getValue() == 0);//limpeza dos valores zerados
     }
 }

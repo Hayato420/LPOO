@@ -28,7 +28,8 @@ public abstract class Municao extends Item{
         }
     }
     //RECARGA SE ADICIONAR MAIS AO INVENTARIO 
-    public abstract void aumentarQuantia(){}/*(Personagem jogador, int quantia){ //getQuantiaAtual() do novo item passado como parâmetro
+    public abstract void aumentarQuantia(Personagem jogador, int quantiaAdicionada);
+    /*(Personagem jogador, int quantia){ //getQuantiaAtual() do novo item passado como parâmetro
         for (Item item : jogador.getInventario().getItens()){
             if (item instanceof XXXX){
                 XXXX xxxx = (XXXX) item;
@@ -39,11 +40,11 @@ public abstract class Municao extends Item{
                 if (quantia == 0) break;
             }
         }
-    */
         if (quantia > 0){
             jogador.getInventario().adicionarItem(new XXXX(jogador.getGeradorDeID(), quantia));
         }
     }
+    */
 
     //OVERRIDE OBRIGATORIO DO ABSTRATO, QUANDO FOR USAR -> UTILIZAR diminuirQuantia()
     @Override

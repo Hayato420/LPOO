@@ -11,12 +11,12 @@ public class AmbienteMontanha extends Ambiente{
     public void gerarRecursos(){//usado apenas uma vez, se não sobrescreverá
         //gerando agua
         int quantidadeAgua = ThreadLocalRandom.current().nextInt(0, 6);
-        recursosDisponiveis.put("Garrafa", quantidadeAgua);
+        getRecursosDisponiveis().put("Garrafa", quantidadeAgua);
 
         //gerando alimentos da lista
         for(Alimento.TipoAlimento tipo : Alimento.TipoAlimento.values()){
             int quantidadeAlimento = ThreadLocalRandom.current().nextInt(0, 6);
-            recursosDisponiveis.put(tipo.getNome(), quantidadeAlimento);
+            getRecursosDisponiveis().put(tipo.getNome(), quantidadeAlimento);
         }
         //gerando materiais
         for(Material.TipoDeMaterial tipo : Material.TipoDeMaterial.values()){
@@ -24,11 +24,11 @@ public class AmbienteMontanha extends Ambiente{
             if(tipo == Material.TipoDeMaterial.MADEIRA){continue;} //não spawna madeira
             if(tipo == Material.TipoDeMaterial.FIBRA){continue;} //não spawna fibra
             int quantidadeMaterial = ThreadLocalRandom.current().nextInt(5,11);
-            recursosDisponiveis.put(tipo.getNome(), quantidadeMaterial);
+            getRecursosDisponiveis().put(tipo.getNome(), quantidadeMaterial);
         }
         //gerando Ferramentas e Armas
-        recursosDisponiveis.putAll(this.getGeradorDeItens().gerarFerrEArm());
+        getRecursosDisponiveis().putAll(this.getGeradorDeItens().gerarFerrArmMunic());
 
-        recursosDisponiveis.entrySet().removeIf(entry -> entry.getValue() == 0);//limpeza dos valores zerados
+        getRecursosDisponiveis().entrySet().removeIf(entry -> entry.getValue() == 0);//limpeza dos valores zerados
     }
 }

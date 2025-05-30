@@ -11,21 +11,21 @@ public class AmbienteFloresta extends Ambiente{
     public void gerarRecursos(){//usado apenas uma vez, se não sobrescreverá
         //gerando agua
         int quantidadeAgua = ThreadLocalRandom.current().nextInt(0, 6);
-        recursosDisponiveis.put("Garrafa", quantidadeAgua);
+        getRecursosDisponiveis().put("Garrafa", quantidadeAgua);
 
         //inicializando alimentos da lista
         for (Alimento.TipoAlimento tipo : Alimento.TipoAlimento.values()){
             int quantidadeAlimento = ThreadLocalRandom.current().nextInt(0, 6);
-            recursosDisponiveis.put(tipo.getNome(), quantidadeAlimento);
+            getRecursosDisponiveis().put(tipo.getNome(), quantidadeAlimento);
         }
         for (Material.TipoDeMaterial tipo : Material.TipoDeMaterial.values()){
             if(tipo == Material.TipoDeMaterial.METALINOX){continue;} //não spawna metal inoxidável
             if(tipo == Material.TipoDeMaterial.FIBRA){continue;} //não spawna fibra
             int quantidadeMaterial = ThreadLocalRandom.current().nextInt(5,11);
-            recursosDisponiveis.put(tipo.getNome(), quantidadeMaterial);
+            getRecursosDisponiveis().put(tipo.getNome(), quantidadeMaterial);
         }
-        recursosDisponiveis.putAll(this.getGeradorDeItens().gerarFerrEArm());
+        getRecursosDisponiveis().putAll(this.getGeradorDeItens().gerarFerrArmMunic());
 
-        recursosDisponiveis.entrySet().removeIf(entry -> entry.getValue() == 0);//limpeza dos valores zerados
+        getRecursosDisponiveis().entrySet().removeIf(entry -> entry.getValue() == 0);//limpeza dos valores zerados
     }
 }

@@ -18,7 +18,7 @@ public abstract class Ferramenta extends Item{
         return this.material1;
     }
 
-    public Material gMaterial2(){
+    public Material getMaterial2(){
         return this.material2;
     }
 

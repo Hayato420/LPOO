@@ -59,14 +59,20 @@ public class Inventario{
     }
 
     public boolean adicionarItem(Item item){
-        int pesoAtual = calcularPesoAtual();
+        if(item != null){
+            int pesoAtual = calcularPesoAtual();
 
-        if (pesoAtual + item.getPeso() <= this.capacidadeMax){
-            inventario.add(item);
-            ordenarItensPorNome();
-            return true;
-        } else{
-            System.out.println("Seu inventario esta cheio!");
+            if (pesoAtual + item.getPeso() <= this.capacidadeMax){
+                inventario.add(item);
+                ordenarItensPorNome();
+                return true;
+            } else{
+                System.out.println("Seu inventario esta cheio!");
+                return false;
+            }
+        }
+        else{
+            System.out.println("Falha ao adicionar item.");
             return false;
         }
     }
@@ -82,7 +88,7 @@ public class Inventario{
     //remove um item com base na sua ID
     public void removerItem(String ID){
         Iterator<Item> iterator = inventario.iterator();
-        while (iterator.hasNext()) {
+        while (iterator.hasNext()){
             Item item = iterator.next();
             if (item.getID().equals(ID)){
                 iterator.remove();
@@ -91,7 +97,7 @@ public class Inventario{
                 return;
             }
         }
-        System.out.println("Item com ID " + ID + " não encontrado.");
+        System.out.println("Item com ID " + ID + " nao encontrado.");
     }
 
     private void ordenarItensPorNome(){

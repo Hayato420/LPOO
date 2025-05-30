@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
@@ -53,20 +54,25 @@ public class EventoExploracao extends Evento{
     public List<Item> ruinasLoots(){
         List<Item> loots = new ArrayList<>();
         int chance = ThreadLocalRandom.current().nextInt(1,4);
+        Material metalInox1 = Material.TipoDeMaterial.METALINOX.criarMaterial(this.getGeradorDeID());
+        Material metalInox2 = Material.TipoDeMaterial.METALINOX.criarMaterial(this.getGeradorDeID());
 
         switch (chance){
             case 1:
-                loots.add(this.geradorDeItens.gerarIsqueiro());
+                loots.add(new Isqueiro(metalInox1, metalInox2, this.getGeradorDeID()));
                 break;
             case 2:
-                loots.add(this.geradorDeItens.gerarLanterna());
+                loots.add(new Lanterna(metalInox1, metalInox2, this.getGeradorDeID()));
                 break;
             default:
-                loots.add(this.geradorDeItens.gerarPistola());
+                loots.add(new Pistola(Arma.TipoArma.aDistancia, Arma.QualArma.PISTOLA, 
+                            3, metalInox1, metalInox2, this.getGeradorDeID()));
                 break;
         }
 
-        //ADICIONAR GERACAO DE MUNICAO
+        List<String> municoesParaLoot = Arrays.asList("balas", "flechas", "fluido de isqueiro", "pilhas");
+        String municaoSorteada = municoesParaLoot.get(ThreadLocalRandom.current().nextInt(municoesParaLoot.size()));
+        loots.add(this.geradorDeItens.gerarMunicaoAleat(municaoSorteada));
         return loots;
     }
 }

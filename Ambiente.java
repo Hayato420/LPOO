@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -50,6 +51,10 @@ public class Ambiente{
         return this.temperaturaAmbiente;
     }
 
+    public Map<String, Integer> getRecursosDisponiveis(){
+        return this.recursosDisponiveis;
+    }
+
     public GeradorDeItens getGeradorDeItens(){
         return this.geradorDeItens;
     }
@@ -86,6 +91,12 @@ public class Ambiente{
                 }
             }
             //se nao for alimento
+            //materiais
+            for (Material.TipoDeMaterial tipo : Material.TipoDeMaterial.values()){
+                if (tipo.getNome().equalsIgnoreCase(recursoEscolhido)){
+                    return tipo.criarMaterial(this.getGeradorDeItens().getGeradorDeID());
+                }
+            }
             //armas
             List<String> armasPossiveis = Arrays.asList("arco", "espada", "lança", "lanca", "pistola");
             if(armasPossiveis.contains(recursoEscolhido.toLowerCase())){

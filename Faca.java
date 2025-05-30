@@ -1,7 +1,7 @@
 public class Faca extends Ferramenta{
 
-    public Faca(String nome, String descricao, int peso, Material material1, Material material2, GeradorDeID geradorDeID){
-        super(nome, descricao, peso, material1, material2, geradorDeID);
+    public Faca(Material material1, Material material2, GeradorDeID geradorDeID){
+        super("Faca", "Tromantino.", 1, material1, material2, geradorDeID);
     }
 
     public void usar(Personagem jogador){
@@ -9,8 +9,9 @@ public class Faca extends Ferramenta{
         this.perderDurabilidade(jogador.getInventario());
         for (int i = 0; i < 5; i++){
             Material fibra = Material.TipoDeMaterial.FIBRA.criarMaterial(this.getGeradorDeID());
-            jogador.getRecursosProximos().add(fibra);
-            jogador.getLocalizacao().diminuirRecurso("Fibra");
+            if(jogador.getLocalizacao().diminuirRecurso("Fibra")){
+                jogador.getRecursosProximos().add(fibra);
+            }
         }
         jogador.exibirRecursosProximos();
     }
