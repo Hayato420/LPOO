@@ -18,7 +18,9 @@ public class Alimento extends Item{
         FEIJOADAENLATADA("Feijoada enlatada", "Feijão e carne.", 1, 1, 1000, false, 25),
         BISCOITOS("Biscoitos", "Doce ou salgado?", 1, 1, 10, false, 30),
         PAO("Pão", "Farinha e fermento", 1, 1, 3, false, 20),
-        BOLACHAS("Bolachas", "Salgada ou doce?", 1, 1, 10, false, 30);
+        BOLACHAS("Bolachas", "Salgada ou doce?", 1, 1, 10, false, 30),
+        COELHOCRU("Coelho cru", "Nao mais saltitante.", 2, 1, 2, false, 10),
+        COELHOASSADO("Coelho assado", "Bro is cooked.", 2, 1, 5, false, 30);
 
         private final String nome;
         private final String descricao;
@@ -69,6 +71,10 @@ public class Alimento extends Item{
                     return new Pao(geradorDeID);
                 case BOLACHAS:
                     return new Bolachas(geradorDeID);
+                case COELHOCRU:
+                    return new CoelhoCru(geradorDeID);
+                case COELHOASSADO: 
+                    return new CoelhoAssado(geradorDeID);
                 default:
                     throw new IllegalArgumentException("Tipo de alimento não listado: " + this);
             }

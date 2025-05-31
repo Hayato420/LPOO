@@ -12,8 +12,7 @@ public abstract class FonteDeCalor{
     }
 
     //USADO A CADA TURNO E NA CRIAÇÃO, PARA MANTER O FOGO ACESO
-    public void alimentarFogo(){
-        try{
+    public void alimentarFogo() throws ExcecaoSemMadeira{
         for (Item item : this.jogador.getInventario().getItens()){
                 if ("Madeira".equals(item.getNome())){
                     this.jogador.getInventario().removerItem(item.getID());
@@ -22,10 +21,6 @@ public abstract class FonteDeCalor{
                 }
         }
         throw new ExcecaoSemMadeira("Nenhuma madeira encontrada no inventario.");
-        } catch (ExcecaoSemMadeira exc){
-            System.out.println("Voce nao possui madeira para iniciar o fogo.");
-            this.getJogador().setFonteDeCalor(null);
-        }
     }
 
     //COZINHAR COMIDAS
@@ -37,6 +32,10 @@ public abstract class FonteDeCalor{
         else if(comida.getTipoAlimento() == Alimento.TipoAlimento.FRANGOCRU){
             this.jogador.getInventario().removerItem(comida.getID());
             return Alimento.TipoAlimento.FRANGOASSADO.criarAlimento(this.geradorDeID);
+        }
+        else if(comida.getTipoAlimento() == Alimento.TipoAlimento.COELHOCRU){
+            this.jogador.getInventario().removerItem(comida.getID());
+            return Alimento.TipoAlimento.COELHOASSADO.criarAlimento(this.geradorDeID);
         }
         else{
             System.out.println("Isso nao e cozinhavel.");

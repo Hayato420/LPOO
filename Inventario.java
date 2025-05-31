@@ -17,11 +17,11 @@ public class Inventario{
         List<Item> itens = this.getItens();
         for (Item item : itens){
             System.out.println(item.getNome() + ": ");
-            System.out.println("ID — " + item.getID());
-            System.out.println("Descricao — " + item.getDescricao());
-            System.out.println("Peso — " + item.getPeso());
-            System.out.println("Durabilidade — " + item.getDurabilidade());
-            System.out.println("Tipo — " + item.getClass().getSimpleName());
+            System.out.println("ID: " + item.getID());
+            System.out.println("Descricao: " + item.getDescricao());
+            System.out.println("Peso: " + item.getPeso());
+            System.out.println("Durabilidade: " + item.getDurabilidade());
+            System.out.println("Tipo: " + item.getClass().getSimpleName());
             System.out.println();
         }
         System.out.println("Peso total do inventario: " + calcularPesoAtual());

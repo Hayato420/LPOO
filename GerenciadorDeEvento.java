@@ -6,14 +6,15 @@ public class GerenciadorDeEvento{
 
     private final List<Evento> eventosDisponiveis;
     private final Random aleatorio = new Random();      //estou deixando esse aviso pra me lembrar de terminar o codigo
-
+    private final GeradorDeItens geradorDeItens;
     //construtor do gerenciador
 
-    public GerenciadorDeEvento(){
+    public GerenciadorDeEvento(GeradorDeItens geradorDeItens){
+        this.geradorDeItens = geradorDeItens;
         this.eventosDisponiveis = Arrays.asList(
             new EventoVazio(),
             new EventoClimatico(),
-            new EventoExploracao(),
+            new EventoExploracao(geradorDeItens),
             new EventoCombate(),
             new EventoDoente()
         );

@@ -2,9 +2,9 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class AmbienteMontanha extends Ambiente{
     //construtor da subclasse
-    public AmbienteMontanha(){
+    public AmbienteMontanha(GeradorDeItens geradorDeItens){
         super("Montanha", "Uma região de difícil acesso, mas rica em minérios e pedras preciosas.", 
-        3, Clima.AMENO, Temperatura.FRIO);
+        3, Clima.AMENO, Temperatura.FRIO, geradorDeItens);
         gerarRecursos();
     }   
 

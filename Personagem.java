@@ -1,4 +1,5 @@
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -7,8 +8,9 @@ public abstract class Personagem{
     private boolean emCombate = false;
     private boolean condicaoVitoria = false;
     private boolean condicaoDerrota = false;
-    //AMBIENTE
-    private final GerenciadorDeAmbiente pontoDePartida = new GerenciadorDeAmbiente();
+    //Geradores e Gerenciadores
+    private final GerenciadorDeAmbiente gerenciadorDeAmbiente;
+    private final GeradorDeID geradorDeID;
     private Ambiente localizacao;
     //ATRIBUTOS
     private final String nome;
@@ -24,10 +26,12 @@ public abstract class Personagem{
     private Arma armaEquipada;
     //CALOR (FOGUEIRA E FORNO)
     private FonteDeCalor fonteDeCalor; //SE != null, A CADA ROUND DEVERA ESQUENTAR O JOGADOR PARA NORMAL, ALEM DE PERMITIR COZINHAR. SE == null, não usará o alimentarFogo(). Se não tiver madeira, o alimentarFogo() porá um fim à fogueira ("setFonteDeCalor(null);").
-    private final GeradorDeID geradorDeID = new GeradorDeID();
 
-    public Personagem(String nome, int vida, int fome, int sede, int energia, int sanidade){
-        this.localizacao = pontoDePartida.gerarAleatorio();
+    public Personagem(String nome, int vida, int fome, int sede, int energia, 
+                      int sanidade, GerenciadorDeAmbiente gerenciadorDeAmbiente, GeradorDeID geradorDeID){
+        this.gerenciadorDeAmbiente = gerenciadorDeAmbiente;
+        this.localizacao = gerenciadorDeAmbiente.gerarAleatorio();
+        this.geradorDeID = geradorDeID;
         this.nome = nome;
         this.vida = vida;
         this.fome = fome;
@@ -36,12 +40,35 @@ public abstract class Personagem{
         this.sanidade = sanidade;
         this.status = new Status();
         this.inventario = new Inventario(50);
-        this.recursosProximos = null;
+        this.recursosProximos = new ArrayList<>();
         this.armaEquipada = null;
         this.fonteDeCalor = null;
     }
 
     public abstract void usarHabilidade();
+
+    public void craftar(){}
+
+    public void cozinhar(String IDcomida){
+        for(Item item : this.getInventario().getItens()){
+            if(item.getID().equals(IDcomida) && item instanceof Alimento && this.getFonteDeCalor() != null){
+                Alimento comida = (Alimento) item;
+                Alimento cozinhado = this.getFonteDeCalor().cozinharComida(comida);
+                if(cozinhado != null){
+                    this.getInventario().adicionarItem(cozinhado);
+                    System.out.println("Alimento cozinhado com sucesso !");
+                    return;
+                }
+            }
+        }
+        System.out.println("Para cozinhar voce precisa estar perto de uma fonte de calor e selecionar um alimento cozinhavel.");
+    }
+
+    //DORMIR
+    public void dormir(){ //FAZER PERDER O TURNO
+        this.adicionarEnergia(30);
+        this.adicionarSanidade(10);
+    }
 
     //EXPLORAR, COLETAR RECURSOS (AMBIENTE E PRÓXIMOS) E MUDAR DE AMBIENTE
     public void explorar(){
@@ -57,19 +84,32 @@ public abstract class Personagem{
         //OCORRENCIA DE EVENTOS !!!!!
     }
 
-    public void mudarAmbiente(){
+    public void mudarAmbiente(GerenciadorDeAmbiente gerenciadorDeAmbiente){
         if(this.getStatus().getTemperatura() == Status.Temperatura.FRIO 
            || this.getStatus().getTemperatura() == Status.Temperatura.CALOR){
             this.perderEnergia(20);
-            //GERENCIADOR DE AMBIENTE, MUDAR LOCALIZACAO
+            gerenciadorDeAmbiente.mudarAmbiente(this);
+            //OCORRENCIA DE EVENTOS !!!!!
         }
         else{
             this.perderEnergia(10);
-            //GERENCIADOR DE AMBIENTE, MUDAR LOCALIZACAO
+            gerenciadorDeAmbiente.mudarAmbiente(this);
+            //OCORRENCIA DE EVENTOS !!!!!
         }
         this.getRecursosProximos().clear();
     }
 
+    public void usarItem(String IDItem){
+        for(Item item : this.getInventario().getItens()){
+            if(item.getID().equals(IDItem)){
+                item.usar(this);
+                return;
+            }
+        }
+        System.out.println("Nao foi encontrado em seu inventario um item de ID ''" + IDItem + "''.");
+    }
+
+    //COLETA DE RECURSOS, METODOS NAO USADOS DIRETAMENTE
     public void coletarAmbiente(int contador){
         for(int i = contador; i >= 1; i--){
             Item recursoColetado = this.getLocalizacao().coletarRecurso(this);
@@ -94,8 +134,6 @@ public abstract class Personagem{
         }
         System.out.println("Nao foram encontrados recursos proximos de ID ''" + ID + "''.");
     }
-
-    //public void mudarAmbiente(){} USAR GERENCIADOR DE AMBIENTE
 
     //FINS DE JOGO
     public boolean getCondicaoVitoria(){
@@ -162,9 +200,35 @@ public abstract class Personagem{
         System.out.println("Nao foi encontrada agua de ID " + ID + ".");
     }
 
-    //APAGAR FOGUEIRA
+    //FOGUEIRA
+    public void criarFogueira(){
+        try{
+            this.fonteDeCalor = new Fogueira(this);
+            System.out.println("Fogueira criada !");
+        }
+        catch(ExcecaoSemMadeira exc){
+            System.out.println(exc.getMessage());
+        }
+    }
+
+    public void alimentarFogo(){
+        if(this.getFonteDeCalor() != null && this.getFonteDeCalor().getClass() == Fogueira.class){
+            try{
+                this.getFonteDeCalor().alimentarFogo();
+                System.out.println("Fogo alimentado, madeira gasta.");
+            }
+            catch(ExcecaoSemMadeira exc){
+                System.out.println(exc.getMessage());
+            }
+        }
+    }
+
     public void apagarFogueira(){
-        this.setFonteDeCalor(null);//não gastará mais madeira do inventário a cada loop, mesmo sem se movimentar
+        if(this.getFonteDeCalor() != null){
+            this.setFonteDeCalor(null);//não gastará mais madeira do inventário a cada loop, mesmo sem se movimentar
+            return;
+        }
+        System.out.println("Nenhuma fonte de calor por perto.");
     }
 
     //LOCALIZACAO
@@ -369,5 +433,16 @@ public abstract class Personagem{
             }
         }
         System.out.println("Nenhuma arma com o ID " + ID + " foi encontrada.");
+    }
+    //EXIBICAO DE ATRIBUTOS E STATUS
+    public void exibirAtrStat(){
+        System.out.println("Nome: " + getNome());
+        System.out.println("Vida: " + this.getVida());
+        System.out.println("Fome: " + this.getFome());
+        System.out.println("Sede: " + this.getSede());
+        System.out.println("Energia: " + this.getEnergia());
+        System.out.println("Sanidade: " + this.getSanidade());
+        System.out.println(this.getStatus().exibirStatus());
+        System.out.println("Ambiente atual: " + this.getLocalizacao().getNome());
     }
 }

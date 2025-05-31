@@ -12,16 +12,18 @@ public class GerenciadorDeAmbiente{
     private final List<Ambiente> ambientesDisponiveis;
     private final Random aleatorio = new Random();
     private final List<Ambiente> historicoMovimentacao = new ArrayList<>();
+    private final GeradorDeItens geradorDeItens;
 
     //construtor do gerenciador
-    public GerenciadorDeAmbiente() {
+    public GerenciadorDeAmbiente(GeradorDeItens geradorDeItens){
+        this.geradorDeItens = geradorDeItens;
         this.ambientesDisponiveis = Arrays.asList(
-            new AmbienteFloresta(),
-            new AmbienteMontanha(),
-            new AmbienteDeserto(),
-            new AmbienteRuinas(),
-            new AmbienteCaverna(),
-            new AmbienteLagoRio()
+            new AmbienteFloresta(geradorDeItens),
+            new AmbienteMontanha(geradorDeItens),
+            new AmbienteDeserto(geradorDeItens),
+            new AmbienteRuinas(geradorDeItens),
+            new AmbienteCaverna(geradorDeItens),
+            new AmbienteLagoRio(geradorDeItens)
         );
 
     }
@@ -59,5 +61,4 @@ public class GerenciadorDeAmbiente{
     public void exibirHistoricoDeMovimentacao(){
         System.out.println(this.historicoMovimentacao);
     }
-
 }
