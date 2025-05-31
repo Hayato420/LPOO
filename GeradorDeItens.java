@@ -50,7 +50,7 @@ public class GeradorDeItens{
         return null; // se não encontrou
     }
 //CORDA E ARMADILHA
-    public Corda gerarCorda(Personagem jogador, String IDmat1, String IDmat2){
+    public Corda gerarCordaFab(Personagem jogador, String IDmat1, String IDmat2){
         try{
             if(verifCombinacaoMateriais(jogador, IDmat1, IDmat2) && 
                 jogador.getInventario().getItemEscolhido(IDmat1).getClass() == Fibra.class &&
@@ -74,7 +74,7 @@ public class GeradorDeItens{
         }
     }
 
-    public Armadilha gerarArmadilha(Personagem jogador, String IDmat1, String IDmat2){
+    public Armadilha gerarArmadilhaFab(Personagem jogador, String IDmat1, String IDmat2){
         try{
             if(verifCombinacaoMateriais(jogador, IDmat1, IDmat2) && 
                 jogador.getInventario().getItemEscolhido(IDmat1).getClass() == Corda.class &&
@@ -99,7 +99,7 @@ public class GeradorDeItens{
     }
 
 //GERAR FERRAMENTAS; INSTANCIAR COM CAST: Picareta picareta = (Picareta) gerador.gerarFerramentaFab("picareta", jogador, "IDmat1", "IDmat2");
-    public Item gerarFerramentaFab(String tipo, Personagem jogador, String IDmat1, String IDmat2){
+    public Ferramenta gerarFerramentaFab(String tipo, Personagem jogador, String IDmat1, String IDmat2){
         try{
             if (!verifCombinacaoMateriais(jogador, IDmat1, IDmat2)) {
                 return null; //Por segurança, mas verifCombinacaoMateriais ja lanca excecao se os materiais forem invalidos
@@ -108,7 +108,7 @@ public class GeradorDeItens{
             Material mat1 = buscarMatComb(jogador, IDmat1);
             Material mat2 = buscarMatComb(jogador, IDmat2);
         
-            switch (tipo.toLowerCase()) {
+            switch (tipo.toLowerCase()){
                 case "picareta":
                     Picareta picareta = new Picareta(mat1, mat2, this.geradorDeID);
                     removerCombinacao(jogador, IDmat1, IDmat2);
@@ -171,7 +171,7 @@ encontrados na exploracao */
 
     //GERADOR DE MUNICOES
     //apenas flechas sao fabricaveis
-    public Item gerarFlechaFab(Personagem jogador, String IDmat1, String IDmat2){
+    public Flechas gerarFlechaFab(Personagem jogador, String IDmat1, String IDmat2){
         try{
             if (!verifCombinacaoMateriais(jogador, IDmat1, IDmat2)){
                 return null; //se nao houver os materiais no inventario do jogador
@@ -260,6 +260,7 @@ encontrados na exploracao */
                     return lanca;
         
                 default:
+                    System.out.println("Tipo invalido. Selecione um tipo de arma fabricavel.");
                     return null;//tipo invalido
             }
         }

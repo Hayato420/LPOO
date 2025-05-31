@@ -72,7 +72,7 @@ public class Inventario{
             }
         }
         else{
-            System.out.println("Falha ao adicionar item.");
+            System.out.println("Falha ao adicionar item. Referencia null."); //debug, nao devera aparecer pro player
             return false;
         }
     }
