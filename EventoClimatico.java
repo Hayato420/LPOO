@@ -26,7 +26,7 @@ public class EventoClimatico extends Evento{
             jogador.getStatus().setTemperatura(Status.Temperatura.FRIO);
         }
         else if(jogador.getLocalizacao().getClass() == AmbienteMontanha.class){
-            System.out.println("Esta nevando, apesar de bonito, isso representa um perigo a sua temperatura.");
+            System.out.println("Esta nevando. Apesar de bonito, isso representa um perigo a sua temperatura.");
             jogador.getStatus().setTemperatura(Status.Temperatura.FRIO);
         }
         else{//AmbienteRuinas

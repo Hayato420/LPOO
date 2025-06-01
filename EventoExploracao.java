@@ -9,7 +9,7 @@ public class EventoExploracao extends Evento{
     private final GeradorDeItens geradorDeItens;
     //construtor
     public EventoExploracao(GeradorDeItens geradorDeItens){
-        super("nome", "descricao");
+        super("Evento Exploracao", "Algo foi encontrado, mas o que?");
         this.geradorDeItens = geradorDeItens;
     }
 

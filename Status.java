@@ -79,7 +79,7 @@ public class Status{
         this.pertoDeFonteDeAgua = perto;
     }
     
-    public String exibirStatus(){
+    public String exibirStatus() {
         List<String> statusAtivos = new ArrayList<>();
 
         if (iluminado) statusAtivos.add("iluminado");
@@ -88,17 +88,21 @@ public class Status{
         if (perturbado) statusAtivos.add("perturbado");
         if (fraturado) statusAtivos.add("fraturado");
 
-        //Normal so sera exibido se nao houver nenhum outro status
-        switch (temperatura){
+        switch (temperatura) {
             case CALOR -> statusAtivos.add("com calor");
             case FRIO -> statusAtivos.add("com hipotermia");
             case NORMAL -> {
-                if(statusAtivos.isEmpty()){statusAtivos.add("Estavel");}
-                else{statusAtivos.add("e com temperatura normal");}
+                if (statusAtivos.isEmpty()) {
+                    statusAtivos.add("Estavel");
+                } else {
+                    statusAtivos.add("com temperatura normal");
+                }
             }
         }
-    
-        return String.join(", ", statusAtivos)      //junta todos os status com ", "
-        .replaceAll(",([^,]*)$", " e$1") + ".";     //substitui a ultima ", " por um " e " para deixar a formatacao mais organizada
+
+        String statusFinal = String.join(", ", statusAtivos)
+            .replaceAll(",([^,]*)$", " e$1") + ".";
+
+        return "Status: " + statusFinal;
     }
 }

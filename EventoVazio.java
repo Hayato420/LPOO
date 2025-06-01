@@ -1,12 +1,12 @@
 public class EventoVazio extends Evento{
 
     public EventoVazio(){
-        super("","nada ocorre");
+        super("Evento Vazio","Nada ocorre.");
     }
 
     @Override
     public void efeitoDoEvento(Personagem personagem){
-        System.out.println("nada ocorre");
+        System.out.println("Nenhum evento inesperado ocorreu.");
     }
 
 }

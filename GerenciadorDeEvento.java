@@ -12,11 +12,11 @@ public class GerenciadorDeEvento{
     public GerenciadorDeEvento(GeradorDeItens geradorDeItens){
         this.geradorDeItens = geradorDeItens;
         this.eventosDisponiveis = Arrays.asList(
-            new EventoVazio(),
             new EventoClimatico(),
-            new EventoExploracao(geradorDeItens),
             new EventoCombate(),
-            new EventoDoente()
+            new EventoDoente(),
+            new EventoExploracao(geradorDeItens),
+            new EventoVazio()
         );
     }
 
@@ -24,21 +24,24 @@ public class GerenciadorDeEvento{
         return this.eventosDisponiveis;
     }
 
+    public GeradorDeItens getGeradorDeItens(){
+        return this.geradorDeItens;
+    }
+
     public Evento gerarEvento(){
         Evento novoEvento;
         float chance = aleatorio.nextFloat(100);
-        if (chance <= 15){
-            novoEvento = eventosDisponiveis.get(3);
-        } else if (chance <= 35){
-            novoEvento = eventosDisponiveis.get(2);
-        } else if (chance <= 50){
-            novoEvento = eventosDisponiveis.get(1);
-        } else if (chance <= 60){
-            novoEvento = eventosDisponiveis.get(4);
-        } else {
-            novoEvento = eventosDisponiveis.get(0);
+        if (chance <= 15){ //15%
+            novoEvento = eventosDisponiveis.get(0); //climatico
+        } else if (chance <= 30){ //15%
+            novoEvento = eventosDisponiveis.get(1); //combate
+        } else if (chance <= 40){ //10%
+            novoEvento = eventosDisponiveis.get(2); //doente
+        } else if (chance <= 60){ //20%
+            novoEvento = eventosDisponiveis.get(3); //exploracao
+        } else { //40%
+            novoEvento = eventosDisponiveis.get(4); //vazio
         }
         return novoEvento;
     }
-
 }

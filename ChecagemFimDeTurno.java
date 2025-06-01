@@ -7,5 +7,26 @@ public class ChecagemFimDeTurno{
             jogador.getSanidade() <= 0){return false;}
         else{return true;}
     }
-    
+    public void aplicarEfeitos(Personagem jogador){
+        jogador.perderFome(5);
+        jogador.perderSede(5);
+        if(jogador.getFonteDeCalor() != null && jogador.getStatus().getTemperatura() == Status.Temperatura.FRIO){
+            jogador.getStatus().setTemperatura(Status.Temperatura.NORMAL);
+        }
+        if(jogador.getStatus().isEnvenenado()){
+            jogador.perderVida(10);
+        }
+        if(jogador.getStatus().isDoente()){
+            jogador.perderVida(10);
+        }
+        if(jogador.getStatus().isPerturbado()){
+            jogador.perderSanidade(10);
+        }
+        if(jogador.getStatus().getTemperatura() == Status.Temperatura.CALOR){
+            jogador.perderEnergia(5);
+        }
+        if(jogador.getStatus().getTemperatura() == Status.Temperatura.FRIO){
+            jogador.perderEnergia(5);
+        }
+    }
 }

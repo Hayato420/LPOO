@@ -1,7 +1,7 @@
 public abstract class Item implements Usavel{
     private final String nome;
     private final String ID;
-    private final String descricao;
+    private String descricao;
     private final int peso;
     private int durabilidade;
     private final GeradorDeID geradorDeID;
@@ -47,6 +47,10 @@ public abstract class Item implements Usavel{
             System.out.println("A ferramenta quebrou.");
             inventario.removerItem(this.ID);
         }
+    }
+
+    public void setDescricao(String descricao){
+        this.descricao = descricao;
     }
 
 }

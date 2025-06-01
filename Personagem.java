@@ -170,21 +170,6 @@ public abstract class Personagem{
         }
     }
 
-    public void cozinhar(String IDcomida){
-        for(Item item : this.getInventario().getItens()){
-            if(item.getID().equals(IDcomida) && item instanceof Alimento && this.getFonteDeCalor() != null){
-                Alimento comida = (Alimento) item;
-                Alimento cozinhado = this.getFonteDeCalor().cozinharComida(comida);
-                if(cozinhado != null){
-                    this.getInventario().adicionarItem(cozinhado);
-                    System.out.println("Alimento cozinhado com sucesso !");
-                    return;
-                }
-            }
-        }
-        System.out.println("Para cozinhar voce precisa estar perto de uma fonte de calor e selecionar um alimento cozinhavel.");
-    }
-
     //DORMIR
     public void dormir(){ //FAZER PERDER O TURNO
         this.adicionarEnergia(30);
@@ -192,30 +177,34 @@ public abstract class Personagem{
     }
 
     //EXPLORAR, COLETAR RECURSOS (AMBIENTE E PRÓXIMOS) E MUDAR DE AMBIENTE
-    public void explorar(){
+    public void explorar(GerenciadorDeEvento gerenciadorDeEvento){
+        int gastoPadraoDeEnergia = 5;
         if(this.getStatus().getTemperatura() == Status.Temperatura.FRIO 
            || this.getStatus().getTemperatura() == Status.Temperatura.CALOR){
-            this.perderEnergia(20);
+            this.perderEnergia(gastoPadraoDeEnergia + 5);
         }
         else{
-            this.perderEnergia(10);
+            this.perderEnergia(gastoPadraoDeEnergia);
         }
         this.getRecursosProximos().clear();
         this.coletarAmbiente(ThreadLocalRandom.current().nextInt(0, 6));
-        //OCORRENCIA DE EVENTOS !!!!!
+        System.out.println("============================================================");
+        gerenciadorDeEvento.gerarEvento().efeitoDoEvento(this);
     }
 
-    public void mudarAmbiente(GerenciadorDeAmbiente gerenciadorDeAmbiente){
+    public void mudarAmbiente(GerenciadorDeAmbiente gerenciadorDeAmbiente, GerenciadorDeEvento gerenciadorDeEvento){
         if(this.getStatus().getTemperatura() == Status.Temperatura.FRIO 
            || this.getStatus().getTemperatura() == Status.Temperatura.CALOR){
             this.perderEnergia(20);
             gerenciadorDeAmbiente.mudarAmbiente(this);
-            //OCORRENCIA DE EVENTOS !!!!!
+            System.out.println("============================================================");
+            gerenciadorDeEvento.gerarEvento().efeitoDoEvento(this);
         }
         else{
             this.perderEnergia(10);
             gerenciadorDeAmbiente.mudarAmbiente(this);
-            //OCORRENCIA DE EVENTOS !!!!!
+            System.out.println("============================================================");
+            gerenciadorDeEvento.gerarEvento().efeitoDoEvento(this);
         }
         this.getRecursosProximos().clear();
     }
@@ -290,35 +279,24 @@ public abstract class Personagem{
 
     //AGUA
     public void encherAgua(String ID){
-        for (Item item : this.getInventario().getItens()){
-            if (item.getID().equals(ID) && item.getClass() == Agua.class){
-                Agua agua = (Agua) item;
-                if (agua.getVolumeAtual() < agua.getVolumeMax()){
-                    agua.encher();
-                    System.out.println("Você encheu a garrafa de agua. Melhor purificar isso.");
-                } else{
-                    System.out.println("A garrafa ja esta cheio.");
-                }
-                return;
-            }
-        }
-        System.out.println("Nao foi encontrada agua de ID " + ID + ".");
-    }
-
-    public void beberAgua(String ID) {
-        for (Item item : this.getInventario().getItens()){
-            if (item.getID().equals(ID) && item instanceof Agua agua) {
-                if (agua.getVolumeAtual() > 0){
-                    agua.usar(this);
-                    System.out.println("Voce bebeu.");
-                    return;
-                } else{
-                    System.out.println("A garrafa esta vazia.");
+        if(this.getStatus().isPertoDeFonteDeAgua() == true){
+            for (Item item : this.getInventario().getItens()){
+                if (item.getID().equals(ID) && item.getClass() == Agua.class){
+                    Agua agua = (Agua) item;
+                    if (agua.getVolumeAtual() < agua.getVolumeMax()){
+                        agua.encher();
+                        System.out.println("Você encheu a garrafa de agua. Melhor purificar isso.");
+                    } else{
+                        System.out.println("A garrafa ja esta cheio.");
+                    }
                     return;
                 }
             }
+            System.out.println("Nao foi encontrada agua de ID " + ID + ".");
         }
-        System.out.println("Nao foi encontrada agua de ID " + ID + ".");
+        else{
+            System.out.println("Voce nao esta proximo a nenhuma fonte de agua.");
+        }
     }
 
     //FOGUEIRA
@@ -341,6 +319,28 @@ public abstract class Personagem{
             catch(ExcecaoSemMadeira exc){
                 System.out.println(exc.getMessage());
             }
+        }
+    }
+
+    public void usarFogueira(String uso, String IDdeUso){
+        if(this.getFonteDeCalor() != null){
+            switch (uso){
+                case "cozinhar":
+                case "cozinhar comida":
+                    Alimento alimentoCozinhado = this.getFonteDeCalor().cozinharComida(IDdeUso);
+                    if(alimentoCozinhado != null){
+                        System.out.println("Alimento cozinhado com sucesso !");
+                        this.getInventario().getItens().add(alimentoCozinhado);
+                    }
+                case "ferver":
+                case "ferver agua":
+                    this.getFonteDeCalor().ferverAgua(IDdeUso);
+                default:
+                    System.out.println("Opcao selecionada invalida. Escolha entre cozinhar e ferver.");
+            }
+        }
+        else{
+            System.out.println("E preciso estar proximo a uma fonte de calor.");
         }
     }
 

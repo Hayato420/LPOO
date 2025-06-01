@@ -4,29 +4,30 @@ public class Teste{
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-        GeradorDeID gerador = new GeradorDeID();
-        GeradorDeItens geradorItens = new GeradorDeItens(gerador);
-        GerenciadorDeAmbiente gerenciador = new GerenciadorDeAmbiente(geradorItens);
+        GeradorDeID geradorID = new GeradorDeID();
+        GeradorDeItens geradorItens = new GeradorDeItens(geradorID);
+        GerenciadorDeAmbiente gerenciadorAmbiente = new GerenciadorDeAmbiente(geradorItens);
+        GerenciadorDeEvento gerenciadorEvento = new GerenciadorDeEvento(geradorItens);
 
         ChecagemFimDeTurno checador = new ChecagemFimDeTurno();
 
-        PersonagemExplorador jogador = new PersonagemExplorador("Adeildo L Durval", gerenciador, gerador);
+        PersonagemExplorador jogador = new PersonagemExplorador("Adeildo L Durval", gerenciadorAmbiente, geradorID);
 
         boolean rodando = true;
         while (rodando) {
             System.out.println("\n=== Estado Atual ===");
             jogador.exibirAtrStat();
             System.out.println("\n=== Menu Principal ===");
-            System.out.println("1. Explorar");
-            System.out.println("2. Coletar recurso proximo");
-            System.out.println("3. Cozinhar");
-            System.out.println("4. Usar item");
-            System.out.println("5. Dormir");
-            System.out.println("6. Mudar de ambiente");
-            System.out.println("7. Ver inventario");
-            System.out.println("8. Criar fogueira.");
-            System.out.println("9. Apagar fogueira.");
-            System.out.println("10. Sair");
+            System.out.println("1 - Explorar");
+            System.out.println("2 - Coletar recurso proximo");
+            System.out.println("3 - Usar fonte de calor (fogueira/forno)");
+            System.out.println("4 - Usar item");
+            System.out.println("5 - Dormir");
+            System.out.println("6 - Mudar de ambiente");
+            System.out.println("7 - Ver inventario");
+            System.out.println("8 - Criar fogueira.");
+            System.out.println("9 - Apagar fogueira.");
+            System.out.println("10 - Sair");
             System.out.print("Escolha: ");
 
             String opcao = scanner.nextLine();
@@ -34,9 +35,10 @@ public class Teste{
             switch (opcao) {
                 case "1":
                     System.out.println("============================================================");
-                    jogador.explorar();
+                    jogador.explorar(gerenciadorEvento);
                     System.out.println("============================================================");
                     if(!checador.checar(jogador)){rodando = false;}
+                    checador.aplicarEfeitos(jogador);
                     break;
 
                 case "2":
@@ -46,20 +48,31 @@ public class Teste{
                     String idRecurso = scanner.nextLine();
                     jogador.coletarProximos(idRecurso);
                     System.out.println("============================================================");
+                    checador.aplicarEfeitos(jogador);
                     break;
 
                 case "3":
+                if(jogador.getFonteDeCalor() != null){
                     System.out.println("============================================================");
-                    if (jogador.getFonteDeCalor() != null) {
-                        jogador.exibirItens();
-                        System.out.print("Digite o ID da comida a cozinhar: ");
-                        String idComida = scanner.nextLine();
-                        jogador.cozinhar(idComida);
-                    } else {
-                        System.out.println("Voce precisa de uma fonte de calor para cozinhar.");
-                    }
+                    System.out.println("Escolha um uso: Cozinhar comida/Ferver agua");
+                    System.out.print("Escolha: ");
+                    String uso = scanner.nextLine();
+                    System.out.print("Insira o ID do item pretendido: ");
+                    String IDdeUso = scanner.nextLine();
+                    System.out.print("");
+                    jogador.usarFogueira(uso, IDdeUso);
                     System.out.println("============================================================");
+                    checador.aplicarEfeitos(jogador);
                     break;
+                }
+                else{
+                    System.out.println("============================================================");
+                    System.out.println("E preciso estar proximo a uma fonte de calor.");
+                    System.out.println("============================================================");
+                    checador.aplicarEfeitos(jogador);
+                    break;
+                }
+                
 
                 case "4":
                     System.out.println("============================================================");
@@ -68,6 +81,7 @@ public class Teste{
                     String idItem = scanner.nextLine();
                     jogador.usarItem(idItem);
                     System.out.println("============================================================");
+                    checador.aplicarEfeitos(jogador);
                     break;
 
                 case "5":
@@ -75,36 +89,42 @@ public class Teste{
                     jogador.dormir();
                     System.out.println("Voce dormiu e recuperou energia e sanidade.");
                     System.out.println("============================================================");
+                    checador.aplicarEfeitos(jogador);
                     break;
 
                 case "6":
                     System.out.println("============================================================");
-                    jogador.mudarAmbiente(gerenciador);
+                    jogador.mudarAmbiente(gerenciadorAmbiente, gerenciadorEvento);
                     System.out.println("Voce mudou de ambiente.");
                     System.out.println("============================================================");
                     if(!checador.checar(jogador)){rodando = false;}
+                    checador.aplicarEfeitos(jogador);
                     break;
 
                 case "7":
                     System.out.println("============================================================");
                     jogador.exibirItens();
                     System.out.println("============================================================");
+                    checador.aplicarEfeitos(jogador);
                     break;
                 case "8":
                     System.out.println("============================================================");
                     jogador.criarFogueira();
                     System.out.println("============================================================");
+                    checador.aplicarEfeitos(jogador);
                     break;
                 case "9":
                     System.out.println("============================================================");
                     jogador.apagarFogueira();
                     System.out.println("============================================================");
+                    checador.aplicarEfeitos(jogador);
                     break;
                 case "10":
                     System.out.println("============================================================");
                     System.out.println("Saindo do jogo.");
                     rodando = false;
                     System.out.println("============================================================");
+                    checador.aplicarEfeitos(jogador);
                     break;
 
                 default:
