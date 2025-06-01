@@ -20,7 +20,7 @@ public class GeradorDeItens{
 
     public boolean verifCombinacaoMateriais(Personagem jogador, String IDmat1, String IDmat2){//NÃO CONTÉM REMOÇÃO
         if (IDmat1.equals(IDmat2)){
-            throw new ExcecaoCombMateriais("Material repetido, e necessario ao menos dois materiais.");
+            throw new ExcecaoCombMateriais("Material repetido, eh necessario ao menos dois materiais.");
         }
         if(jogador.getInventario().verificarItemInventario(IDmat1) 
             && jogador.getInventario().verificarItemInventario(IDmat2)){

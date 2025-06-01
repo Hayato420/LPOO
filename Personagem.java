@@ -7,6 +7,7 @@ public abstract class Personagem{
     //COMBATE E FINS DE JOGO
     private boolean emCombate = false;
     private boolean condicaoVitoria = false;
+    private int emResgate = 10000;
     private boolean condicaoDerrota = false;
     //Geradores e Gerenciadores
     private final GerenciadorDeAmbiente gerenciadorDeAmbiente;
@@ -47,126 +48,55 @@ public abstract class Personagem{
 
     public abstract void usarHabilidade();
 
-    public void craftar(String craft, String IDmat1, String IDmat2, GeradorDeItens geradorDeItens){
-        switch (craft.toLowerCase()){
+    public void craftar(String craft, String IDmat1, String IDmat2, GeradorDeItens geradorDeItens) {
+        Item item = null;
+        switch (craft.toLowerCase()) {
             case "arco":
-                    Arma arco = geradorDeItens.gerarArmaFab(craft, this, IDmat1, IDmat2);
-                    if(arco != null){
-                        if(!this.getInventario().adicionarItem(arco)){
-                            this.getRecursosProximos().add(arco);
-                            System.out.println("Item dropado nas redondezas.");
-                            this.exibirRecursosProximos();
-                        }
-                        else{
-                            System.out.println("Item adicionado ao inventario com sucesso !");
-                        }
-                    }
-            case "armadilha":
-                    Armadilha armadilha = geradorDeItens.gerarArmadilhaFab(this, IDmat1, IDmat2);
-                    if(armadilha != null){
-                        if(!this.getInventario().adicionarItem(armadilha)){
-                            this.getRecursosProximos().add(armadilha);
-                            System.out.println("Item dropado nas redondezas.");
-                            this.exibirRecursosProximos();
-                        }
-                        else{
-                            System.out.println("Item adicionado ao inventario com sucesso !");
-                        }
-                    }
-
-            case "corda":
-                    Corda corda = geradorDeItens.gerarCordaFab(this, IDmat1, IDmat2);
-                    if(corda != null){
-                        if(!this.getInventario().adicionarItem(corda)){
-                            this.getRecursosProximos().add(corda);
-                            System.out.println("Item dropado nas redondezas.");
-                            this.exibirRecursosProximos();
-                        }
-                        else{
-                            System.out.println("Item adicionado ao inventario com sucesso !");
-                        }
-                    }
-
-            case "faca":
-                    Ferramenta faca = geradorDeItens.gerarFerramentaFab(craft, this, IDmat1, IDmat2);
-                    if(faca != null){
-                        if(!this.getInventario().adicionarItem(faca)){
-                            this.getRecursosProximos().add(faca);
-                            System.out.println("Item dropado nas redondezas.");
-                            this.exibirRecursosProximos();
-                        }
-                        else{
-                            System.out.println("Item adicionado ao inventario com sucesso !");
-                        }
-                    }
-            case "flechas":
-            case "flecha":
-                    Flechas flecha = geradorDeItens.gerarFlechaFab(this, IDmat1, IDmat2);
-                    if(flecha != null){
-                        if(!this.getInventario().adicionarItem(flecha)){
-                            this.getRecursosProximos().add(flecha);
-                            System.out.println("Item dropado nas redondezas.");
-                            this.exibirRecursosProximos();
-                        }
-                        else{
-                            System.out.println("Item adicionado ao inventario com sucesso !");
-                        }
-                    }
-
             case "lança":
             case "lanca":
-                    Arma lanca = geradorDeItens.gerarArmaFab(craft, this, IDmat1, IDmat2);
-                    if(lanca != null){
-                        if(!this.getInventario().adicionarItem(lanca)){
-                            this.getRecursosProximos().add(lanca);
-                            System.out.println("Item dropado nas redondezas.");
-                            this.exibirRecursosProximos();
-                        }
-                        else{
-                            System.out.println("Item adicionado ao inventario com sucesso !");
-                        }
-                    }
-            case "machado":
-                    Ferramenta machado = geradorDeItens.gerarFerramentaFab(craft, this, IDmat1, IDmat2);
-                    if(machado != null){
-                        if(!this.getInventario().adicionarItem(machado)){
-                            this.getRecursosProximos().add(machado);
-                            System.out.println("Item dropado nas redondezas.");
-                            this.exibirRecursosProximos();
-                        }
-                        else{
-                            System.out.println("Item adicionado ao inventario com sucesso !");
-                        }
-                    }
-                
-            case "picareta":
-                    Ferramenta picareta = geradorDeItens.gerarFerramentaFab(craft, this, IDmat1, IDmat2);
-                    if(picareta != null){
-                        if(!this.getInventario().adicionarItem(picareta)){
-                            this.getRecursosProximos().add(picareta);
-                            System.out.println("Item dropado nas redondezas.");
-                            this.exibirRecursosProximos();
-                        }
-                        else{
-                            System.out.println("Item adicionado ao inventario com sucesso !");
-                        }
-                    }
-                
             case "espada":
-                    Arma espada = geradorDeItens.gerarArmaFab(craft, this, IDmat1, IDmat2);
-                    if(espada != null){
-                        if(!this.getInventario().adicionarItem(espada)){
-                            this.getRecursosProximos().add(espada);
-                            System.out.println("Item dropado nas redondezas.");
-                            this.exibirRecursosProximos();
-                        }
-                        else{
-                            System.out.println("Item adicionado ao inventario com sucesso !");
-                        }
-                    }
-                
+                item = geradorDeItens.gerarArmaFab(craft, this, IDmat1, IDmat2);
+                break;
+
+            case "armadilha":
+                item = geradorDeItens.gerarArmadilhaFab(this, IDmat1, IDmat2);
+                break;
+
+            case "corda":
+                item = geradorDeItens.gerarCordaFab(this, IDmat1, IDmat2);
+                break;
+
+            case "faca":
+            case "machado":
+            case "picareta":
+                item = geradorDeItens.gerarFerramentaFab(craft, this, IDmat1, IDmat2);
+                break;
+
+            case "flechas":
+            case "flecha":
+                item = geradorDeItens.gerarFlechaFab(this, IDmat1, IDmat2);
+                break;
+
             default:
-                return;//tipo invalido, mensagem de invalidez exibir no metodo de geracao
+                System.out.println("Tipo invalido de item fabricavel");
+                return; // tipo invalido
+        }
+
+        if (item != null){
+            addOuDrop(item);
+        }
+        else{
+            System.out.println("Falha ao fabricar. Insira materiais e/ou tipo corretos.");
+        }
+    }
+
+    private void addOuDrop(Item item) {
+        if (!this.getInventario().adicionarItem(item)) {
+            this.getRecursosProximos().add(item);
+            System.out.println("Item dropado proximamente, libere espaco.");
+            this.exibirRecursosProximos();
+        } else {
+            System.out.println("Item adicionado ao inventario com sucesso!");
         }
     }
 
@@ -260,6 +190,14 @@ public abstract class Personagem{
 
     public void setCondicaoDerrota(boolean valor){
         this.condicaoDerrota = valor;
+    }
+
+    public int getEmResgate(){
+        return this.emResgate;
+    }
+
+    public void setEmResgate(int turnos){
+        this.emResgate = turnos;
     }
 
     //COMBATE

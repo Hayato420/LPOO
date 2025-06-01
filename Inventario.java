@@ -54,7 +54,7 @@ public class Inventario{
                 return true;
             }
         }
-        System.out.println("Item de ID " + ID + " nao consta no inventario.");
+        System.out.println("Item nao consta no inventario.");
         return false;
     }
 

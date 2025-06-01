@@ -12,9 +12,15 @@ public class Teste{
         ChecagemFimDeTurno checador = new ChecagemFimDeTurno();
 
         PersonagemExplorador jogador = new PersonagemExplorador("Adeildo L Durval", gerenciadorAmbiente, geradorID);
-
-        boolean rodando = true;
-        while (rodando) {
+        final int TURNO_MAX = 3;
+        int turnoAtual = TURNO_MAX;
+        while (turnoAtual != -1 && jogador.getCondicaoDerrota() == false && jogador.getCondicaoDerrota() == false){
+            turnoAtual --;
+            if(turnoAtual == -1){
+                System.out.println("Parabens ! Voce sobreviveu por " + TURNO_MAX + " turnos.");
+                scanner.close();
+                break;
+            }
             System.out.println("\n=== Estado Atual ===");
             jogador.exibirAtrStat();
             System.out.println("\n=== Menu Principal ===");
@@ -27,7 +33,8 @@ public class Teste{
             System.out.println("7 - Ver inventario");
             System.out.println("8 - Criar fogueira.");
             System.out.println("9 - Apagar fogueira.");
-            System.out.println("10 - Sair");
+            System.out.println("10 - Fabricar...");
+            System.out.println("11 - Sair");
             System.out.print("Escolha: ");
 
             String opcao = scanner.nextLine();
@@ -37,7 +44,6 @@ public class Teste{
                     System.out.println("============================================================");
                     jogador.explorar(gerenciadorEvento);
                     System.out.println("============================================================");
-                    if(!checador.checar(jogador)){rodando = false;}
                     checador.aplicarEfeitos(jogador);
                     break;
 
@@ -48,7 +54,6 @@ public class Teste{
                     String idRecurso = scanner.nextLine();
                     jogador.coletarProximos(idRecurso);
                     System.out.println("============================================================");
-                    checador.aplicarEfeitos(jogador);
                     break;
 
                 case "3":
@@ -62,14 +67,12 @@ public class Teste{
                     System.out.print("");
                     jogador.usarFogueira(uso, IDdeUso);
                     System.out.println("============================================================");
-                    checador.aplicarEfeitos(jogador);
                     break;
                 }
                 else{
                     System.out.println("============================================================");
                     System.out.println("E preciso estar proximo a uma fonte de calor.");
                     System.out.println("============================================================");
-                    checador.aplicarEfeitos(jogador);
                     break;
                 }
                 
@@ -77,11 +80,11 @@ public class Teste{
                 case "4":
                     System.out.println("============================================================");
                     jogador.exibirItens();
+                    System.out.println("============================================================");
                     System.out.print("Digite o ID do item a usar: ");
                     String idItem = scanner.nextLine();
                     jogador.usarItem(idItem);
                     System.out.println("============================================================");
-                    checador.aplicarEfeitos(jogador);
                     break;
 
                 case "5":
@@ -97,7 +100,6 @@ public class Teste{
                     jogador.mudarAmbiente(gerenciadorAmbiente, gerenciadorEvento);
                     System.out.println("Voce mudou de ambiente.");
                     System.out.println("============================================================");
-                    if(!checador.checar(jogador)){rodando = false;}
                     checador.aplicarEfeitos(jogador);
                     break;
 
@@ -105,26 +107,37 @@ public class Teste{
                     System.out.println("============================================================");
                     jogador.exibirItens();
                     System.out.println("============================================================");
-                    checador.aplicarEfeitos(jogador);
                     break;
                 case "8":
                     System.out.println("============================================================");
                     jogador.criarFogueira();
                     System.out.println("============================================================");
-                    checador.aplicarEfeitos(jogador);
                     break;
                 case "9":
                     System.out.println("============================================================");
                     jogador.apagarFogueira();
                     System.out.println("============================================================");
-                    checador.aplicarEfeitos(jogador);
                     break;
                 case "10":
                     System.out.println("============================================================");
-                    System.out.println("Saindo do jogo.");
-                    rodando = false;
+                    jogador.getInventario().exibirItens();
                     System.out.println("============================================================");
-                    checador.aplicarEfeitos(jogador);
+                    System.out.println("Selecione dois materiais, exceto fibras fracotes !");
+                    System.out.print("Primeiro material: ");
+                    String IDmat1 = scanner.nextLine();
+                    System.out.print("Segundo material: ");
+                    String IDmat2 = scanner.nextLine();
+                    System.out.println("Opcoes: arco, armadilha, corda, espada, faca, flechas, lanca, machado e picareta.");
+                    String opcaoDeCraft = scanner.nextLine();
+                    jogador.craftar(opcaoDeCraft, IDmat1, IDmat2, geradorItens);
+                    System.out.println("============================================================");
+                    break;
+                case "11":
+                    System.out.println("============================================================");
+                    System.out.println("Saindo do jogo.");
+                    System.out.println("============================================================");
+                    turnoAtual = -1;
+                    scanner.close();
                     break;
 
                 default:

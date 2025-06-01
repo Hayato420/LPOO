@@ -17,8 +17,36 @@ public class EventoExploracao extends Evento{
     public void efeitoDoEvento(Personagem jogador){
         int chance = aleatorio.nextInt(101);
         if(jogador.getClass() == PersonagemExplorador.class){ //se for Rastreador
-            if(chance <= 30){
-                System.out.println("Abrigo encontrado !"); //30%
+            if(chance <= 20){
+                System.out.println("Abrigo encontrado !"); //20%
+                int quantidadeAlimentos = ThreadLocalRandom.current().nextInt(1, 4); 
+                for (int i = 0; i <= quantidadeAlimentos; i++){
+                    jogador.getInventario().adicionarItem(this.geradorDeItens.gerarAlimento());
+                }
+                //talvez gerar criatura
+            }
+            else if(chance <= 50){
+                jogador.getStatus().setPertoDeFonteDeAgua(true);
+                System.out.println("Fonte de água encontrada."); //30%
+            }
+            else if(chance <= 90){
+                System.out.println("Ruínas misteriosas encontradas."); //40%
+                jogador.setLocalizacao(new AmbienteRuinas(this.geradorDeItens));//vai por o personagem em um novo objeto de AmbienteRuinas
+                jogador.getRecursosProximos().addAll(ruinasLoots());
+                //ITEM RARO
+            }
+            else if(chance <= 95){
+                System.out.println("Voce encontrou um refugio seguro, que sorte !");
+                jogador.setCondicaoVitoria(true);
+            }
+            else{
+                System.out.println("Voce encontrou modo de pedir resgate, mas ainda devera sobreviver mais um pouco enquanto espera.");
+                jogador.setEmResgate(5);
+            }
+        }
+        else{ //se não for Rastreador
+            if(chance <= 40){ //se não for Rastreador
+                System.out.println("Abrigo encontrado !"); //40%
                 int quantidadeAlimentos = ThreadLocalRandom.current().nextInt(1, 4); 
                 for (int i = 0; i <= quantidadeAlimentos; i++){
                     jogador.getInventario().adicionarItem(this.geradorDeItens.gerarAlimento());
@@ -27,27 +55,15 @@ public class EventoExploracao extends Evento{
             }
             else if(chance <= 90){
                 jogador.getStatus().setPertoDeFonteDeAgua(true);
-                System.out.println("Fonte de água encontrada."); //60%
-            }
-            else{
-                System.out.println("Ruínas misteriosas encontradas."); //10%
-                jogador.setLocalizacao(new AmbienteRuinas(this.geradorDeItens));//vai por o personagem em um novo objeto de AmbienteRuinas
-                jogador.getRecursosProximos().addAll(ruinasLoots());
-                //ITEM RARO
-            }
-        }
-        else{ //se não for Rastreador
-            if(chance <= 30){ //se não for Rastreador
-                System.out.println("Abrigo encontrado !"); //40%
-                int quantidadeAlimentos = ThreadLocalRandom.current().nextInt(1, 4); 
-                for (int i = 0; i <= quantidadeAlimentos; i++){
-                    jogador.getInventario().adicionarItem(this.geradorDeItens.gerarAlimento());
-                }
-                //talvez gerar criatura
-            }
-            else{
-                jogador.getStatus().setPertoDeFonteDeAgua(true);
                 System.out.println("Fonte de água encontrada."); //70%
+            }
+            else if(chance <= 95){
+                System.out.println("Voce encontrou um refugio seguro, que sorte !");
+                jogador.setCondicaoVitoria(true);
+            }
+            else{
+                System.out.println("Voce encontrou modo de pedir resgate, mas ainda devera sobreviver mais um pouco enquanto espera.");
+                jogador.setEmResgate(5);
             }
         }
     }

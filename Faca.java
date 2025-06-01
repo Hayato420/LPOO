@@ -5,6 +5,11 @@ public class Faca extends Ferramenta{
     }
 
     public void usar(Personagem jogador){
+        if(jogador.getLocalizacao().getClass() == AmbienteCaverna.class ||
+            jogador.getLocalizacao().getClass() == AmbienteDeserto.class){
+            System.out.println("Este ambiente impossibilita o uso desta ferramenta.");
+            return;
+        }
         jogador.perderEnergia(5);
         this.perderDurabilidade(jogador.getInventario());
         for (int i = 0; i < 5; i++){
