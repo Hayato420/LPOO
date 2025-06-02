@@ -21,13 +21,14 @@ public class EventoExploracao extends Evento{
                 System.out.println("Abrigo encontrado !"); //20%
                 int quantidadeAlimentos = ThreadLocalRandom.current().nextInt(1, 4); 
                 for (int i = 0; i <= quantidadeAlimentos; i++){
-                    jogador.getInventario().adicionarItem(this.geradorDeItens.gerarAlimento());
+                    jogador.getRecursosProximos().add(this.geradorDeItens.gerarAlimento());
                 }
+                jogador.exibirRecursosProximos();
                 //talvez gerar criatura
             }
             else if(chance <= 50){
                 jogador.getStatus().setPertoDeFonteDeAgua(true);
-                System.out.println("Fonte de água encontrada."); //30%
+                System.out.println("Fonte de agua encontrada."); //30%
             }
             else if(chance <= 90){
                 System.out.println("Ruínas misteriosas encontradas."); //40%
@@ -41,7 +42,7 @@ public class EventoExploracao extends Evento{
             }
             else{
                 System.out.println("Voce encontrou modo de pedir resgate, mas ainda devera sobreviver mais um pouco enquanto espera.");
-                jogador.setEmResgate(5);
+                jogador.setEmResgate(2);
             }
         }
         else{ //se não for Rastreador
@@ -49,13 +50,14 @@ public class EventoExploracao extends Evento{
                 System.out.println("Abrigo encontrado !"); //40%
                 int quantidadeAlimentos = ThreadLocalRandom.current().nextInt(1, 4); 
                 for (int i = 0; i <= quantidadeAlimentos; i++){
-                    jogador.getInventario().adicionarItem(this.geradorDeItens.gerarAlimento());
+                    jogador.getRecursosProximos().add(this.geradorDeItens.gerarAlimento());
                 }
+                jogador.exibirRecursosProximos();
                 //talvez gerar criatura
             }
             else if(chance <= 90){
                 jogador.getStatus().setPertoDeFonteDeAgua(true);
-                System.out.println("Fonte de água encontrada."); //70%
+                System.out.println("Fonte de agua encontrada."); //70%
             }
             else if(chance <= 95){
                 System.out.println("Voce encontrou um refugio seguro, que sorte !");

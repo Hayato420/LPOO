@@ -3,7 +3,7 @@ import java.util.concurrent.ThreadLocalRandom;
 public class AmbienteFloresta extends Ambiente{
     //construtor da subclasse
     public AmbienteFloresta(GeradorDeItens geradorDeItens){
-        super("Floresta", "Uma área rica em recursos naturais, mas também habitada por predadores.", 
+        super("Floresta", "Uma area rica em recursos naturais, mas tambem habitada por predadores.", 
         2, Clima.UMIDO, Temperatura.NEUTRO, geradorDeItens);
         gerarRecursos();
     }

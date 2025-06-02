@@ -12,7 +12,7 @@ public class Teste{
         ChecagemFimDeTurno checador = new ChecagemFimDeTurno();
 
         PersonagemExplorador jogador = new PersonagemExplorador("Adeildo L Durval", gerenciadorAmbiente, geradorID);
-        final int TURNO_MAX = 3;
+        final int TURNO_MAX = 100;
         int turnoAtual = TURNO_MAX;
         while (turnoAtual != -1 && jogador.getCondicaoDerrota() == false && jogador.getCondicaoDerrota() == false){
             turnoAtual --;
@@ -97,7 +97,7 @@ public class Teste{
 
                 case "6":
                     System.out.println("============================================================");
-                    jogador.mudarAmbiente(gerenciadorAmbiente, gerenciadorEvento);
+                    jogador.mudarAmbiente(gerenciadorEvento);
                     System.out.println("Voce mudou de ambiente.");
                     System.out.println("============================================================");
                     checador.aplicarEfeitos(jogador);

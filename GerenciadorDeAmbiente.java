@@ -48,6 +48,7 @@ public class GerenciadorDeAmbiente{
         jogador.setLocalizacao(novaLocalizacao);
         historicoMovimentacao.add(novaLocalizacao);
         System.out.println("Voce se encontra em: " + novaLocalizacao.getNome());
+        System.out.println(novaLocalizacao.getDescricao());
     }
 
     public void gerarEvento(Ambiente local){

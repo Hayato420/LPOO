@@ -3,7 +3,7 @@ import java.util.concurrent.ThreadLocalRandom;
 public class AmbienteDeserto extends Ambiente{
     //construtor da subclasse
     public AmbienteDeserto(GeradorDeItens geradorDeItens){
-        super("Deserto", "Uma região extremamente seca e quente, com poucos recursos, onde o ambiente é o maior perigo.", 
+        super("Deserto", "Uma regiao extremamente seca e quente, com poucos recursos, onde o ambiente e o maior perigo.", 
         4, Clima.SECO, Temperatura.QUENTE, geradorDeItens);
         gerarRecursos();
     }   

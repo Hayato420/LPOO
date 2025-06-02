@@ -3,7 +3,7 @@ import java.util.concurrent.ThreadLocalRandom;
 public class AmbienteRuinas extends Ambiente{
     //construtor da subclasse
     public AmbienteRuinas(GeradorDeItens geradorDeItens){
-        super("Ruinas", "Perdidas e esquecidas pelo tempo, estas estruturas podem ainda ter algo útil.", 
+        super("Ruinas", "Perdidas e esquecidas pelo tempo, estas estruturas podem ainda ter algo util.", 
         2, Clima.AMENO, Temperatura.NEUTRO, geradorDeItens);
         gerarRecursos();
     }   

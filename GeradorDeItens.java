@@ -49,6 +49,35 @@ public class GeradorDeItens{
         System.out.println("Erro: Material nao encontrado.");
         return null; // se não encontrou
     }
+//TRATAMENTOS
+    public Tratamento gerarTratAleat(String tipoTrat){
+
+        tipoTrat = tipoTrat.toLowerCase();
+    
+        switch (tipoTrat){
+            case "antibiotico":
+                return new Antibiotico(this.geradorDeID);
+
+            case "antidoto":
+                return new Antidoto(this.geradorDeID);
+    
+            case "bandagem":
+                return new Bandagem(this.geradorDeID);
+
+            case "metiolate":
+                return new Metiolate(this.geradorDeID);
+    
+            case "panaceia":
+                return new Panaceia(this.geradorDeID);
+            
+            case "vicodin":
+                return new Vicodin(this.geradorDeID);
+
+            default:
+                throw new IllegalArgumentException("Tipo de ferramenta desconhecido: " + tipoTrat + ". Erro em gerarFerramentaAleat(GeradorDeItens)"); // erro do código
+        }
+    }
+
 //CORDA E ARMADILHA
     public Corda gerarCordaFab(Personagem jogador, String IDmat1, String IDmat2){
         try{
@@ -332,11 +361,17 @@ encontrados na exploracao */
         recursos.put("Picareta", ThreadLocalRandom.current().nextInt(0, 2));
         recursos.put("Isqueiro", ThreadLocalRandom.current().nextInt(0, 2));
         recursos.put("Lanterna", ThreadLocalRandom.current().nextInt(0, 2));
-        recursos.put("Balas", ThreadLocalRandom.current().nextInt(0, 2)); //se achado, deverá dar várias municoes, ou mudamos municao de bala
+        recursos.put("Balas", ThreadLocalRandom.current().nextInt(0, 2));
         recursos.put("Flechas", ThreadLocalRandom.current().nextInt(0, 2));
         recursos.put("Fluido de Isqueiro", ThreadLocalRandom.current().nextInt(0, 2));
         recursos.put("Pilhas", ThreadLocalRandom.current().nextInt(0, 2));
-        //agua é gerada fora desse metodo, dentro de cada ambiente
+        recursos.put("Antibiotico", ThreadLocalRandom.current().nextInt(0, 2));
+        recursos.put("Antidoto", ThreadLocalRandom.current().nextInt(0, 2));
+        recursos.put("Bandagem", ThreadLocalRandom.current().nextInt(0, 2));
+        recursos.put("Metiolate", ThreadLocalRandom.current().nextInt(0, 2));
+        recursos.put("Panaceia", ThreadLocalRandom.current().nextInt(0, 2));
+        recursos.put("Vicodin", ThreadLocalRandom.current().nextInt(0, 2));
+        //agua é gerada fora desse metodo, dentro de cada ambiente para nao bagunçar com esses itens nao consumiveis
         return recursos;
     }
 }

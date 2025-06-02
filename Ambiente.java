@@ -113,6 +113,11 @@ public class Ambiente{
             if(municoesPossiveis.contains(recursoEscolhido.toLowerCase())){
                 return this.getGeradorDeItens().gerarMunicaoAleat(recursoEscolhido);
             }
+
+            List<String> tratamentosPossiveis = Arrays.asList("antibiotico", "antidoto", "bandagem", "metiolate", "panaceia", "vicodin");
+            if(tratamentosPossiveis.contains(recursoEscolhido.toLowerCase())){
+                return this.getGeradorDeItens().gerarTratAleat(recursoEscolhido);
+            }
             //se for agua (ultima possibilidade)
             return this.getGeradorDeItens().gerarAguaAleatoria();
         }

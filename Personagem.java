@@ -122,17 +122,17 @@ public abstract class Personagem{
         gerenciadorDeEvento.gerarEvento().efeitoDoEvento(this);
     }
 
-    public void mudarAmbiente(GerenciadorDeAmbiente gerenciadorDeAmbiente, GerenciadorDeEvento gerenciadorDeEvento){
+    public void mudarAmbiente(GerenciadorDeEvento gerenciadorDeEvento){
         if(this.getStatus().getTemperatura() == Status.Temperatura.FRIO 
            || this.getStatus().getTemperatura() == Status.Temperatura.CALOR){
             this.perderEnergia(20);
-            gerenciadorDeAmbiente.mudarAmbiente(this);
+            this.getGerenciadorDeAmbiente().mudarAmbiente(this);
             System.out.println("============================================================");
             gerenciadorDeEvento.gerarEvento().efeitoDoEvento(this);
         }
         else{
             this.perderEnergia(10);
-            gerenciadorDeAmbiente.mudarAmbiente(this);
+            this.getGerenciadorDeAmbiente().mudarAmbiente(this);
             System.out.println("============================================================");
             gerenciadorDeEvento.gerarEvento().efeitoDoEvento(this);
         }
@@ -305,10 +305,15 @@ public abstract class Personagem{
     public void setFonteDeCalor(FonteDeCalor fonteDeCalor){
         this.fonteDeCalor = fonteDeCalor;
     }
-    //GERADOR PARA FONTE DE CALOR
+    //GERADOR PARA FONTE DE CALOR E GERENCIADOR DE AMBIENTE PARA MUDAR DE AMBIENTE
     public GeradorDeID getGeradorDeID(){
         return this.geradorDeID;
     }
+
+    public GerenciadorDeAmbiente getGerenciadorDeAmbiente(){
+        return this.gerenciadorDeAmbiente;
+    }
+
     //NOME
     public String getNome(){
         return this.nome;

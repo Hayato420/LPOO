@@ -3,7 +3,7 @@ import java.util.concurrent.ThreadLocalRandom;
 public class AmbienteCaverna extends Ambiente{
     //construtor da subclasse
     public AmbienteCaverna(GeradorDeItens geradorDeItens){
-        super("Caverna", "Um grande túnel que passa por baixo da terra, escondido do sol e fácil de se perder.", 
+        super("Caverna", "Um grande tunel que passa por baixo da terra, escondido do sol e facil de se perder.", 
         3, Clima.UMIDO, Temperatura.NEUTRO, geradorDeItens);
         gerarRecursos();
     }   
@@ -26,7 +26,7 @@ public class AmbienteCaverna extends Ambiente{
             int quantidadeMaterial = ThreadLocalRandom.current().nextInt(5,11);
             getRecursosDisponiveis().put(tipo.getNome(), quantidadeMaterial);
         }
-        //gerando Ferramentas e Armas
+        //gerando Ferramentas, Armas e Municao
         getRecursosDisponiveis().putAll(this.getGeradorDeItens().gerarFerrArmMunic());
 
         getRecursosDisponiveis().entrySet().removeIf(entry -> entry.getValue() == 0);//limpeza dos valores zerados
