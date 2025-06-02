@@ -10,7 +10,7 @@ public class ChecagemFimDeTurno{
             return;
         }
 
-        else if(jogador.getEmResgate() <= 0){
+        if(jogador.getEmResgate() <= 0){
             jogador.setCondicaoVitoria(true);
             return;
         }
@@ -25,9 +25,9 @@ public class ChecagemFimDeTurno{
     public void aplicarEfeitos(Personagem jogador){
         jogador.perderFome(5);
         jogador.perderSede(5);
-        if(jogador.getEmResgate() <= 5){
-            jogador.setEmResgate(jogador.getEmResgate() - 1);
-        }
+        System.out.println("Debug em resgate: " + jogador.getEmResgate());
+        jogador.setEmResgate(jogador.getEmResgate() - 1);
+
         if(jogador.getFonteDeCalor() != null && jogador.getStatus().getTemperatura() == Status.Temperatura.FRIO){
             jogador.getStatus().setTemperatura(Status.Temperatura.NORMAL);
         }

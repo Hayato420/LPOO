@@ -42,7 +42,7 @@ public class EventoExploracao extends Evento{
             }
             else{
                 System.out.println("Voce encontrou modo de pedir resgate, mas ainda devera sobreviver mais um pouco enquanto espera.");
-                jogador.setEmResgate(2);
+                jogador.setEmResgate(5);
             }
         }
         else{ //se não for Rastreador

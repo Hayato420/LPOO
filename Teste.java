@@ -14,13 +14,15 @@ public class Teste{
         PersonagemExplorador jogador = new PersonagemExplorador("Adeildo L Durval", gerenciadorAmbiente, geradorID);
         final int TURNO_MAX = 100;
         int turnoAtual = TURNO_MAX;
-        while (turnoAtual != -1 && jogador.getCondicaoDerrota() == false && jogador.getCondicaoDerrota() == false){
+        while (turnoAtual != -1 && jogador.getCondicaoDerrota() == false && jogador.getCondicaoVitoria() == false){
             turnoAtual --;
             if(turnoAtual == -1){
                 System.out.println("Parabens ! Voce sobreviveu por " + TURNO_MAX + " turnos.");
                 scanner.close();
                 break;
             }
+        checador.checar(jogador);
+
             System.out.println("\n=== Estado Atual ===");
             jogador.exibirAtrStat();
             System.out.println("\n=== Menu Principal ===");
