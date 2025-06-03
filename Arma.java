@@ -25,6 +25,7 @@ public abstract class Arma extends Item{
         this.alcance = alcance;
         this.material1 = material1;
         this.material2 = material2;
+        this.setDescricao(this.getDescricao() + " " + this.feitaDe());
         //dano calculado dependendo do tipo de arma
         if (tipo == TipoArma.corpoACorpo){
             this.dano = (material1.getResistencia()+material2.getResistencia())/4;//LÓGICA ARITMÉTICA PARA DETERMINAR O DANO COM BASE NOS MATERIAIS
@@ -35,12 +36,12 @@ public abstract class Arma extends Item{
         else{this.dano = 0; System.out.println("Tipo inválido. Necessário debug no valor repassado ao construtor de Arma.");}//isso NUNCA deverá aparecer para o player
     }
 
-    public void feitaDe(){
+    public String feitaDe(){
         if(material1.getTipoDeMaterial() == material2.getTipoDeMaterial()){
-            System.out.println("Feita de " + material1.getNome() + ".");
+            return "Feita de " + material1.getNome() + ".";
         }
         else{
-        System.out.println("Feita de " + material1.getNome() + " e " + material2.getNome() + ".");
+            return "Feita de " + material1.getNome() + " e " + material2.getNome() + ".";
         }
     }
 

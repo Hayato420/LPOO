@@ -7,5 +7,6 @@ public class Bandagem extends Tratamento{
     public void usar(Personagem jogador){
         jogador.adicionarVida(this.getCura());
         jogador.getStatus().setFraturado(false);
+        jogador.getInventario().removerItem(this.getID());
     }
 }

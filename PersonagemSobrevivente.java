@@ -1,11 +1,12 @@
 public class PersonagemSobrevivente extends Personagem{
     
-    public PersonagemSobrevivente(String nome){
-        super(nome, 80, 120, 100, 100, 100);
+    public PersonagemSobrevivente(String nome, GerenciadorDeAmbiente gerenciadorDeAmbiente, GerenciadorDeEvento gerenciadorDeEvento, GeradorDeID geradorDeID){
+        super(nome, 80, 120, 100, 100, 100, gerenciadorDeAmbiente, gerenciadorDeEvento, geradorDeID);
     }
 
     @Override
     public void usarHabilidade(){
+        System.out.println("Seus alimentos agora vao durar mais.");
         /*Mantimentos: recuperar a "durabilidade" dos alimentos*/
         boolean x = false;
         for(Item item : this.getInventario().getItens()){

@@ -17,11 +17,19 @@ public class Inventario{
         List<Item> itens = this.getItens();
         for (Item item : itens){
             System.out.println(item.getNome() + ": ");
-            System.out.println("ID — " + item.getID());
-            System.out.println("Descricao — " + item.getDescricao());
-            System.out.println("Peso — " + item.getPeso());
-            System.out.println("Durabilidade — " + item.getDurabilidade());
-            System.out.println("Tipo — " + item.getClass().getSimpleName());
+            System.out.println("ID: " + item.getID());
+            System.out.println("Descricao: " + item.getDescricao());
+            System.out.println("Peso: " + item.getPeso());
+            if(item instanceof Alimento){
+                Alimento alimento = (Alimento) item;
+                System.out.println("Prazo de Validade: " + alimento.getPrazoDeValidade());
+            }
+            if(item instanceof Municao){
+                Municao municao = (Municao) item;
+                System.out.println("Quantia restante:  " + municao.getQuantiaAtual());
+            }
+            System.out.println("Durabilidade: " + item.getDurabilidade());
+            System.out.println("Tipo: " + item.getClass().getSimpleName());
             System.out.println();
         }
         System.out.println("Peso total do inventario: " + calcularPesoAtual());
@@ -54,7 +62,7 @@ public class Inventario{
                 return true;
             }
         }
-        System.out.println("Item de ID " + ID + " nao consta no inventario.");
+        System.out.println("Item nao consta no inventario.");
         return false;
     }
 
@@ -72,7 +80,7 @@ public class Inventario{
             }
         }
         else{
-            System.out.println("Falha ao adicionar item.");
+            System.out.println("Falha ao adicionar item. Referencia null."); //debug, nao devera aparecer pro player
             return false;
         }
     }

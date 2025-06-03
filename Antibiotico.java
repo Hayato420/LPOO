@@ -7,5 +7,6 @@ public class Antibiotico extends Tratamento{
     public void usar(Personagem jogador){
         jogador.adicionarVida(this.getCura());
         jogador.getStatus().setDoente(false);
+        jogador.getInventario().removerItem(this.getID());
     }
 }

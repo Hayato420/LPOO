@@ -8,7 +8,11 @@ import java.util.Map;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class GeradorDeItens{
-    private GeradorDeID geradorDeID;
+    private final GeradorDeID geradorDeID;
+
+    public GeradorDeItens(GeradorDeID geradorDeID){
+        this.geradorDeID = geradorDeID;
+    }
 
     public GeradorDeID getGeradorDeID(){
         return this.geradorDeID;
@@ -16,7 +20,7 @@ public class GeradorDeItens{
 
     public boolean verifCombinacaoMateriais(Personagem jogador, String IDmat1, String IDmat2){//NÃO CONTÉM REMOÇÃO
         if (IDmat1.equals(IDmat2)){
-            throw new ExcecaoCombMateriais("Material repetido, é necessário ao menos dois materiais.");
+            throw new ExcecaoCombMateriais("Material repetido, eh necessario ao menos dois materiais.");
         }
         if(jogador.getInventario().verificarItemInventario(IDmat1) 
             && jogador.getInventario().verificarItemInventario(IDmat2)){
@@ -27,7 +31,7 @@ public class GeradorDeItens{
             O QUE JA FOI IMPLEMENTADO, MAS CUIDADO PARA NAO ESQUECER EM GERACOES FUTURAS*/
         }
         else{
-            throw new ExcecaoCombMateriais("Material não encontrado. Insira uma ID válida.");
+            throw new ExcecaoCombMateriais("Material nao encontrado. Insira uma ID valida.");
         }
     }
 
@@ -45,35 +49,118 @@ public class GeradorDeItens{
         System.out.println("Erro: Material nao encontrado.");
         return null; // se não encontrou
     }
+//TRATAMENTOS
+    public Tratamento gerarTratAleat(String tipoTrat){
+
+        tipoTrat = tipoTrat.toLowerCase();
+    
+        switch (tipoTrat){
+            case "antibiotico":
+                return new Antibiotico(this.geradorDeID);
+
+            case "antidoto":
+                return new Antidoto(this.geradorDeID);
+    
+            case "bandagem":
+                return new Bandagem(this.geradorDeID);
+
+            case "metiolate":
+                return new Metiolate(this.geradorDeID);
+    
+            case "panaceia":
+                return new Panaceia(this.geradorDeID);
+            
+            case "vicodin":
+                return new Vicodin(this.geradorDeID);
+
+            default:
+                throw new IllegalArgumentException("Tipo de ferramenta desconhecido: " + tipoTrat + ". Erro em gerarFerramentaAleat(GeradorDeItens)"); // erro do código
+        }
+    }
+
+//CORDA E ARMADILHA
+    public Corda gerarCordaFab(Personagem jogador, String IDmat1, String IDmat2){
+        try{
+            if(verifCombinacaoMateriais(jogador, IDmat1, IDmat2) && 
+                jogador.getInventario().getItemEscolhido(IDmat1).getClass() == Fibra.class &&
+                jogador.getInventario().getItemEscolhido(IDmat2).getClass() == Fibra.class){
+
+                Fibra fibra1 = (Fibra) jogador.getInventario().getItemEscolhido(IDmat1);
+                Fibra fibra2 = (Fibra) jogador.getInventario().getItemEscolhido(IDmat2);
+                Corda corda = new Corda(fibra1, fibra2, this.geradorDeID);
+                jogador.getInventario().removerItem(IDmat1);
+                jogador.getInventario().removerItem(IDmat2);
+                System.out.println("Corda gerada com sucesso.");
+                return corda;
+            }
+            else{
+                return null;
+            }
+        }
+        catch(ExcecaoCombMateriais exc){
+            System.out.println(exc.getMessage());
+            return null;
+        }
+    }
+
+    public Armadilha gerarArmadilhaFab(Personagem jogador, String IDmat1, String IDmat2){
+        try{
+            if(verifCombinacaoMateriais(jogador, IDmat1, IDmat2) && 
+                jogador.getInventario().getItemEscolhido(IDmat1).getClass() == Corda.class &&
+                jogador.getInventario().getItemEscolhido(IDmat2).getClass() == Corda.class){
+
+                Corda corda1 = (Corda) jogador.getInventario().getItemEscolhido(IDmat1);
+                Corda corda2 = (Corda) jogador.getInventario().getItemEscolhido(IDmat2);
+                Armadilha armadilha = new Armadilha(corda1, corda2, this.geradorDeID);
+                jogador.getInventario().removerItem(IDmat1);
+                jogador.getInventario().removerItem(IDmat2);
+                System.out.println("Armadilha gerada com sucesso.");
+                return armadilha;
+            }
+            else{
+                return null;
+            }
+        }
+        catch(ExcecaoCombMateriais exc){
+                System.out.println(exc.getMessage());
+                return null;
+        }
+    }
 
 //GERAR FERRAMENTAS; INSTANCIAR COM CAST: Picareta picareta = (Picareta) gerador.gerarFerramentaFab("picareta", jogador, "IDmat1", "IDmat2");
-    public Item gerarFerramentaFab(String tipo, Personagem jogador, String IDmat1, String IDmat2){
-        if (!verifCombinacaoMateriais(jogador, IDmat1, IDmat2)) {
-            return null; //Por segurança, mas verifCombinacaoMateriais ja lanca excecao se os materiais forem invalidos
+    public Ferramenta gerarFerramentaFab(String tipo, Personagem jogador, String IDmat1, String IDmat2){
+        try{
+            if (!verifCombinacaoMateriais(jogador, IDmat1, IDmat2)) {
+                return null; //Por segurança, mas verifCombinacaoMateriais ja lanca excecao se os materiais forem invalidos
+            }
+        
+            Material mat1 = buscarMatComb(jogador, IDmat1);
+            Material mat2 = buscarMatComb(jogador, IDmat2);
+        
+            switch (tipo.toLowerCase()){
+                case "picareta":
+                    Picareta picareta = new Picareta(mat1, mat2, this.geradorDeID);
+                    removerCombinacao(jogador, IDmat1, IDmat2);
+                    return picareta;
+        
+                case "machado":
+                    Machado machado = new Machado(mat1, mat2, this.geradorDeID);
+                    removerCombinacao(jogador, IDmat1, IDmat2);
+                    return machado;
+        
+                case "faca":
+                    Faca faca = new Faca(mat1, mat2, this.geradorDeID);
+                    removerCombinacao(jogador, IDmat1, IDmat2);
+                    return faca;
+        
+                default:
+                    System.out.println("Tipo de ferramenta invalido.");
+                    return null;
+            }
         }
-    
-        Material mat1 = buscarMatComb(jogador, IDmat1);
-        Material mat2 = buscarMatComb(jogador, IDmat2);
-    
-        switch (tipo.toLowerCase()) {
-            case "picareta":
-                Picareta picareta = new Picareta(mat1, mat2, this.geradorDeID);
-                removerCombinacao(jogador, IDmat1, IDmat2);
-                return picareta;
-    
-            case "machado":
-                Machado machado = new Machado(mat1, mat2, this.geradorDeID);
-                removerCombinacao(jogador, IDmat1, IDmat2);
-                return machado;
-    
-            case "faca":
-                Faca faca = new Faca(mat1, mat2, this.geradorDeID);
-                removerCombinacao(jogador, IDmat1, IDmat2);
-                return faca;
-    
-            default:
-                System.out.println("Tipo de ferramenta invalido.");
-                return null;
+        catch(ExcecaoCombMateriais exc){
+            System.out.println(exc.getMessage());
+            return null;
         }
     }
 
@@ -113,13 +200,19 @@ encontrados na exploracao */
 
     //GERADOR DE MUNICOES
     //apenas flechas sao fabricaveis
-    public Item gerarFlechaFab(Personagem jogador, String IDmat1, String IDmat2){
-        if (!verifCombinacaoMateriais(jogador, IDmat1, IDmat2)){
-            return null; //se nao houver os materiais no inventario do jogador
+    public Flechas gerarFlechaFab(Personagem jogador, String IDmat1, String IDmat2){
+        try{
+            if (!verifCombinacaoMateriais(jogador, IDmat1, IDmat2)){
+                return null; //se nao houver os materiais no inventario do jogador
+            }
+            Flechas flecha = new Flechas(4, buscarMatComb(jogador, IDmat1), buscarMatComb(jogador, IDmat2), this.geradorDeID);
+            removerCombinacao(jogador, IDmat1, IDmat2);
+            return flecha;//FAZER UM GETMATERIAL
         }
-        Flechas flecha = new Flechas(4, buscarMatComb(jogador, IDmat1), buscarMatComb(jogador, IDmat2), this.geradorDeID);
-        removerCombinacao(jogador, IDmat1, IDmat2);
-        return flecha;//FAZER UM GETMATERIAL
+        catch(ExcecaoCombMateriais exc){
+            System.out.println(exc.getMessage());
+            return null;
+        }
     }
     //apenas flechas podem ser de materiais diferentes de metal inoxidavel
     public Item gerarMunicaoAleat(String tipo) {
@@ -173,29 +266,36 @@ encontrados na exploracao */
 
 //GERADOR DE ARMAS; INSTANCIAR COM CAST: Espada espada = (Espada) geradorDeItens.gerarArmaFab("espada", jogador, "IDmat1", "IDmat2");
     public Arma gerarArmaFab(String tipo, Personagem jogador, String IDmat1, String IDmat2){
-        if (!verifCombinacaoMateriais(jogador, IDmat1, IDmat2)) return null;
-    
-        Material mat1 = buscarMatComb(jogador, IDmat1);
-        Material mat2 = buscarMatComb(jogador, IDmat2);
-    
-        switch (tipo.toLowerCase()){
-            case "arco":
-                Arco arco = new Arco(Arma.TipoArma.aDistancia, Arma.QualArma.ARCO, 3, mat1, mat2, this.geradorDeID);
-                                    removerCombinacao(jogador, IDmat1, IDmat2);
-                return arco;
-
-            case "espada":
-                Espada espada = new Espada(Arma.TipoArma.corpoACorpo, Arma.QualArma.ESPADA, 1, mat1, mat2, this.geradorDeID);
-                                            removerCombinacao(jogador, IDmat1, IDmat2);
-                return espada;
-    
-            case "lanca":
-                Lanca lanca = new Lanca(Arma.TipoArma.corpoACorpo, Arma.QualArma.LANCA, 2, mat1, mat2, this.geradorDeID);
+        try{
+            if (!verifCombinacaoMateriais(jogador, IDmat1, IDmat2)) return null;
+        
+            Material mat1 = buscarMatComb(jogador, IDmat1);
+            Material mat2 = buscarMatComb(jogador, IDmat2);
+        
+            switch (tipo.toLowerCase()){
+                case "arco":
+                    Arco arco = new Arco(Arma.TipoArma.aDistancia, Arma.QualArma.ARCO, 3, mat1, mat2, this.geradorDeID);
                                         removerCombinacao(jogador, IDmat1, IDmat2);
-                return lanca;
-    
-            default:
-                return null;//tipo invalido
+                    return arco;
+
+                case "espada":
+                    Espada espada = new Espada(Arma.TipoArma.corpoACorpo, Arma.QualArma.ESPADA, 1, mat1, mat2, this.geradorDeID);
+                                                removerCombinacao(jogador, IDmat1, IDmat2);
+                    return espada;
+        
+                case "lanca":
+                    Lanca lanca = new Lanca(Arma.TipoArma.corpoACorpo, Arma.QualArma.LANCA, 2, mat1, mat2, this.geradorDeID);
+                                            removerCombinacao(jogador, IDmat1, IDmat2);
+                    return lanca;
+        
+                default:
+                    System.out.println("Tipo invalido. Selecione um tipo de arma fabricavel.");
+                    return null;//tipo invalido
+            }
+        }
+        catch(ExcecaoCombMateriais exc){
+            System.out.println(exc.getMessage());
+            return null;
         }
     }
 
@@ -261,11 +361,17 @@ encontrados na exploracao */
         recursos.put("Picareta", ThreadLocalRandom.current().nextInt(0, 2));
         recursos.put("Isqueiro", ThreadLocalRandom.current().nextInt(0, 2));
         recursos.put("Lanterna", ThreadLocalRandom.current().nextInt(0, 2));
-        recursos.put("Balas", ThreadLocalRandom.current().nextInt(0, 2)); //se achado, deverá dar várias municoes, ou mudamos municao de bala
+        recursos.put("Balas", ThreadLocalRandom.current().nextInt(0, 2));
         recursos.put("Flechas", ThreadLocalRandom.current().nextInt(0, 2));
         recursos.put("Fluido de Isqueiro", ThreadLocalRandom.current().nextInt(0, 2));
         recursos.put("Pilhas", ThreadLocalRandom.current().nextInt(0, 2));
-        //agua é gerada fora desse metodo, dentro de cada ambiente
+        recursos.put("Antibiotico", ThreadLocalRandom.current().nextInt(0, 2));
+        recursos.put("Antidoto", ThreadLocalRandom.current().nextInt(0, 2));
+        recursos.put("Bandagem", ThreadLocalRandom.current().nextInt(0, 2));
+        recursos.put("Metiolate", ThreadLocalRandom.current().nextInt(0, 2));
+        recursos.put("Panaceia", ThreadLocalRandom.current().nextInt(0, 2));
+        recursos.put("Vicodin", ThreadLocalRandom.current().nextInt(0, 2));
+        //agua é gerada fora desse metodo, dentro de cada ambiente para nao bagunçar com esses itens nao consumiveis
         return recursos;
     }
 }

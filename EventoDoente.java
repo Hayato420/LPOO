@@ -4,7 +4,7 @@ public class EventoDoente extends Evento{
     Random aleatorio = new Random();
 
     public EventoDoente(){
-        super("Evento", "Doenca/Ferimento");
+        super("Evento Doenca/Ferimento", "Houve descuido na exploracao, voce se prejudicou de alguma forma.");
     }
 
     @Override

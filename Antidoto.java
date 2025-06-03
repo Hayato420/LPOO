@@ -7,5 +7,6 @@ public class Antidoto extends Tratamento{
     public void usar(Personagem jogador){
         jogador.adicionarVida(this.getCura());
         jogador.getStatus().setEnvenenado(false);
+        jogador.getInventario().removerItem(this.getID());
     }
 }

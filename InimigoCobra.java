@@ -1,7 +1,7 @@
 public class InimigoCobra extends Inimigo{
 
     public InimigoCobra(){
-        super("cobra","Sem bracos ou pernas, mas nao deve ser subestimada", 7, 4, 3, 2, true);
+        super("Cobra","Macarrao perigoso.", 7, 4, 3, 2, true);
     }
 
     @Override

@@ -7,5 +7,6 @@ public class Vicodin extends Tratamento{
     public void usar(Personagem jogador){
         jogador.adicionarVida(this.getCura());
         jogador.getStatus().setPerturbado(false);
+        jogador.getInventario().removerItem(this.getID());
     }
 }

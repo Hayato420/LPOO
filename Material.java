@@ -2,7 +2,7 @@ public abstract class Material extends Item{
 //EXEMPLO DE CRIAÇÃO DE MATERIAL: Material metal = Material.TipoDeMaterial.METAL.criarMaterial(geradorDeID);
     private final TipoDeMaterial tipoDeMaterial;
     public enum TipoDeMaterial{
-        MADEIRA("Madeira", "Versátil.", 2, 1, 10),
+        MADEIRA("Madeira", "Versátil.", 2, 1, 14),
         PEDRA("Pedra", "Pedra.", 2, 1, 20),
         FIBRA("Fibra", "Unidirecionalmente resistente.", 1, 1, 5),
         METAL("Metal", "Mais resistente devido à deformação plástica e ligações não direcionais.", 3, 1, 40),

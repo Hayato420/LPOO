@@ -1,7 +1,7 @@
 public class EventoCombate extends Evento{
 
     public EventoCombate(){
-        super("nome", "descricao");
+        super("Evento Combate", "");
     }
 
     @Override
@@ -9,5 +9,4 @@ public class EventoCombate extends Evento{
         System.out.println("Voce entrou em combate");
         personagem.setEmCombate(true);
     }
-
 }

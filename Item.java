@@ -1,7 +1,7 @@
 public abstract class Item implements Usavel{
     private final String nome;
     private final String ID;
-    private final String descricao;
+    private String descricao;
     private final int peso;
     private int durabilidade;
     private final GeradorDeID geradorDeID;
@@ -29,6 +29,10 @@ public abstract class Item implements Usavel{
         return this.descricao;
     }
 
+    public void setDescricao(String descricao){
+        this.descricao = descricao;
+    }
+
     public int getPeso(){
         return this.peso;
     }
@@ -48,5 +52,4 @@ public abstract class Item implements Usavel{
             inventario.removerItem(this.ID);
         }
     }
-
 }

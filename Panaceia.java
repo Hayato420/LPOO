@@ -11,5 +11,6 @@ public class Panaceia extends Tratamento{
         jogador.getStatus().setPerturbado(false);
         jogador.getStatus().setFraturado(false);
         jogador.getStatus().setTemperatura(Status.Temperatura.NORMAL);
+        jogador.getInventario().removerItem(this.getID());
     }
 }

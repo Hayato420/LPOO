@@ -6,19 +6,21 @@ public class Alimento extends Item{
 
     private final TipoAlimento tipoAlimento;
     public enum TipoAlimento{
-        MACA("Maçã", "Vermelha e meio ácida.", 1, 1, 5, false, 10),
+        MACA("Maçã", "Vermelha e meio acida.", 1, 1, 5, false, 10),
         LARANJA("Laranja", "O que veio primeiro, a cor ou a fruta?", 1, 1, 5, false, 12),
-        PERA("Pera", "Não é uma maçã.", 1, 1, 7, false, 9),
+        PERA("Pera", "Nao e uma maca.", 1, 1, 7, false, 9),
         CARNEIROASSADO("Carneiro assado", "Cheira bem.", 2, 1, 3, false, 33),
         FRANGOASSADO("Frango assado", "Lava chicken !", 1, 1, 3, false, 33),
         CARNEIROCRU("Carneiro cru", "Cheira mal.", 2, 1, 2, false, 5),
         FRANGOCRU("Frango cru", "Melhor assar logo.", 1, 1, 2, false, 5),
-        SARDINHASENLATADAS("Sardinhas enlatadas", "Ômega 3", 1, 1, 1000, false, 25),
-        CARNEENLATADA("Carne enlatada", "Amâlgama emulsificada de cadáveres.", 1, 1, 1000, false, 20),
-        FEIJOADAENLATADA("Feijoada enlatada", "Feijão e carne.", 1, 1, 1000, false, 25),
+        SARDINHASENLATADAS("Sardinhas enlatadas", "Omega 3", 1, 1, 1000, false, 25),
+        CARNEENLATADA("Carne enlatada", "Amalgama emulsificada de cadaveres.", 1, 1, 1000, false, 20),
+        FEIJOADAENLATADA("Feijoada enlatada", "Feijao e carne.", 1, 1, 1000, false, 25),
         BISCOITOS("Biscoitos", "Doce ou salgado?", 1, 1, 10, false, 30),
-        PAO("Pão", "Farinha e fermento", 1, 1, 3, false, 20),
-        BOLACHAS("Bolachas", "Salgada ou doce?", 1, 1, 10, false, 30);
+        PAO("Pao", "Farinha e fermento", 1, 1, 3, false, 20),
+        BOLACHAS("Bolachas", "Salgada ou doce?", 1, 1, 10, false, 30),
+        COELHOCRU("Coelho cru", "Nao mais saltitante.", 2, 1, 2, false, 10),
+        COELHOASSADO("Coelho assado", "Bro is cooked.", 2, 1, 5, false, 30);
 
         private final String nome;
         private final String descricao;
@@ -69,6 +71,10 @@ public class Alimento extends Item{
                     return new Pao(geradorDeID);
                 case BOLACHAS:
                     return new Bolachas(geradorDeID);
+                case COELHOCRU:
+                    return new CoelhoCru(geradorDeID);
+                case COELHOASSADO: 
+                    return new CoelhoAssado(geradorDeID);
                 default:
                     throw new IllegalArgumentException("Tipo de alimento não listado: " + this);
             }

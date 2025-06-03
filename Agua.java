@@ -8,6 +8,12 @@ public class Agua extends Item{
         this.pureza = pureza;
         this.volumeMax = volumeMax;
         this.volumeAtual = volumeMax;
+        if(this.getPureza()){
+            this.setDescricao("Contem agua pura.");
+        }
+        else{
+            this.setDescricao("Contem agua impura.");
+        }
     }
 
     public int getVolumeAtual(){
@@ -21,6 +27,7 @@ public class Agua extends Item{
     public void encher(){ //enche para o volume máximo, mas será IMPURA (não vejo formas de encher se não com fontes naturais)
         this.volumeAtual = volumeMax;
         this.pureza = false;
+        this.setDescricao("Contem agua impura.");
     }
 
     public void diminuirVolume(Inventario inventario){
@@ -31,11 +38,17 @@ public class Agua extends Item{
     }
 
     public void usar(Personagem jogador){
-        if(!this.pureza){jogador.getStatus().setDoente(true);} //se impura, adoecera
-        if(jogador.getStatus().getTemperatura() == Status.Temperatura.CALOR){jogador.getStatus().setTemperatura(Status.Temperatura.NORMAL);}
-        //ESFRIA A TEMPERATURA SE TIVER COM CALOR
-        jogador.adicionarSede(10);
-        this.diminuirVolume(jogador.getInventario());
+        if(this.getVolumeAtual() > 0){
+            if(!this.pureza){jogador.getStatus().setDoente(true);} //se impura, adoecera
+            if(jogador.getStatus().getTemperatura() == Status.Temperatura.CALOR){jogador.getStatus().setTemperatura(Status.Temperatura.NORMAL);}
+            //ESFRIA A TEMPERATURA SE TIVER COM CALOR
+            jogador.adicionarSede(10);
+            this.diminuirVolume(jogador.getInventario());
+            System.out.println("Agua consumida.");
+        }
+        else{
+            System.out.println("A garrafa esta vazia.");
+        }
     }
 
     public boolean getPureza(){

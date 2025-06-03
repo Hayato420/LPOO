@@ -11,6 +11,7 @@ public abstract class Municao extends Item{
         this.material2 = material2;
         this.quantiaAtual = quantiaAtual;//NAO FILTRA DE A QUANTIA ATUAL PASSA A MAXIMA, CUIDADO DEVE SER FEITO EM QUEM CHAMAR
     }
+
     //QUANTIA
     public int getQuantiaAtual(){
         return this.quantiaAtual;
@@ -21,15 +22,17 @@ public abstract class Municao extends Item{
     }
 
     //USO
-    public void diminuirQuantia(Personagem jogador, int quantia){
+    public boolean diminuirQuantia(Personagem jogador, int quantia){
         this.quantiaAtual -= quantia;
         if(this.quantiaAtual <= 0){
             jogador.getInventario().removerItem(this.getID());
         }
+        return true;
     }
     //RECARGA SE ADICIONAR MAIS AO INVENTARIO 
     public abstract void aumentarQuantia(Personagem jogador, int quantiaAdicionada);
-    /*(Personagem jogador, int quantia){ //getQuantiaAtual() do novo item passado como parâmetro
+    /*
+        (Personagem jogador, int quantia){ //getQuantiaAtual() do novo item passado como parâmetro
         for (Item item : jogador.getInventario().getItens()){
             if (item instanceof XXXX){
                 XXXX xxxx = (XXXX) item;

@@ -11,7 +11,7 @@ public class Ambiente{
     private final int dificuldade;
     private final Clima condicoesClimaticas;
     private final Temperatura temperaturaAmbiente;
-    private final GeradorDeItens geradorDeItens = new GeradorDeItens();
+    private final GeradorDeItens geradorDeItens;
     private Map<String, Integer> recursosDisponiveis = new HashMap<>();
 
     public enum Clima {
@@ -22,12 +22,13 @@ public class Ambiente{
     }
 
     public Ambiente(String nome, String descricao, int dificuldade,
-                    Clima condicoesClimaticas, Temperatura temperaturaAmbiente){
+                    Clima condicoesClimaticas, Temperatura temperaturaAmbiente, GeradorDeItens geradorDeItens){
         this.nome = nome;
         this.descricao = descricao;
         this.dificuldade = dificuldade;
         this.condicoesClimaticas = condicoesClimaticas;
         this.temperaturaAmbiente = temperaturaAmbiente;
+        this.geradorDeItens = geradorDeItens;
     }
 
 
@@ -111,6 +112,11 @@ public class Ambiente{
             List<String> municoesPossiveis = Arrays.asList("bala", "flecha", "fluido de isqueiro", "pilhas");
             if(municoesPossiveis.contains(recursoEscolhido.toLowerCase())){
                 return this.getGeradorDeItens().gerarMunicaoAleat(recursoEscolhido);
+            }
+
+            List<String> tratamentosPossiveis = Arrays.asList("antibiotico", "antidoto", "bandagem", "metiolate", "panaceia", "vicodin");
+            if(tratamentosPossiveis.contains(recursoEscolhido.toLowerCase())){
+                return this.getGeradorDeItens().gerarTratAleat(recursoEscolhido);
             }
             //se for agua (ultima possibilidade)
             return this.getGeradorDeItens().gerarAguaAleatoria();
