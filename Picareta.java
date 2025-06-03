@@ -18,15 +18,11 @@ public class Picareta extends Ferramenta{
             int chance = ThreadLocalRandom.current().nextInt(1,11); //incluso 1, excluso 11
             if (chance <= 7){
                 Material pedra = Material.TipoDeMaterial.PEDRA.criarMaterial(this.getGeradorDeID());
-                if(jogador.getLocalizacao().diminuirRecurso("Pedra")){
-                    jogador.getRecursosProximos().add(pedra);
-                }
+                jogador.getRecursosProximos().add(pedra);
             }
             else{
                 Material metal = Material.TipoDeMaterial.METAL.criarMaterial(this.getGeradorDeID());
-                if(jogador.getLocalizacao().diminuirRecurso("Metal")){
-                    jogador.getRecursosProximos().add(metal);
-                }
+                jogador.getRecursosProximos().add(metal);
             }
         }
         jogador.exibirRecursosProximos();

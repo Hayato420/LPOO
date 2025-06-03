@@ -15,9 +15,7 @@ public class Machado extends Ferramenta{
         this.perderDurabilidade(jogador.getInventario());
         for (int i = 0; i < 5; i++){
             Material madeira = Material.TipoDeMaterial.MADEIRA.criarMaterial(this.getGeradorDeID());
-            if(jogador.getLocalizacao().diminuirRecurso("Madeira")){
-                jogador.getRecursosProximos().add(madeira);
-            }
+            jogador.getRecursosProximos().add(madeira);
         }
         jogador.exibirRecursosProximos();
     }
