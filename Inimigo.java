@@ -56,6 +56,10 @@ public class Inimigo{
         this.isAlive = isAlive;
     }
 
+    public void gerarStatus(Personagem personagem){
+        //a ser modificado dependendo do inimigo
+    }
+
     public void perderVida(int quantidade){
         if(this.resistencia >= quantidade){
             this.vida -= 1;

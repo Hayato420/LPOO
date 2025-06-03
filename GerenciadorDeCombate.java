@@ -14,9 +14,16 @@ public class GerenciadorDeCombate{
 
     public GerenciadorDeCombate(){
         this.inimigosDisponiveis = Arrays.asList(
-            //new InimigoBandido(),
-           //new InimigoUrso()
-           new InimigoTeste()
+            /*
+            new InimigoBandido(),
+            new InimigoUrso(),
+            new InimigoCobra(),
+            new InimigoCorvos(),
+            new InimigoLobo(),
+            new InimigoCanibal(),
+            new InimigoCultista()
+            */
+            new InimigoTeste()
         );
     }
 
@@ -82,6 +89,7 @@ public class GerenciadorDeCombate{
                 System.out.println("Rodada: "+ rodada);
             }else{
                 personagem.perderVida(inimigo.getDano());
+                inimigo.gerarStatus(personagem);
                 setIniciativa(true);
             }
             if(inimigo.getIsAlive() == false){      //se o inimigo morrer

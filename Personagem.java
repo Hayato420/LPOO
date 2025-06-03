@@ -1,6 +1,6 @@
-import java.util.concurrent.ThreadLocalRandom;
 import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 public abstract class Personagem{
     //COMBATE E FINS DE JOGO
@@ -337,7 +337,6 @@ public abstract class Personagem{
     public void exibirRecursosProximos(){
         if (this.getRecursosProximos().isEmpty()){
            System.out.println("Nenhum recurso coletavel por perto.");
-           return;
         } else{
             System.out.println("Recursos coletaveis: ");
             for(Item item : this.getRecursosProximos()){
