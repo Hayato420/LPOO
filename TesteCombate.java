@@ -12,7 +12,7 @@ public class TesteCombate {
         ChecagemFimDeTurno checador = new ChecagemFimDeTurno();
 
         // Criar personagem
-        PersonagemExplorador jogador = new PersonagemExplorador("Adeildo L Durval", gerenciadorAmbiente, geradorID);
+        PersonagemExplorador jogador = new PersonagemExplorador("Adeildo L Durval", gerenciadorAmbiente, gerenciadorEvento, geradorID);
 
         // Criar arma e munição manualmente
         Material material1 = Material.TipoDeMaterial.METAL.criarMaterial(geradorID);

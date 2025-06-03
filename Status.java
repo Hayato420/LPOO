@@ -2,7 +2,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Status{ 
-    private boolean iluminado; //diz se o personagem esta proximo a fonte de luz, para CAVERNA
     private boolean envenenado;
     private boolean doente;
     private boolean perturbado;
@@ -17,20 +16,11 @@ public class Status{
 
 
     public Status(){
-        this.iluminado = false;
         this.envenenado = false;
         this.doente = false;
         this.perturbado = false;
         this.fraturado = false;
         this.temperatura = Temperatura.NORMAL;
-    }
-
-    //iluminado
-    public boolean isIluminado(){
-        return this.iluminado;
-    }
-    public void setIluminado(boolean estado){
-        this.iluminado = estado;
     }
 
     //Envenenamento, Doenca, Perturbacao e Fraturamento
@@ -82,7 +72,6 @@ public class Status{
     public String exibirStatus() {
         List<String> statusAtivos = new ArrayList<>();
 
-        if (iluminado) statusAtivos.add("iluminado");
         if (envenenado) statusAtivos.add("envenenado");
         if (doente) statusAtivos.add("doente");
         if (perturbado) statusAtivos.add("perturbado");

@@ -6,5 +6,6 @@ public class Metiolate extends Tratamento{
     @Override
     public void usar(Personagem jogador){
         jogador.adicionarVida(this.getCura());
+        jogador.getInventario().removerItem(this.getID());
     }
 }

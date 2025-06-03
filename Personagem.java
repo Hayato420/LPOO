@@ -11,6 +11,7 @@ public abstract class Personagem{
     private boolean condicaoDerrota = false;
     //Geradores e Gerenciadores
     private final GerenciadorDeAmbiente gerenciadorDeAmbiente;
+    private final GerenciadorDeEvento gerenciadorDeEvento;
     private final GeradorDeID geradorDeID;
     private Ambiente localizacao;
     //ATRIBUTOS
@@ -29,9 +30,10 @@ public abstract class Personagem{
     private FonteDeCalor fonteDeCalor; //SE != null, A CADA ROUND DEVERA ESQUENTAR O JOGADOR PARA NORMAL, ALEM DE PERMITIR COZINHAR. SE == null, não usará o alimentarFogo(). Se não tiver madeira, o alimentarFogo() porá um fim à fogueira ("setFonteDeCalor(null);").
 
     public Personagem(String nome, int vida, int fome, int sede, int energia, 
-                      int sanidade, GerenciadorDeAmbiente gerenciadorDeAmbiente, GeradorDeID geradorDeID){
+                      int sanidade, GerenciadorDeAmbiente gerenciadorDeAmbiente, GerenciadorDeEvento gerenciadorDeEvento, GeradorDeID geradorDeID){
         this.gerenciadorDeAmbiente = gerenciadorDeAmbiente;
         this.localizacao = gerenciadorDeAmbiente.gerarAleatorio();
+        this.gerenciadorDeEvento = gerenciadorDeEvento;
         this.geradorDeID = geradorDeID;
         this.nome = nome;
         this.vida = vida;
@@ -107,34 +109,41 @@ public abstract class Personagem{
     }
 
     //EXPLORAR, COLETAR RECURSOS (AMBIENTE E PRÓXIMOS) E MUDAR DE AMBIENTE
-    public void explorar(GerenciadorDeEvento gerenciadorDeEvento){
-        int gastoPadraoDeEnergia = 5;
-        if(this.getStatus().getTemperatura() == Status.Temperatura.FRIO 
-           || this.getStatus().getTemperatura() == Status.Temperatura.CALOR){
-            this.perderEnergia(gastoPadraoDeEnergia + 5);
+    public boolean explorar(){
+        if(this.getLocalizacao().getClass() != AmbienteCaverna.class){
+            int gastoPadraoDeEnergia = 5;
+            if(this.getStatus().getTemperatura() == Status.Temperatura.FRIO 
+            || this.getStatus().getTemperatura() == Status.Temperatura.CALOR){
+                this.perderEnergia(gastoPadraoDeEnergia + 5);
+            }
+            else{
+                this.perderEnergia(gastoPadraoDeEnergia);
+            }
+            this.getRecursosProximos().clear();
+            this.coletarAmbiente(ThreadLocalRandom.current().nextInt(0, 6));
+            System.out.println("============================================================");
+            this.getGerenciadorDeEvento().gerarEvento().efeitoDoEvento(this);
+            return true;
         }
         else{
-            this.perderEnergia(gastoPadraoDeEnergia);
+            System.out.println("Para explorar cavernas e necessario USAR algo que ilumine.");
+            return false;
         }
-        this.getRecursosProximos().clear();
-        this.coletarAmbiente(ThreadLocalRandom.current().nextInt(0, 6));
-        System.out.println("============================================================");
-        gerenciadorDeEvento.gerarEvento().efeitoDoEvento(this);
     }
 
-    public void mudarAmbiente(GerenciadorDeEvento gerenciadorDeEvento){
+    public void mudarAmbiente(){
         if(this.getStatus().getTemperatura() == Status.Temperatura.FRIO 
            || this.getStatus().getTemperatura() == Status.Temperatura.CALOR){
             this.perderEnergia(20);
             this.getGerenciadorDeAmbiente().mudarAmbiente(this);
             System.out.println("============================================================");
-            gerenciadorDeEvento.gerarEvento().efeitoDoEvento(this);
+            this.getGerenciadorDeEvento().gerarEvento().efeitoDoEvento(this);
         }
         else{
             this.perderEnergia(10);
             this.getGerenciadorDeAmbiente().mudarAmbiente(this);
             System.out.println("============================================================");
-            gerenciadorDeEvento.gerarEvento().efeitoDoEvento(this);
+            this.getGerenciadorDeEvento().gerarEvento().efeitoDoEvento(this);
         }
         this.getRecursosProximos().clear();
     }
@@ -305,7 +314,7 @@ public abstract class Personagem{
     public void setFonteDeCalor(FonteDeCalor fonteDeCalor){
         this.fonteDeCalor = fonteDeCalor;
     }
-    //GERADOR PARA FONTE DE CALOR E GERENCIADOR DE AMBIENTE PARA MUDAR DE AMBIENTE
+    //GERADOR PARA FONTE DE CALOR E GERENCIADOR DE AMBIENTE PARA MUDAR DE AMBIENTE, ISQUEIRO/LANTERNA -> USAR
     public GeradorDeID getGeradorDeID(){
         return this.geradorDeID;
     }
@@ -314,6 +323,9 @@ public abstract class Personagem{
         return this.gerenciadorDeAmbiente;
     }
 
+    public GerenciadorDeEvento getGerenciadorDeEvento(){
+        return this.gerenciadorDeEvento;
+    }
     //NOME
     public String getNome(){
         return this.nome;
@@ -502,6 +514,29 @@ public abstract class Personagem{
         }
         System.out.println("Nenhuma arma com o ID " + ID + " foi encontrada.");
     }
+    //TEM PILHAS/FLUIDO DE ISQUEIRO PARA EXPLORAR CAVERNAS?
+    public boolean temFluidoDeIsqueiro(){
+        for(Item item : this.getInventario().getItens()){
+            if(item.getClass() == FluidoDeIsqueiro.class){
+                FluidoDeIsqueiro fluidoDeIsqueiro = (FluidoDeIsqueiro) item;
+                fluidoDeIsqueiro.diminuirQuantia(this, 1);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean temPilhas(){
+        for(Item item : this.getInventario().getItens()){
+            if(item.getClass() == Pilhas.class){
+                Pilhas pilhas = (Pilhas) item;
+                pilhas.diminuirQuantia(this, 1);
+                return true;
+            }
+        }
+        return false;
+    }
+
     //EXIBICAO DE ATRIBUTOS E STATUS
     public void exibirAtrStat(){
         System.out.println("Nome: " + getNome());

@@ -21,11 +21,12 @@ public abstract class Municao extends Item{
     }
 
     //USO
-    public void diminuirQuantia(Personagem jogador, int quantia){
+    public boolean diminuirQuantia(Personagem jogador, int quantia){
         this.quantiaAtual -= quantia;
         if(this.quantiaAtual <= 0){
             jogador.getInventario().removerItem(this.getID());
         }
+        return true;
     }
     //RECARGA SE ADICIONAR MAIS AO INVENTARIO 
     public abstract void aumentarQuantia(Personagem jogador, int quantiaAdicionada);
