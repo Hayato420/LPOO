@@ -483,6 +483,10 @@ public abstract class Personagem{
         return this.armaEquipada;
     }
 
+    public void setArmaEquipada(Arma arma){
+        this.armaEquipada = arma;
+    }
+
     public void equiparArma(String ID){
         if (ID == null || ID.isEmpty()){
             this.armaEquipada = null;

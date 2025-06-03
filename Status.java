@@ -88,17 +88,22 @@ public class Status{
         if (perturbado) statusAtivos.add("perturbado");
         if (fraturado) statusAtivos.add("fraturado");
 
-        switch (temperatura) {
-            case CALOR -> statusAtivos.add("com calor");
-            case FRIO -> statusAtivos.add("com hipotermia");
-            case NORMAL -> {
+        switch (temperatura){
+            case CALOR:
+                statusAtivos.add("com calor");
+                break;
+            case FRIO:
+                statusAtivos.add("com hipotermia");
+                break;
+            case NORMAL:
                 if (statusAtivos.isEmpty()) {
                     statusAtivos.add("Estavel");
                 } else {
                     statusAtivos.add("com temperatura normal");
                 }
-            }
+                break;
         }
+
 
         String statusFinal = String.join(", ", statusAtivos)
             .replaceAll(",([^,]*)$", " e$1") + ".";

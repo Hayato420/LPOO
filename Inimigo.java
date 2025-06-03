@@ -65,7 +65,7 @@ public class Inimigo{
         }
         if(this.vida <= 0){
             this.vida = 0;
-            System.out.print("O inimigo morreu");
+            System.out.println("O inimigo morreu.");
             this.isAlive = false;
         }
     }

@@ -30,16 +30,16 @@ public class GerenciadorDeEvento{
 
     public Evento gerarEvento(){
         Evento novoEvento;
-        float chance = aleatorio.nextFloat(100);
+        float chance = aleatorio.nextFloat() * 100;
         if (chance <= 15){ //15%
             novoEvento = eventosDisponiveis.get(0); //climatico
-        } else if (chance <= 30){ //15%
+        } else if (chance <= 20){ //5%
             novoEvento = eventosDisponiveis.get(1); //combate
-        } else if (chance <= 40){ //10%
+        } else if (chance <= 30){ //10%
             novoEvento = eventosDisponiveis.get(2); //doente
-        } else if (chance <= 60){ //20%
+        } else if (chance <= 65){ //35%
             novoEvento = eventosDisponiveis.get(3); //exploracao
-        } else { //40%
+        } else { //35%
             novoEvento = eventosDisponiveis.get(4); //vazio
         }
         return novoEvento;

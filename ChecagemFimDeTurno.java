@@ -25,7 +25,6 @@ public class ChecagemFimDeTurno{
     public void aplicarEfeitos(Personagem jogador){
         jogador.perderFome(5);
         jogador.perderSede(5);
-        System.out.println("Debug em resgate: " + jogador.getEmResgate());
         jogador.setEmResgate(jogador.getEmResgate() - 1);
 
         if(jogador.getFonteDeCalor() != null && jogador.getStatus().getTemperatura() == Status.Temperatura.FRIO){
@@ -37,7 +36,7 @@ public class ChecagemFimDeTurno{
         if(jogador.getStatus().isDoente()){
             jogador.perderVida(10);
         }
-        if(jogador.getStatus().isPerturbado()){
+        if(jogador.getStatus().isPerturbado() && jogador.getCondicaoVitoria() == false && jogador.getCondicaoDerrota() == false){
             System.out.println("BLU BLU BLEH BLEH BLU BLU !!!!");
             jogador.perderSanidade(10);
         }
