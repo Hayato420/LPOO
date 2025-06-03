@@ -4,6 +4,12 @@ public class Pilhas extends Municao{
     public Pilhas(int quantiaAtual, Material material1, Material material2, GeradorDeID geradorDeID){
         super("Pilhas", "Oxirreducao do balacobaco !", 1, 1, quantiaAtual, material1, material2, geradorDeID);
         this.quantiaMax = 20;
+        if(quantiaAtual > this.quantiaMax){
+            this.setQuantiaAtual(quantiaMax);
+        }
+        else{
+            this.setQuantiaAtual(quantiaAtual);
+        }
     }
 
     @Override

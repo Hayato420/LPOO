@@ -83,7 +83,6 @@ public class GerenciadorDeCombate{
         int turno = 1;
 
         jogador.setEmCombate(true);
-
         while(jogador.getEmCombate() == true){
             System.out.println("============================================================");
             System.out.println("Turno atual: " + turno);
@@ -92,7 +91,7 @@ public class GerenciadorDeCombate{
                 exibirEstados();
                 boolean turnoPassou = false;
                 while(!turnoPassou){
-                    System.out.println("Escolha uma acao: ATACAR / TROCAR de arma / DESEQUIPAR / EXIBIR estados");
+                    System.out.println("Escolha uma acao: ATACAR / TROCAR de arma / DESEQUIPAR / EXIBIR estados / tentar FUGIR");
                     String acao = scanner.nextLine().trim().toLowerCase();
 
                     switch (acao){
@@ -136,6 +135,21 @@ public class GerenciadorDeCombate{
                         case "exibir":
                             exibirEstados();
                             break;
+                        case "fugir":
+                            int chanceDeFuga = aleatorio.nextInt(10);
+                            if(chanceDeFuga <= 1){
+                                jogador.setEmCombate(false);
+                                System.out.println("Voce conseguiu fugir.");
+                                turnoPassou = true;
+                                break;
+                            }
+                            else{
+                                System.out.println("Fuga mal-sucedida. Lute !!!");
+                                turnoPassou = true;
+                                this.setIniciativa(!this.getIniciativa());
+                                turno++;
+                                break;
+                            }
                         default:
                             System.out.println("Insira uma opcao valida.");
                     }

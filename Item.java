@@ -29,6 +29,10 @@ public abstract class Item implements Usavel{
         return this.descricao;
     }
 
+    public void setDescricao(String descricao){
+        this.descricao = descricao;
+    }
+
     public int getPeso(){
         return this.peso;
     }
@@ -48,9 +52,4 @@ public abstract class Item implements Usavel{
             inventario.removerItem(this.ID);
         }
     }
-
-    public void setDescricao(String descricao){
-        this.descricao = descricao;
-    }
-
 }
