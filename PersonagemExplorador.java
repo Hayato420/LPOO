@@ -30,6 +30,7 @@ public class PersonagemExplorador extends Personagem{
             this.coletarAmbiente(ThreadLocalRandom.current().nextInt(0, 6));
             System.out.println("============================================================");
             if(this.safeZone == false){this.getGerenciadorDeEvento().gerarEvento().efeitoDoEvento(this);}
+            this.safeZone = false;
             return true;
         }
         else{
